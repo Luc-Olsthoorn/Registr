@@ -1,0 +1,10 @@
+version: '2'
+services:
+ server:
+  image: 915932261392.dkr.ecr.us-west-2.amazonaws.com/simpleton-server
+  ports:
+   - "8080:8080"
+  links:
+   - database
+ database:
+  image: 915932261392.dkr.ecr.us-west-2.amazonaws.com/simpleton-database
