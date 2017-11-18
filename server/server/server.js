@@ -12,6 +12,7 @@ var express = require('express'); //routing
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
+var request = require('request');
 
 var PORT=8080; 
 
@@ -38,47 +39,27 @@ function connectDB(callback){
 
 	});
 };
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res){
   		res.sendFile(path.join(__dirname, 'public/index.html'));
 	});
-app.post('/getNote', function(req, res){
-	console.log("key:" + req.body.key);
- 	var collection = database.query().collection('myTable');
- 	collection.find({"key" :req.body.key}).toArray(function(err, records) {
-		if(err)//cannot connect to database
-		{
-			console.log("error getting records");
-		}
-		else if(records[0] == null)//cannot find username
-		{
-			res.send(false);
-		}
-		else
-		{
-			res.send(records[0].note);
+app.post('/getCourseInfo', function(req, res){
+	console.log("course:" + req.body.course);
+	url = 'https://one.uf.edu/apix/soc/schedule/?category=RES&course-code='+req.body.course+'&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-row=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&section=&term=20181&var-cred=true&writing=';
+	console.log(url);
+	request(url, function(error, response, html){
+		if(!error){
+			console.log("got it");
+			res.send(html);
 		}
 	});
-
+	
+	
 
 });
-app.post('/setNote', function(req, res){
-	console.log("key:" + req.body.key);
-	console.log("Note:" + req.body.note);
-	var collection = database.query().collection('myTable');
-	collection.insert({
-		key:req.body.key,
-		note: req.body.note
-	}, function(err, docs) {
-		if(err){
-			console.log("error registering");
-		}
-		else{
-			res.send(docs.note);
-		}
-	});
-});
+
+
+
 //start this bitch up
 var server = app.listen(PORT, function(){
   console.log('Server listening on port');

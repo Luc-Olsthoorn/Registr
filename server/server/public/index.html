@@ -17,22 +17,7 @@ body{
   font-family:roboto !important;
   color:white;
 }
-#textarea{
 
-
-    overflow: auto;
-    outline: none;
-    padding:3%;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-color: rgba(255, 255, 255, 255);
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0);
-    height:40%;
-    width:100%;
-    resize: none;
-}
 </style>
   <body>
 
@@ -40,25 +25,20 @@ body{
 
 <div id="mainPage" class="ui container basic segment" >
   
-     <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%;font-size:10vw; margin:0px;">Simpleton</h1> 
-     <div class="ui search basic segment center aligned">
-      <div class="ui icon input transparent inverted " id="searchBox">
-        <input    id="search" type="text" placeholder="Enter your Key">
-        <i class="search icon "></i>
-      </div>
-      
-    </div>
-    <div id="results">
-        <h2>What is this website?</h2>
-        This is a simple place to store your notes, with a key <br>
-        Simply enter a key you want to use, and add a note to it <br>
-        Once a note is added, it can't be changed <br>
-    </div>
+     <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%;font-size:10vw; margin:0px;">Registr</h1> 
+     <div class="ui form"><div id="search" class="inline fields"></div> <div id ="addMore"></div></div>
+
+     <div class="ui horizontal divider"></div>
+</div>
+ <div  class="ui container basic segment" >
+    
+    <div id="results"></div>
+       
 </div>
 
+<div class="ui horizontal divider"></div>
 
-
-
+</div>
 <div id ="footer" class="container basic segment ui">
   <div class="ui divider inverted"></div>
   <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
