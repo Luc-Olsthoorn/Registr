@@ -101,11 +101,11 @@ class Main{
 	}
 	checkOverlap(input){
 		//looping through every calender
-		console.log(input);
+
 		var last;
 		for(var i =0; i< input.length; i++){
 		
-			console.log("New Calendar");
+
 			var hit = {};
 			//looping through every course
 		loopy:
@@ -122,16 +122,15 @@ class Main{
 						
 						for(var l = parseInt(sectionMeetTimes[k].meetPeriodBegin, 10);  l < (parseInt(sectionMeetTimes[k].meetPeriodEnd,10)+1); l++){
 							var key = " " + l + " " + sectionMeetTimes[b].meetDays[k];
-							console.log(j);
-							console.log(key); 
+
 							if(hit[key]){
 								//make sure its not slicing based on overlaping itself
 								if(last != j){
 									input = input.slice(i);
-									console.log("hit");
+
 									break loopy;
 								}else{
-									console.log("overlapping itself");
+									console.log("ERROR: overlapping itself");
 								}
 								
 							}else{
@@ -144,7 +143,6 @@ class Main{
 			}
 			
 		}
-		console.log(input);
 		return input;
 	}
 	createPermutation(){
@@ -283,11 +281,12 @@ class calendarHandler{
 	addSection(sectionMeetTimes, section, color){
 		//Create elements
 		var tempArr=[];
+		var self =this;
 		for(var i=0; i < sectionMeetTimes.length; i++){
 			for(var j =0; j< sectionMeetTimes[i].meetDays.length; j++){
 				var sectionMeetTimey = new sectionMeetTime(this.days[sectionMeetTimes[i].meetDays[j]]);
 				sectionMeetTimey.addSectionName(section);
-				sectionMeetTimey.addStartStop(sectionMeetTimes[i].meetPeriodBegin, sectionMeetTimes[i].meetPeriodEnd);
+				sectionMeetTimey.addStartStop(self.convertToNum(sectionMeetTimes[i].meetPeriodBegin), self.convertToNum(sectionMeetTimes[i].meetPeriodEnd));
 				
 				sectionMeetTimey.addColor(color);
 				sectionMeetTimey.render();
@@ -295,6 +294,23 @@ class calendarHandler{
 			}
 		}
 		this.boxArr[section] = tempArr;
+	}
+	//UF has late classes with special codes, this strips them and returns an integer
+	convertToNum(inputTime){
+		switch(inputTime){
+			case "E1":
+				return 11;
+			break;
+			case "E2":
+				return 12;
+			break;
+			case "E3":
+				return 13;
+			break;
+			default: 
+				return inputTime;
+			break;
+		}
 	}
 	removeSection(section){
 		this.boxArr[section].deleteMe();
