@@ -1,4 +1,5 @@
-class calendarHandler{
+
+class calendar{
 	constructor(divToBindTo, calendarNumber){
 		this.divToBindTo = divToBindTo;
 		this.boxArr = {};
@@ -21,7 +22,7 @@ class calendarHandler{
 		}
 		this.boxArr[section] = tempArr;
 	}
-	//UF has late classes with special codes, this strips them and returns an integer
+	//UF has late classes with special codes, this strips them and returns an integer //TODO verify if this is necessary
 	convertToNum(inputTime){
 		switch(inputTime){
 			case "E1":
