@@ -6,6 +6,4 @@ docker-compose up
 
 ## Known Bugs
 	
-Lines dont line up 
-
-error checking is awful
+Check for web section

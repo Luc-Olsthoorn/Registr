@@ -19,26 +19,7 @@ var PORT=8080;
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use( bodyParser.text() );       // to support JSON-encoded bodies
 
-var database = require('./database.js');	
-connectDB(function(){
-	var collectionName= "myTable";
-	database.query().createCollection(collectionName, function(err, res) {
-		if (err) throw err;
-		console.log("Collection created!");
 
-	});
-	console.log("This bitch ready");
-});
-function connectDB(callback){
-	database.connect(function(success){
-		if(success){
-			callback();
-		}else{
-			setTimeout(connectDB.bind(this, callback), 1000);
-		}
-
-	});
-};
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function(req, res){
   		res.sendFile(path.join(__dirname, 'public/index.html'));
