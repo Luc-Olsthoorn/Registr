@@ -67,7 +67,6 @@ class SearchBox{
 		this.label.append(this.removeIcon);
 	}
 	render(){
-		this.addSwitch();
 		$('#'+ this.divToBindTo).append(this.element);
 		
 	}

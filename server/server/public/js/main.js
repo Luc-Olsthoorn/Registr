@@ -20,9 +20,9 @@ class Main{
 		this.calendarHandly = new calendarHandler();
 	}
 	getColor(){
-		var colorArray = ["#43a047","#ff5722","#795548","#607d8b","#673ab7","#d81b60","#9c27b0","#f44336"];
-		if (this.colorCounter > colorArray.length){
-			this.colorCounter = 0;
+		var colorArray = ["#f44336","#e91e63","#9c27b0","#3f51b5","#2196f3","#00bcd4","#4caf50","#ff9800"];
+		if (this.colorCounter >= colorArray.length-1){
+			this.colorCounter = -1;
 		}
 		this.colorCounter++;
 		return colorArray[this.colorCounter];
