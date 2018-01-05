@@ -85,6 +85,7 @@ class calendar{
 	}
 	deleteMe(){
 		this.calendarDiv.remove();
+		delete this;
 	}
 }
 class sectionMeetTime{

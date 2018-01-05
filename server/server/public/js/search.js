@@ -26,8 +26,6 @@ class SearchBox{
 		this.addHtml();
 		this.attachKeydownHandler();
 		this.render();
-
-
 	}
 	addHtml(){
 		this.element = $(`<div class="ui inverted card"></div>`);
@@ -75,42 +73,42 @@ class SearchBox{
 	}
 	deleteMe(){
 		this.element.remove();
-		this.cancelPressed(this.course);
+		this.deleteCourseCallback(this.coursePointer);
 	}
 	focus(){
 		this.searchBox.focus();
 	}
 	getKey(){
-		return this.course;
+		return this.inputText;
 	}
 	refreshKey(){
-		this.course = this.searchBox.val();
+		this.inputText = this.searchBox.val();
 	}
 	attachKeydownHandler(){
 		var self = this;
 		this.element.keydown(function(e) {
 			setTimeout(function() {
-				
 				if(this.active && e.keyCode != 13){
 					this.active=false;
-					self.cancelPressed(self.course);
+					self.deleteCourseCallback(self.coursePointer);
 					
 				}
 				self.refreshKey();
 				if (e.keyCode == 13) {
 					if(!this.active){
-						this.active = self.course;
-						self.enterPressed(self.course);
+						this.active = self.inputText;
+						self.enterPressed(self.inputText);
 					}
 
 				}
 			}, 20);
 		});
-		
 	}
-
-	attachCancelPressHandler(callback){
-		this.cancelPressed = callback;
+	attachCoursePointer(course){
+		this.coursePointer = course;
+	}
+	attachDeleteHandler(callback){
+		this.deleteCourseCallback = callback;
 	}
 	attachEnterPressHandler(callback){
 		this.enterPressed = callback;

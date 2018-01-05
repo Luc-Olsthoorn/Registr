@@ -6,5 +6,6 @@ docker-compose up
 
 ## Known Bugs
 	
-Deleting inconsistent at times
+Errors on xing out overlaps
 
+Need to account for web

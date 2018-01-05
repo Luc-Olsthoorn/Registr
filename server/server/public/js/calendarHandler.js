@@ -1,6 +1,7 @@
 class calendarHandler{
 	constructor(){
 		this.calendars = [];
+		this.courses = [];
 	}
 	deleteCalendars(){
 		
@@ -9,8 +10,7 @@ class calendarHandler{
 		}
 		this.calendars = [];
 	}
-	updateCalendars(inputCourses){
-		this.courses=inputCourses; 
+	updateCalendars(){
 		this.deleteCalendars();
 		var self =this;
 		if(this.courses.length>0){
@@ -18,7 +18,7 @@ class calendarHandler{
 		}else{
 			return false;
 		}
-		temp = this.checkOverlap(temp);
+		temp = this.checkOverlap(temp); //TODO create switch for this
 		for(var i =0; i< temp.length; i++){
 			var calendary = new calendar('results', i);
 			calendary.addBaseHtml();
@@ -30,16 +30,47 @@ class calendarHandler{
 			self.calendars.push(calendary);
 		}
 	}
+	addCourse(code, color, callback){
+		//Check that it isnt already in use
+		var self = this;
+		//Make request	
+		serverGetRequest(code, function(result){
+			if(!result){
+				callback({"error":"serverNoResponse"});
+			}else if(JSON.parse(result)[0].TOTALROWS != null){
+				//not empty
+				var coursey = new Course();
+				coursey.setRawJSON(JSON.parse(result));
+				coursey.addColor(color);
+				self.courses.push(coursey);
+				callback({"success": coursey});
+			}
+			else{
+				//error
+				callback({"error":"doesNotExist"});
+			}
+
+		});
+	}
+	deleteCourse(course){
+		for(var i=0; i<this.courses.length; i++){
+			if(this.courses[i]==course){
+				this.courses.splice(i, 1);
+				return;
+			}
+		}
+		console.log("delete failed"); //TODO make this better
+	}
 	checkOverlap(input){
-		//looping through every calender
+		//looping through every possible calender
 		var output = [];
 		var toDelete = false;
 		for(var i =0; i< input.length; i++){
-			console.log("newCalender");
+			//console.log("newCalender" + i);
 			var hit = {};
 			//looping through every course
 			for(var j=0; j< input[i].length; j++){
-				console.log(input[i][j].section);
+				//console.log(input[i][j].section);
 				var sectionMeetTimes = this.courses[input[i][j].course].getSectionTimes(input[i][j].section);
 
 				//looping through every meet time
@@ -52,8 +83,7 @@ class calendarHandler{
 							var key = " " + l + " " + sectionMeetTimes[b].meetDays[k];
 							console.log(key);
 							if(hit[key]){
-								//make sure its not slicing based on overlaping itself
-									console.log("hit" + key);
+									//console.log("hit" + key);
 									toDelete=true;
 							}else{
 					
@@ -64,10 +94,13 @@ class calendarHandler{
 				}	
 			}
 			if(!toDelete){
-				toDelete = false;
+				//console.log("pushing");
 				output.push(input[i]);
+			}else{
+				toDelete = false;
 			}
 		}
+		console.log(output);
 		return output;
 	}
 	createPermutation(){
@@ -99,7 +132,28 @@ class calendarHandler{
 		else{
 			newArr = oldArray.slice();
 		}
-	
+		console.log(newArr);
 		return newArr;
+	}
+}
+//Make get note server request
+function serverGetRequest(course, callback) {
+	if(course==""){
+		callback(false);
+	}else{
+		$.ajax({
+			type: "POST",
+			url: "/getCourseInfo",
+			data: JSON.stringify({
+				"course": course
+			}),
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				callback(false);
+			},
+			contentType: 'application/json'
+		});
 	}
 }

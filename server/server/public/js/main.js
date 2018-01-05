@@ -7,7 +7,6 @@ $(document).ready(function() {
 class Main{
 	constructor(){
 		this.searchBoxes = [];
-		this.courses = [];
 		this.colorCounter =-1;
 	}
 	main(){
@@ -37,91 +36,29 @@ class Main{
 			searchy.deleteMe();
 		});
 		this.searchBoxes.push(searchy);
-		searchy.attachEnterPressHandler(function(course){
+		searchy.attachEnterPressHandler(function(inputText){
 			searchy.addColor("#f44336");
-			self.addNewCourse(course, color, function(result){
-				if(result == "success"){
-					self.calendarHandly.updateCalendars(self.courses);
+			self.calendarHandly.addCourse(inputText, color, function(result){
+				if(result.success){
+					self.calendarHandly.updateCalendars();
 					searchy.addColor(color);
+					searchy.attachCoursePointer(result.success);
 				}
-				if(result == "alreadyThere"){
-					searchy.popup("Already exists");
-				}
-				if(result == "doesNotExist"){
+				if(result.error == "doesNotExist"){
 					searchy.addColor("#ffeb3b");
 					searchy.popup("Invalid Course Code");
 					
 				}
-				if(result == "serverNoResponse"){
+				if(result.error == "serverNoResponse"){
 					searchy.popup("Cannot connect to one.uf. Contact me pls");
 					searchy.addColor("#000000");
 				}
 			});	
 		});
-		searchy.attachCancelPressHandler(function(course){
-			self.deleteCourse(course);
-			self.calendarHandly.updateCalendars(self.courses);
+		searchy.attachDeleteHandler(function(course){
+			self.calendarHandly.deleteCourse(course);
+			self.calendarHandly.updateCalendars();
 		});
 	}
-	addNewCourse(code, color, callback){
-		//Check that it isnt already in use
-		var self = this;
-		for(var i=0; i<self.courses.length; i++){
-			if(self.courses[i].getCourseCode==code){
-				callback("alreadyThere");
-			}
-		}
-		//Make request	
-		serverGetRequest(code, function(result){
-			if(!result){
-				callback("serverNoResponse");
-			}else if(JSON.parse(result)[0].TOTALROWS != null){
-				//not empty
-				var coursey = new Course();
-				coursey.setRawJSON(JSON.parse(result));
-				coursey.addColor(color);
-				self.courses.push(coursey);
-				callback("success");
-			}
-			else{
-				//error
-				callback("doesNotExist");
-			}
-
-		});
-	}
-	deleteCourse(course){
-		console.log("deleting course");
-		for(var i=0; i<this.courses.length; i++){
-			if(this.courses[i].getCourseCode()==course){
-				console.log("deleted!");
-				this.courses.splice(i, 1);
-				return;
-			}
-		}
-	}
-}
-
-
-
-//Make get note server request
-function serverGetRequest(course, callback) {
-	if(course==""){
-		callback(false);
-	}else{
-		$.ajax({
-			type: "POST",
-			url: "/getCourseInfo",
-			data: JSON.stringify({
-				"course": course
-			}),
-			success: function(data) {
-				callback(data);
-			},
-			error: function() {
-				callback(false);
-			},
-			contentType: 'application/json'
-		});
-	}
+	
 }
