@@ -6,4 +6,5 @@ docker-compose up
 
 ## Known Bugs
 	
-Check for web section
+Deleting inconsistent at times
+

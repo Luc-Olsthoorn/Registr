@@ -5,7 +5,7 @@ class addNewSearchButton{
 		this.render();
 	}
 	addHtml(){
-		this.element = $(`<button class="ui basic icon button">
+		this.element = $(`<button class="ui basic icon button" data-tooltip="Add more courses" data-inverted="">
   			<i class="add icon"></i>
 			</button>`);
 	}
@@ -38,6 +38,8 @@ class SearchBox{
       	innerHtml.append(searchIcon);
       	this.element.append(innerHtml);
 
+      	this.label = $(` <div class="content" > </div>`);
+		this.element.prepend(this.label)
 	}
 	addSwitch(){
 		$(this.element).append(`<div class="content"><div class="ui toggle checkbox">
@@ -45,12 +47,19 @@ class SearchBox{
   			<label></label>
 		</div></div>`);
 	}
+	popup(text){
+		this.label.popup({
+			content : text
+		});
+
+		this.label.popup('show');
+		var self =this;
+		setTimeout(function(){
+			self.label.popup('hide');
+		}, 3000);
+	}
 	addColor(color){
-		if(this.label){
-			this.label.remove();
-		}
-		this.label = $(` <div class="content" style="background-color: ${color}"> </div>`);
-		this.element.prepend(this.label)
+		this.label.css("background-color", color);
 	}
 	addRemoveIcon(callback){
 		this.removeIcon = $(`<i class=" remove icon"></i>`); 
@@ -66,7 +75,7 @@ class SearchBox{
 	}
 	deleteMe(){
 		this.element.remove();
-		self.cancelPressed(course);
+		this.cancelPressed(this.course);
 	}
 	focus(){
 		this.searchBox.focus();

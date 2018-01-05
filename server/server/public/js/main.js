@@ -35,7 +35,6 @@ class Main{
 		searchy.addColor(color);
 		searchy.addRemoveIcon(function(){
 			searchy.deleteMe();
-			self.calendarHandly.updateCalendars(self.courses);
 		});
 		this.searchBoxes.push(searchy);
 		searchy.attachEnterPressHandler(function(course){
@@ -46,13 +45,16 @@ class Main{
 					searchy.addColor(color);
 				}
 				if(result == "alreadyThere"){
-					alert("Already exists");
+					searchy.popup("Already exists");
 				}
 				if(result == "doesNotExist"){
-					alert("Invalid Course Code");
+					searchy.addColor("#ffeb3b");
+					searchy.popup("Invalid Course Code");
+					
 				}
 				if(result == "serverNoResponse"){
-					alert("Cannot connect to one.uf. Contact me pls");
+					searchy.popup("Cannot connect to one.uf. Contact me pls");
+					searchy.addColor("#000000");
 				}
 			});	
 		});
