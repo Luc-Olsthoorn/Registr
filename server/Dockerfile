@@ -1,13 +1,11 @@
 FROM ubuntu:14.04
-Run apt-get update && apt-get -y install nodejs 
-Run apt-get -y install npm
+RUN apt-get update && apt-get -y install nodejs 
+RUN sudo ln -s "$(which nodejs)" /usr/bin/node
+RUN apt-get -y install npm
+ADD package.json /package.json
+RUN npm install
 
-Run apt-get update && npm install mongodb \
-http \
-express \
-body-parser \
-request@2.81.0
-Add server/ /server/
-Add nodeStartup.sh /nodeStartup.sh
-RUN chmod +x /nodeStartup.sh
-ENTRYPOINT ./nodeStartup.sh && ./bin/bash
+ADD public/ /public
+ADD server.js /server.js
+
+ENTRYPOINT npm start

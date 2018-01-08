@@ -43,5 +43,5 @@ app.post('/getCourseInfo', function(req, res){
 
 //start this bitch up
 var server = app.listen(PORT, function(){
-  console.log('Server listening on port');
+  	console.log("Server listening on port " + PORT);
 });

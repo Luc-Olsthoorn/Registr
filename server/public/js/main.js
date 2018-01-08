@@ -7,12 +7,13 @@ $(document).ready(function() {
 class Main{
 	constructor(){
 		this.searchBoxes = [];
-		this.colorCounter =-1;
+		this.colorCounter = 0;
+		this.colorArray = ["#f44336","#e91e63","#9c27b0","#3f51b5","#2196f3","#00bcd4","#4caf50","#ff9800"];
 	}
 	main(){
 		var button = new addNewSearchButton('addMore');
 		this.newSearchBox('search');
-		var self =this;
+		var self = this;
 		button.attachClickHandler(function(){
 			self.newSearchBox('search');
 		});
@@ -20,12 +21,9 @@ class Main{
 		this.calendarHandly = new calendarHandler();
 	}
 	getColor(){
-		var colorArray = ["#f44336","#e91e63","#9c27b0","#3f51b5","#2196f3","#00bcd4","#4caf50","#ff9800"];
-		if (this.colorCounter >= colorArray.length-1){
-			this.colorCounter = -1;
-		}
-		this.colorCounter++;
-		return colorArray[this.colorCounter];
+		var color = this.colorArray[this.colorCounter];
+		this.colorCounter = (this.colorCounter + 1) % this.colorArray.length;
+		return color;
 	}
 	newSearchBox(divToBindTo){
 		var color = this.getColor();
