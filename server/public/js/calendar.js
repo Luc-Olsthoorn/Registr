@@ -48,13 +48,13 @@ class calendar{
         
 		//Add day columns
 		this.days = {}; 
-		this.days["M"]=$(`<div class="two wide column">Monday</div>`);
-		this.days["T"]=$(`<div class="two wide column">Tuesday</div>`);
-		this.days["W"]=$(`<div class="two wide column">Wednesday</div>`);
-		this.days["R"]=$(`<div class="two wide column">Thursday</div>`);
-		this.days["F"]=$(`<div class="two wide column">Friday</div>`);
-		this.days["S"]=$(`<div class="two wide column">Saturday</div>`);
-		this.days["U"]=$(`<div class="two wide column">Sunday</div>`);
+		this.days["M"]=$(`<div class="two wide column"><div style="overflow:hidden;">Monday</div></div>`);
+		this.days["T"]=$(`<div class="two wide column"><div style="overflow:hidden;">Tuesday</div></div>`);
+		this.days["W"]=$(`<div class="two wide column"><div style="overflow:hidden;">Wednesday</div></div>`);
+		this.days["R"]=$(`<div class="two wide column"><div style="overflow:hidden;">Thursday</div></div>`);
+		this.days["F"]=$(`<div class="two wide column"><div style="overflow:hidden;">Friday</div></div>`);
+		this.days["S"]=$(`<div class="two wide column"><div style="overflow:hidden;">Saturday</div></div>`);
+		this.days["U"]=$(`<div class="two wide column"><div style="overflow:hidden;">Sunday</div></div>`);
 		var keys = Object.keys(this.days);
 
         innerElement.append(`<div class="two wide column"></div>`);
@@ -63,15 +63,16 @@ class calendar{
         }
         //Add numbers
         var text = '';
-		var arr=["1 (7:25 - 8:15)","2 (8:30 - 9:20)","3 (9:35 - 10:25)","4 (10:40 - 11:30)","5 (11:45 - 12:35)","6 (12:50 - 1:40)","7 (1:55 - 2:45)","8 (3:00 - 3:50)","9 (4:05 - 4:55)","10 (5:10 - 6:00)","11 (6:15 - 7:05)","E1 (7:20 - 8:10)","E2 (8:20 - 9:10)","E3 (9:20 - 10:10)"];
-    	for(var i = 0; i < arr.length; i++){
-			text += `<div style="height:40px; position:relative;"> ${arr[i]} </div>`;
+		var periods=["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
+    	var times=[" (7:25 - 8:15)", " (8:30 - 9:20)", " (9:35 - 10:25)", " (10:40 - 11:30)", " (11:45 - 12:35)", " (12:50 - 1:40)", " (1:55 - 2:45)", " (3:00 - 3:50)", " (4:05 - 4:55)", " (5:10 - 6:00)", " (6:15 - 7:05)", " (7:20 - 8:10)", " (8:20 - 9:10)", " (9:20 - 10:10)" ];
+    	for(var i = 0; i < periods.length; i++){
+			text += `<div style="height:20px; margin-bottom:20px; overflow:hidden; position:relative;"> <h4>${periods[i]}<span class="thin">${times[i]}</span></h4> </div>`;
 		}
         innerElement.append(`<div class="two wide column">${text}</div>`);
 
         //add dividers
         text = "";
-        for(var i = 0; i < arr.length; i++){
+        for(var i = 0; i < periods.length; i++){
 			text += `<div style="top: ${i*24+40}px;     width: 100%; position:relative;"><div class="ui  divider"></div></div>`;
 		}
 		innerElement.append(`<div style="position: absolute;  width:100%;">${text}</div>`);
@@ -100,7 +101,7 @@ class sectionMeetTime{
 		this.element.css({"position":"absolute", "margin-top":"0", "top":`${((start*40)+14)}px`, "height":`${((stop-start)+1)*40}px`});
 	}
 	addSectionName(sectionName){
-		this.element.append(`<div class="column"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`);
+		this.element.append(`<div class="column" style="padding:0px;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`);
 	}
 	deleteMe(){
 		this.element.remove();
