@@ -1,6 +1,8 @@
-# Registr v 1.0.0
+# Registr v 1.0.1
 
 ## About
+
+Live at https://registr-uf.herokuapp.com/
 
 This creates all the different schedules possible with your courses entered, without them overlapping 
 
