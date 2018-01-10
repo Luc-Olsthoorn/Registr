@@ -1,4 +1,4 @@
-# Registr v 1.0.1
+# Registr v 1.0.2
 
 ## About
 
@@ -10,7 +10,7 @@ Currently built for UF only
 
 If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com
 
-##Run
+## Run
 
 docker-compose up
 
