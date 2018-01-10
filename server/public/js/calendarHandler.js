@@ -79,8 +79,8 @@ class calendarHandler{
 					for(var k =0; k < sectionMeetTimes[b].meetDays.length; k++)
 					{
 						//looping thru every period of the meettime
-						for(var l = parseInt(sectionMeetTimes[b].meetPeriodBegin, 10);  l < (parseInt(sectionMeetTimes[b].meetPeriodEnd,10)+1); l++){
-							var key = " " + l + " " + sectionMeetTimes[b].meetDays[k];
+						for(var l = parseInt(convertToNum(sectionMeetTimes[b].meetPeriodBegin), 10);  l < (parseInt(convertToNum(sectionMeetTimes[b].meetPeriodEnd),10)+1); l++){
+							var key = " " + l + " " + convertToNum(sectionMeetTimes[b].meetDays[k]);
 							console.log(key);
 							if(hit[key]){
 									//console.log("hit" + key);
@@ -134,6 +134,23 @@ class calendarHandler{
 		}
 		console.log(newArr);
 		return newArr;
+	}
+}
+//UF has late classes with special codes, this strips them and returns an integer 
+function convertToNum(inputTime){
+	switch(inputTime){
+		case "E1":
+			return 11;
+		break;
+		case "E2":
+			return 12;
+		break;
+		case "E3":
+			return 13;
+		break;
+		default: 
+			return inputTime;
+		break;
 	}
 }
 //Make get note server request

@@ -38,6 +38,7 @@ class Main{
 			searchy.addColor("#f44336");
 			self.calendarHandly.addCourse(inputText, color, function(result){
 				if(result.success){
+					console.log(result.success);
 					self.calendarHandly.updateCalendars();
 					searchy.addColor(color);
 					searchy.attachCoursePointer(result.success);

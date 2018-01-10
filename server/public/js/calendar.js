@@ -13,7 +13,7 @@ class calendar{
 			for(var j =0; j< sectionMeetTimes[i].meetDays.length; j++){
 				var sectionMeetTimey = new sectionMeetTime(this.days[sectionMeetTimes[i].meetDays[j]]);
 				sectionMeetTimey.addSectionName(section);
-				sectionMeetTimey.addStartStop(self.convertToNum(sectionMeetTimes[i].meetPeriodBegin), self.convertToNum(sectionMeetTimes[i].meetPeriodEnd));
+				sectionMeetTimey.addStartStop(convertToNum(sectionMeetTimes[i].meetPeriodBegin), convertToNum(sectionMeetTimes[i].meetPeriodEnd));
 				
 				sectionMeetTimey.addColor(color);
 				sectionMeetTimey.render();
@@ -22,23 +22,7 @@ class calendar{
 		}
 		this.boxArr[section] = tempArr;
 	}
-	//UF has late classes with special codes, this strips them and returns an integer //TODO verify if this is necessary
-	convertToNum(inputTime){
-		switch(inputTime){
-			case "E1":
-				return 11;
-			break;
-			case "E2":
-				return 12;
-			break;
-			case "E3":
-				return 13;
-			break;
-			default: 
-				return inputTime;
-			break;
-		}
-	}
+
 	removeSection(section){
 		this.boxArr[section].deleteMe();
 	}
