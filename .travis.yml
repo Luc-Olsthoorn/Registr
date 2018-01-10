@@ -1,14 +1,25 @@
 language: node_js
+
 node_js:
 - stable
+
 before_install:
 - cd server
+
 install:
 - npm install
-script: npm test
+
+script: 
+- npm test
+
 deploy:
   provider: heroku
   apikey:
     secure: NaSBkGXK1Hz4DjiZT5l8tqqoWu1ccqsL/XjQFX1D33vwyU3+qHmPmM5BWlZfSipiMfjM5Ts8L8AXVHmsDpu+1FUWvCIh6vIiId1WtOlFlD0q4ogGvV+3rBEvcw7n9s0ps4FY9Kzr24cDLk5UOXGURyBSIUG9ErFTj6EQedcVCfynCbvUrKH+i19PVRY/X2pnsU/yy9ObsLrKfG6RJn+RHDuKarYaXErvtmsISJj/lsG9m5lRbwueeDuJj/J4gnVc7e/fs+ldGvc7deObgHjA6NThJSJEIn1B4cvIuy9nx8vAH9+ysHP6HxibfYl1loKCfHbuNQyLQLMIuCuCAxtEvoLmIXC7tHh03eEbPJ9XL3YNlbSE6fPM3UznZiy4OFaoZqAH5n1qHdKF+ARADNXgSwZMjdPRZsaLFWwWvZucjI/ut0zTR8PJJz0G03iBL7jbdE13R6lVRzYsPjog5jxPpMVq4oFI1j+Z+hjW63evlTdb5iWY3CuQIHQqAh5Tq/9g0xvbE9eN3Z1Q2OCVCXGmiTYgtrf12YPBiWje+GblXFR/+bcF0XvKHGUdP5R7JZ2QOhfZF8r4QlNAMa53cVLwPZiX8zr9MKWIrwAiThTDMBEtQg00CKdLznz9CgiN41RuKPsx0vZl+4r/drNY7T+rPxQg7fURxe2p3g4mDNsYeQg=
   on:
     branch: release
+
+notifications:
+  email:
+    on_success: always # default: change
+    on_failure: never # default: always
