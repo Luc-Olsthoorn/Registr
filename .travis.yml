@@ -7,13 +7,6 @@ install:
 - npm install
 script:
 - npm test
-deploy:
-  provider: heroku
-  on:
-    repo: Luc-Olsthoorn/Registr
-    branch: release
-  api_key:
-    secure: OZGsdcKDFnKsrNWw9uRhV1Cym3V4McHbdox82sVwo+SarZFb54veswUR5SeAO1OsTYCnS8AM5igof02iHqOOZmnPjBDzVKWx/MIXjcRJL8QKuzIDQ95K9weHIOg0Srmdkk02J0R7WxYVKU1dEhR6Zs7ccXRB7W4xif3TbZS7i0R/Qs60mY0sAl4Dp6W+NTXPuZjxkxuhUgKF86l4jpI5buCDhEbPNrEcELs0qLViOnsiAAuEufYfWha9TqJf2FiPGHgzoHYqpi1304lGR5V4ADxTn7Lxs1u8uaqMFRkc1aGIJ5FyytJ+vYW0XMu6TNEyKSWc33YbpAVxCps/UfavED9Se0B7l3oyr9x2Xh95T7JZ17LvUrwjuO2ZSgCBpI9KM6URVBFkGJAxGeb58w2RN168DBboPELWF4MNFYoJEUPlHUufCm9gmk3nagucDfqBl7pPKzZsurDyDm8uNsGDCN5ra8DOcsoPGaG9hyElzqVeITZDZjIjEB6aSayzbT7lBjnqXftlx2qSiUKHr9KuOpB88/xZt26B75PJHIcEcqaWdVafuk8C4ZBYbLMeHt8vMkmnJvmvZ1uL7S1uJTX+/mp7xPwuHZ6jAKNezBhYRfJeyNdGSF3vWHOfssFU3n8Wm+EPTY+qP7KTRDJxqW8INzOxtwb2wV+iQOhVmxBp9MA=
 notifications:
   email:
     on_success: always
