@@ -97,3 +97,5 @@ class sectionMeetTime{
 		this.element.css("background-color", color);
 	}
 }
+
+module.exports = UF;

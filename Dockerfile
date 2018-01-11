@@ -5,6 +5,7 @@ RUN apt-get update &&  apt-get -y install npm
 ADD server/package.json /package.json
 RUN npm install
 
+ADD server/schools /schools
 ADD server/public/ /public
 ADD server/server.js /server.js
 

@@ -2,46 +2,51 @@
 process.on('SIGINT', function() {
     process.exit();
 });
+
 //Doesnt die all the time
 process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);
 });
-"use strict";
-var http = require('http');
-var express = require('express'); //routing
-var app = express();
-var path = require('path');
-var bodyParser = require('body-parser');
-var request = require('request');
 
-var PORT=8080; 
+"use strict";
+const http = require('http');
+const express = require('express'); //routing
+const app = express();
+
+const path = require('path');
+const bodyParser = require('body-parser');
+
+const school = require('./schools/UF');
+
+const PORT=8080;
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use( bodyParser.text() );       // to support JSON-encoded bodies
 
+let schools = {
+    'UF': require('./schools/UF'),
+    'FSU': require('./schools/FSU')
+};
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', function(req, res){
   		res.sendFile(path.join(__dirname, 'public/index.html'));
 	});
+
 app.post('/getCourseInfo', function(req, res){
 	console.log("course:" + req.body.course);
-	url = 'https://one.uf.edu/apix/soc/schedule/?category=RES&course-code='+req.body.course+'&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-row=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&section=&term=20181&var-cred=true&writing=';
-	console.log(url);
-	request(url, function(error, response, html){
-		if(!error){
-			console.log("got it");
-			res.send(html);
-		}
-	});
-	
-	
 
+    // eventually get the school from the request like schools[req.body.school].getCourseInfo(req, res)
+	schools['UF'].getCourseInfo(req, res);
 });
 
-
+app.get('/getCoursePeriods', function(req, res) {
+    // eventually get the school from the request like schools[req.body.school].getCoursePeriods(req, res)
+    schools['UF'].getCoursePeriods(req, res);
+});
 
 //start this bitch up
-var server = app.listen(process.env.PORT || PORT, function(){
+const server = app.listen(process.env.PORT || PORT, function(){
   	console.log("Server listening on port " + PORT);
 });
