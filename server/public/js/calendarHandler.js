@@ -169,13 +169,13 @@ class calendarHandler{
 function convertToNum(inputTime){
 	switch(inputTime){
 		case "E1":
-			return 11;
-		break;
-		case "E2":
 			return 12;
 		break;
-		case "E3":
+		case "E2":
 			return 13;
+		break;
+		case "E3":
+			return 14;
 		break;
 		default: 
 			return inputTime;
