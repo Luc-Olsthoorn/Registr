@@ -1,17 +1,12 @@
 language: node_js
-
 node_js:
 - stable
-
 before_install:
 - cd server
-
 install:
 - npm install
-
-script: 
+script:
 - npm test
-
 deploy:
   provider: heroku
   apikey:
@@ -19,8 +14,9 @@ deploy:
   on:
     repo: Luc-Olsthoorn/Registr
     branch: release
-
+  api_key:
+    secure: gjzmxJrovrey/UkvB1CWTLjEl8pbbWFbEcRaYTB8r6yH/4gm71K6mMK6gzI7QkniFZ71N1d2VJG7SWoebCoUAinsRDzTpQvf+IcXZbHzfW9qt/N2YHiEuZzPEIyCoC4/2UMAyHvR2hVxqUOheUtwuUtmZAJQlHW41WqP2U6CSdPyMO8fKMCpKEIeYDLHKkOWagiRci12HcvSMuZrIadTt7g87yI4Uw1p706W/S0zAfLuG13us9ypJJLZWYNLpr1bctcWDf069mSlE0Dt0YhEek7eWSPeA0YrsWSTxW7+igGOhBZxGUPtKRlzKk6BUqczs5ubCm7IBrTRJP+wUStqcPHYWEx6mRI2og9XVIGA7ATWHsUnGKT9v0P5XqLXuIKJqdT+ZnSaZq3KTqvgDytPjXwpbKT4AAGa5eVEsPxlES1il05GNX4JKvlv7V8dgH6qVji7tA4nl+w5h1Xaf0EsqY+FB3g0YAHjz/UZLRFagTwaAUIh6yKkZi0dLVvQr7eflXS8jZx3LBq5WPeHPOqidQQ5QyEzeiBk/E29Ns/h+7JnX3PsK0Sk2IakQSqYQMLpCBv7c/mVRfwI1w8ssnp7Psf4dvRGkUi4IuCOCOD1dcx0V65kZ4USC6wV5KFgAzGJC22/R46g//ZUPKaD1vXPtNH4ygEvlKYbbI0h34KX2r0=
 notifications:
   email:
-    on_success: always # default: change
-    on_failure: never # default: always
+    on_success: always
+    on_failure: never
