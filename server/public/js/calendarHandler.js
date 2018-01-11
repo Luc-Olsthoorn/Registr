@@ -1,35 +1,64 @@
 class calendarHandler{
-	constructor(){
+	constructor(divToBindTo){
+		this.divToBindTo = divToBindTo;
 		this.calendars = [];
+		this.currCal = 0; //keeps track of the last calendar to be loaded
 		this.courses = [];
+		this.permutation;
+		this.permutationWithFilter;
 	}
 	deleteCalendars(){
-		
+		this.permutation = {};
+		this.permutationWithFilter = {};
+		$('#' + this.divToBindTo).empty();
 		for(var i =0; i < this.calendars.length; i++){
 			this.calendars[i].deleteMe();
 		}
 		this.calendars = [];
 	}
 	updateCalendars(){
+		this.currCal=0; //reset counter
 		this.deleteCalendars();
 		var self =this;
+
 		if(this.courses.length>0){
-			var temp = this.createPermutation();
+			this.permutation = this.createPermutation();
 		}else{
 			return false;
 		}
-		temp = this.checkOverlap(temp); //TODO create switch for this
-		for(var i =0; i< temp.length; i++){
-			var calendary = new calendar('results', i);
+
+		this.permutationWithFilter = this.checkOverlap(this.permutation); //TODO create switch for this
+		self.loadMoreContent(self);
+		//TODO put this in its own box/function
+		
+		$('#' + this.divToBindTo).prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
+		$('#' + this.divToBindTo).visibility({
+		    once: false,
+		    observeChanges: true,
+		    onBottomVisible: function() {
+		      self.loadMoreContent(self);
+		    }
+	  	});
+		
+	}
+	loadMoreContent(self){
+		for(var i =0; i< Math.min(10, self.permutationWithFilter.length-self.currCal); i++){
+			var calendary = new calendar(self.divToBindTo, self.currCal);
 			calendary.addBaseHtml();
-			for(var j=0; j< temp[i].length; j++)
+			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
 				//adds to calendar the sectiion based on the permutation
-				calendary.addSection(self.courses[temp[i][j].course].getSectionTimes(temp[i][j].section), self.courses[temp[i][j].course].getSectionNumber(temp[i][j].section), self.courses[temp[i][j].course].getColor());	
+				calendary.addSection({
+					"sectionMeetTimes": self.courses[self.permutationWithFilter[i][j].course].getSectionTimes(self.permutationWithFilter[i][j].section), 
+					"section": self.courses[self.permutationWithFilter[i][j].course].getSectionNumber(self.permutationWithFilter[i][j].section), 
+					"color" :self.courses[self.permutationWithFilter[i][j].course].getColor()
+				});	
 			}
 			self.calendars.push(calendary);
+			self.currCal++;
 		}
 	}
+	
 	addCourse(code, color, callback){
 		//Check that it isnt already in use
 		var self = this;
@@ -81,7 +110,7 @@ class calendarHandler{
 						//looping thru every period of the meettime
 						for(var l = parseInt(convertToNum(sectionMeetTimes[b].meetPeriodBegin), 10);  l < (parseInt(convertToNum(sectionMeetTimes[b].meetPeriodEnd),10)+1); l++){
 							var key = " " + l + " " + convertToNum(sectionMeetTimes[b].meetDays[k]);
-							console.log(key);
+							//console.log(key);
 							if(hit[key]){
 									//console.log("hit" + key);
 									toDelete=true;
@@ -100,7 +129,7 @@ class calendarHandler{
 				toDelete = false;
 			}
 		}
-		console.log(output);
+		//console.log(output);
 		return output;
 	}
 	createPermutation(){

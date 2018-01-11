@@ -18,7 +18,7 @@ class Main{
 			self.newSearchBox('search');
 		});
 
-		this.calendarHandly = new calendarHandler();
+		this.calendarHandly = new calendarHandler('results');
 	}
 	getColor(){
 		var color = this.colorArray[this.colorCounter];
