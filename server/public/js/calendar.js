@@ -5,28 +5,29 @@ class calendar{
 		this.boxArr = {};
 		this.calendarNumber = calendarNumber;
 	}
-	addSection(sectionMeetTimes, section, color){
+	addSection(options){
 		//Create elements
 		var tempArr=[];
 		var self =this;
-		for(var i=0; i < sectionMeetTimes.length; i++){
-			for(var j =0; j< sectionMeetTimes[i].meetDays.length; j++){
-				var sectionMeetTimey = new sectionMeetTime(this.days[sectionMeetTimes[i].meetDays[j]]);
-				sectionMeetTimey.addSectionName(section);
-				sectionMeetTimey.addStartStop(convertToNum(sectionMeetTimes[i].meetPeriodBegin), convertToNum(sectionMeetTimes[i].meetPeriodEnd));
+		for(var i=0; i < options.sectionMeetTimes.length; i++){
+			for(var j =0; j< options.sectionMeetTimes[i].meetDays.length; j++){
+				var sectionMeetTimey = new sectionMeetTime(this.days[options.sectionMeetTimes[i].meetDays[j]]);
+				sectionMeetTimey.addSectionName(options.section);
+				sectionMeetTimey.addStartStop(convertToNum(options.sectionMeetTimes[i].meetPeriodBegin), convertToNum(options.sectionMeetTimes[i].meetPeriodEnd));
 				
-				sectionMeetTimey.addColor(color);
+				sectionMeetTimey.addColor(options.color);
 				sectionMeetTimey.render();
 				tempArr.push(sectionMeetTimey);
 			}
 		}
-		this.boxArr[section] = tempArr;
+		this.boxArr[options.section] = tempArr;
 	}
 
 	removeSection(section){
 		this.boxArr[section].deleteMe();
 	}
 	addBaseHtml(){
+
 		var element = $(`<div style=""> </div>`);
         var innerElement = $(`<div class="ui grid" ></div>`);
         
@@ -65,6 +66,7 @@ class calendar{
         element.append(`<h2 style="width:100%; text-align:center;">Option: ${this.calendarNumber+1}</h2>`);
     	element.append(innerElement);
 		this.calendarDiv = element;
+		console.log(element);
 		$("#" + this.divToBindTo).append(element);
     	
 	}
