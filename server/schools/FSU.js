@@ -1,23 +1,19 @@
-const request = require('request');
+const request = require("request");
 
 class FSU {
-    constructor(){
+  constructor() {}
+  getCoursePeriods(req, res) {}
+  getCourseInfo(req, res) {
+    let url = "https://fsusucks.com/wegoodtho";
 
-    }
-    getCoursePeriods(req, res) {
-
-    }
-    getCourseInfo(req, res) {
-        let url = 'https://fsusucks.com/wegoodtho';
-
-        console.log(url);
-        request(url, function(error, response, html){
-            if(!error){
-                console.log("got it");
-                res.send(html);
-            }
-        });
-    }
+    console.log(url);
+    request(url, function(error, response, html) {
+      if (!error) {
+        console.log("got it");
+        res.send(html);
+      }
+    });
+  }
 }
 
 module.exports = new FSU();

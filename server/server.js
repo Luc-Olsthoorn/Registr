@@ -1,52 +1,52 @@
 //kill it when I say kill it
-process.on('SIGINT', function() {
-    process.exit();
+process.on("SIGINT", function() {
+  process.exit();
 });
 
 //Doesnt die all the time
-process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
+process.on("uncaughtException", function(err) {
+  console.log("Caught exception: " + err);
 });
 
-"use strict";
-const http = require('http');
-const express = require('express'); //routing
+("use strict");
+const http = require("http");
+const express = require("express"); //routing
 const app = express();
 
-const path = require('path');
-const bodyParser = require('body-parser');
+const path = require("path");
+const bodyParser = require("body-parser");
 
-const school = require('./schools/UF');
+const school = require("./schools/UF");
 
-const PORT=8080;
+const PORT = 8080;
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use( bodyParser.text() );       // to support JSON-encoded bodies
+app.use(bodyParser.json()); // to support JSON-encoded bodies
+app.use(bodyParser.text()); // to support JSON-encoded bodies
 
 let schools = {
-    'UF': require('./schools/UF'),
-    'FSU': require('./schools/FSU')
+  UF: require("./schools/UF"),
+  FSU: require("./schools/FSU")
 };
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', function(req, res){
-  		res.sendFile(path.join(__dirname, 'public/index.html'));
-	});
-
-app.post('/getCourseInfo', function(req, res){
-	console.log("course:" + req.body.course);
-
-    // eventually get the school from the request like schools[req.body.school].getCourseInfo(req, res)
-	schools['UF'].getCourseInfo(req, res);
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-app.get('/getCoursePeriods', function(req, res) {
-    // eventually get the school from the request like schools[req.body.school].getCoursePeriods(req, res)
-    schools['UF'].getCoursePeriods(req, res);
+app.post("/getCourseInfo", function(req, res) {
+  console.log("course:" + req.body.course);
+
+  // eventually get the school from the request like schools[req.body.school].getCourseInfo(req, res)
+  schools["UF"].getCourseInfo(req, res);
+});
+
+app.get("/getCoursePeriods", function(req, res) {
+  // eventually get the school from the request like schools[req.body.school].getCoursePeriods(req, res)
+  schools["UF"].getCoursePeriods(req, res);
 });
 
 //start this bitch up
-const server = app.listen(process.env.PORT || PORT, function(){
-  	console.log("Server listening on port " + PORT);
+const server = app.listen(process.env.PORT || PORT, function() {
+  console.log("Server listening on port " + PORT);
 });
