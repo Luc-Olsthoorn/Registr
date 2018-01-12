@@ -180,6 +180,7 @@ class calendarHandler {
     return newArr;
   }
 }
+<<<<<<< HEAD
 
 //UF has late classes with special codes, this strips them and returns an integer
 function convertToNum(inputTime) {
@@ -197,7 +198,6 @@ function convertToNum(inputTime) {
       return inputTime;
       break;
   }
-}
 //Make get note server request
 function serverGetRequest(course, callback) {
   if (course == "") {
