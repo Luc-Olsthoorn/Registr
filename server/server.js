@@ -16,8 +16,6 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const school = require("./schools/UF");
-
 const PORT = 8080;
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -41,10 +39,10 @@ app.post("/getCourseInfo", function(req, res) {
   schools["UF"].getCourseInfo(req, res);
 });
 
-app.get("/getCoursePeriods", function(req, res) {
-  // eventually get the school from the request like schools[req.body.school].getCoursePeriods(req, res)
-  schools["UF"].getCoursePeriods(req, res);
-});
+// app.get("/getCoursePeriods", function(req, res) {
+//   // eventually get the school from the request like schools[req.body.school].getCoursePeriods(req, res)
+//   schools["UF"].getCoursePeriods(req, res);
+// });
 
 //start this bitch up
 const server = app.listen(process.env.PORT || PORT, function() {
