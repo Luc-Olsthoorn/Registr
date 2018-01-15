@@ -48,10 +48,17 @@ class calendarHandler{
 			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
 				//adds to calendar the sectiion based on the permutation
+				var course = self.permutationWithFilter[i][j].course;
+				var section = self.permutationWithFilter[i][j].section;
 				calendary.addSection({
-					"sectionMeetTimes": self.courses[self.permutationWithFilter[i][j].course].getSectionTimes(self.permutationWithFilter[i][j].section), 
-					"section": self.courses[self.permutationWithFilter[i][j].course].getSectionNumber(self.permutationWithFilter[i][j].section), 
-					"color" :self.courses[self.permutationWithFilter[i][j].course].getColor()
+					"sectionMeetTimes": self.courses[course].getSectionTimes(section), 
+					"section": self.courses[course].getSectionNumber(section), 
+					"color" :self.courses[course].getColor(),
+					"code" : self.courses[course].getCourseCode(),
+					"name" : self.courses[course].getCourseName(),
+					"deptName" : self.courses[course].getDeptName(section) , 
+					"credits" :  self.courses[course].getCredits(section),
+					"courseFee" : self.courses[course].getCourseFee(section)
 				});	
 			}
 			self.calendars.push(calendary);
@@ -81,6 +88,7 @@ class calendarHandler{
 
 		});
 	}
+
 	deleteCourse(course){
 		for(var i=0; i<this.courses.length; i++){
 			if(this.courses[i]==course){
