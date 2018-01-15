@@ -21,6 +21,8 @@ class calendar {
 
         sectionMeetTimey.addColor(options.color);
         sectionMeetTimey.render();
+        var info = "swag";
+        sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
         tempArr.push(sectionMeetTimey);
       }
     }
@@ -30,11 +32,40 @@ class calendar {
   removeSection(section) {
     this.boxArr[section].deleteMe();
   }
-  addBaseHtml() {
-    var element = $(`<div style=""> </div>`);
-    var innerElement = $(`<div class="ui grid" ></div>`);
-
-    //Add day columns
+  addSideBar() {
+    return $(`<div class="ui sidebar inverted vertical "></div>`);
+  }
+  toggleSideBar(info, self) {
+    self.sideBar.empty();
+    self.sideBar.append(`
+			<div class="ui container">
+			<h3 class="ui header">${info.code}</h3>
+			<h2 class="ui sub header"><i>${info.name}</i></h2> 
+			<div class="ui  divider"></div>
+			<div class="ui list">
+			  	<div class="item">
+			    	<div class="header">Department Name</div>
+			    	${info.deptName}
+				</div>
+			 
+				<div class="item">
+				    <div class="header">Credits</div>
+				    ${info.credits}
+				</div>
+				 
+				<div class="item">
+				    <div class="header">Cost</div>
+				     ${info.courseFee}
+				</div>
+			 </div>
+		  </div>`);
+    self.sideBar
+      .sidebar({
+        context: self.calendarDiv
+      })
+      .sidebar("toggle");
+  }
+  addDayColumns(innerElement) {
     this.days = {};
     this.days["M"] = $(
       `<div class="two wide column"><div style="overflow:hidden;">Monday</div></div>`
@@ -63,24 +94,9 @@ class calendar {
     for (var i = 0; i < keys.length; i++) {
       innerElement.append(this.days[keys[i]]);
     }
-    //Add numbers
+  }
+  addTimes(periods) {
     var text = "";
-    var periods = [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "E1",
-      "E2",
-      "E3"
-    ];
     var times = [
       " (7:25 - 8:15)",
       " (8:30 - 9:20)",
@@ -102,26 +118,55 @@ class calendar {
         periods[i]
       }<span class="thin">${times[i]}</span></h4> </div>`;
     }
-    innerElement.append(`<div class="two wide column">${text}</div>`);
-
-    //add dividers
-    text = "";
+    return $(`<div class="two wide column">${text}</div>`);
+  }
+  addDividers(periods) {
+    var text = "";
     for (var i = 0; i < periods.length; i++) {
       text += `<div style="top: ${i * 24 +
         40}px;     width: 100%; position:relative;"><div class="ui  divider"></div></div>`;
     }
-    innerElement.append(
-      `<div style="position: absolute;  width:100%;">${text}</div>`
+    return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
+  }
+  addBaseHtml() {
+    var element = $(`<div  class="pushable"> </div>`);
+    var pusher = $(
+      `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );
+    var innerElement = $(`<div  class="ui grid " ></div>`);
 
-    //add Schedule name and attatch every thing
-    element.append(
+    //Add day columns
+    this.addDayColumns(innerElement);
+    var periods = [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "E1",
+      "E2",
+      "E3"
+    ];
+
+    innerElement.append(this.addTimes(periods));
+    innerElement.append(this.addDividers(periods));
+    this.sideBar = this.addSideBar();
+    element.append(this.sideBar);
+
+    //add Schedule name and attach every thing
+    pusher.append(
       `<h2 style="width:100%; text-align:center;">Option: ${this
         .calendarNumber + 1}</h2>`
     );
-    element.append(innerElement);
+    pusher.append(innerElement);
+    element.append(pusher);
     this.calendarDiv = element;
-    console.log(element);
     $("#" + this.divToBindTo).append(element);
   }
   deleteMe() {
@@ -155,9 +200,15 @@ class sectionMeetTime {
   deleteMe() {
     this.element.remove();
   }
+  addSideBarHandler(callback, info, self) {
+    var x = callback;
+    var box = this;
+    this.element.click(function() {
+      box.element.transition("pulse");
+      x(info, self);
+    });
+  }
   addColor(color) {
     this.element.css("background-color", color);
   }
 }
-
-module.exports = UF;

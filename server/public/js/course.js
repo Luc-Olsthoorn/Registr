@@ -19,6 +19,15 @@ class Course {
   getCourseCode() {
     return this.rawJSON[0].COURSES[0].code;
   }
+  getDeptName(i) {
+    return this.sectionArray[i].deptName;
+  }
+  getCredits(i) {
+    return this.sectionArray[i].credits;
+  }
+  getCourseFee(i) {
+    return this.sectionArray[i].courseFee;
+  }
   getRawJSON() {
     return this.rawJSON;
   }
