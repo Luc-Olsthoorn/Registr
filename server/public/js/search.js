@@ -1,27 +1,8 @@
-class addNewSearchButton{
-	constructor(divToBindTo){
-		this.divToBindTo = divToBindTo;
-		this.addHtml();
-		this.render();
-	}
-	addHtml(){
-		this.element = $(`<button class="ui basic icon button" data-tooltip="Add more courses" data-inverted="">
-  			<i class="add icon"></i>
-			</button>`);
-	}
-	attachClickHandler(callback){
-		this.element.on('click', function(){
-			callback();
-		});
-	}
-	render(){
-		$('#' + this.divToBindTo).append(this.element);
-	}
-}
+
 class SearchBox{
-	constructor(divToBindTo){
+	constructor(divToBindBefore){
 		//Order matters
-		this.divToBindTo = divToBindTo;
+		this.divToBindBefore = divToBindBefore;
 		this.active=false;
 		this.addHtml();
 		this.attachKeydownHandler();
@@ -32,6 +13,10 @@ class SearchBox{
       	var innerHtml =$(`<div class="ui icon input "></div>`);
         this.searchBox = $(`<input type="text" placeholder="Enter Course">`);	
         var searchIcon = $(`<i class="search icon "></i>`);
+        var self = this;
+        searchIcon.click(function(){
+        	self.enterPressed;
+        });
       	innerHtml.append(this.searchBox);
       	innerHtml.append(searchIcon);
       	this.element.append(innerHtml);
@@ -67,7 +52,7 @@ class SearchBox{
 		this.label.append(this.removeIcon);
 	}
 	render(){
-		$('#'+ this.divToBindTo).append(this.element);
+		this.divToBindBefore.before(this.element);
 		
 	}
 	deleteMe(){

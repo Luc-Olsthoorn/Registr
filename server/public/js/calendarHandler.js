@@ -10,7 +10,7 @@ class calendarHandler{
 	deleteCalendars(){
 		this.permutation = {};
 		this.permutationWithFilter = {};
-		$('#' + this.divToBindTo).empty();
+		this.divToBindTo.empty();
 		for(var i =0; i < this.calendars.length; i++){
 			this.calendars[i].deleteMe();
 		}
@@ -31,8 +31,8 @@ class calendarHandler{
 		self.loadMoreContent(self);
 		//TODO put this in its own box/function
 		
-		$('#' + this.divToBindTo).prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
-		$('#' + this.divToBindTo).visibility({
+		this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
+		this.divToBindTo.visibility({
 		    once: false,
 		    observeChanges: true,
 		    onBottomVisible: function() {
@@ -65,9 +65,14 @@ class calendarHandler{
 			self.currCal++;
 		}
 	}
-	
+	handleInputUpdate(input){
+		if(input.add){
+			this.addCourse(input.add, input.color, input.callback);
+		}else if(input.deleteCourse){
+			this.deleteCourse(input.deleteCourse);
+		}
+	}
 	addCourse(code, color, callback){
-		//Check that it isnt already in use
 		var self = this;
 		//Make request	
 		serverGetRequest(code, function(result){
@@ -80,6 +85,7 @@ class calendarHandler{
 				coursey.addColor(color);
 				self.courses.push(coursey);
 				callback({"success": coursey});
+				self.updateCalendars();
 			}
 			else{
 				//error
@@ -93,10 +99,10 @@ class calendarHandler{
 		for(var i=0; i<this.courses.length; i++){
 			if(this.courses[i]==course){
 				this.courses.splice(i, 1);
+				this.updateCalendars();
 				return;
 			}
 		}
-		console.log("delete failed"); //TODO make this better
 	}
 	checkOverlap(input){
 		//looping through every possible calender

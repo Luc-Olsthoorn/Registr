@@ -113,7 +113,7 @@ class calendar{
     	pusher.append(innerElement);
     	element.append(pusher);
 		this.calendarDiv = element;
-		$("#" + this.divToBindTo).append(element);
+		this.divToBindTo.append(element);
 	}
 	deleteMe(){
 		this.calendarDiv.remove();
