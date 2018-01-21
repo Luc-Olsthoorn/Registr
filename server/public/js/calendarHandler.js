@@ -17,6 +17,7 @@ class calendarHandler{
 		this.calendars = [];
 	}
 	updateCalendars(){
+
 		this.currCal=0; //reset counter
 		this.deleteCalendars();
 		var self =this;
@@ -26,8 +27,10 @@ class calendarHandler{
 		}else{
 			return false;
 		}
+		this.filters = this.getFilters();
+		console.log(this.filters);
 
-		this.permutationWithFilter = this.checkOverlap(this.permutation); //TODO create switch for this
+		this.permutationWithFilter = this.checkOverlap(this.permutation);
 		self.loadMoreContent(self);
 		//TODO put this in its own box/function
 		
@@ -66,6 +69,7 @@ class calendarHandler{
 		}
 	}
 	handleInputUpdate(input){
+
 		if(input.add){
 			this.addCourse(input.add, input.color, input.callback);
 		}else if(input.deleteCourse){
@@ -91,7 +95,6 @@ class calendarHandler{
 				//error
 				callback({"error":"doesNotExist"});
 			}
-
 		});
 	}
 
@@ -103,6 +106,34 @@ class calendarHandler{
 				return;
 			}
 		}
+	}
+	checkFilter(day, time){
+		var self = this;
+		//console.log(self.filters);
+		var map ={ 
+			"M" : "Monday",
+			"T" : "Tuesday",
+			"W" : "Wednesday",
+			"R" : "Thursday",
+			"F" : "Friday"
+
+				};
+		var result = self.filters.find(function(element) {
+		  return element.name == map[day];
+		});
+		
+		//console.log(day);
+		//console.log(map[day]);
+		//console.log(result);
+		if(!result.val){
+			return false;
+		}
+		/*
+		if(!map[time]){
+			return false;
+		}
+		*/
+		return true;
 	}
 	checkOverlap(input){
 		//looping through every possible calender
@@ -125,7 +156,7 @@ class calendarHandler{
 						for(var l = parseInt(convertToNum(sectionMeetTimes[b].meetPeriodBegin), 10);  l < (parseInt(convertToNum(sectionMeetTimes[b].meetPeriodEnd),10)+1); l++){
 							var key = " " + l + " " + convertToNum(sectionMeetTimes[b].meetDays[k]);
 							//console.log(key);
-							if(hit[key]){
+							if(hit[key] || !this.checkFilter(sectionMeetTimes[b].meetDays[k], convertToNum(sectionMeetTimes[b].meetDays[k]))) {
 									//console.log("hit" + key);
 									toDelete=true;
 							}else{
@@ -177,6 +208,9 @@ class calendarHandler{
 		}
 		console.log(newArr);
 		return newArr;
+	}
+	attachGetFilters(callback){
+		this.getFilters = callback;
 	}
 }
 //UF has late classes with special codes, this strips them and returns an integer 

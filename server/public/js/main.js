@@ -13,7 +13,7 @@ class Main{
 		var self =this;
 		this.calendarHandly = new calendarHandler($('#results'));
 		this.searchy = new searchHandler($('#search'));
-		//this.filters = new filterHandler($('#filter'));
+		this.filters = new filterHandler($('#filters'));
 
 		this.searchy.attachColorGetter(function(){
 			return self.getColor();
@@ -24,7 +24,9 @@ class Main{
 
 		//this.calendarHandly.attachGetCourses(this.searchy.getCourses());
 		
-		//this.calendarHandly.attachGetFilters(this.filters.getRestrictions());
+		this.calendarHandly.attachGetFilters(function(){
+			return self.filters.getValues();
+		});
 	}
 	getColor(){
 		console.log(this);
