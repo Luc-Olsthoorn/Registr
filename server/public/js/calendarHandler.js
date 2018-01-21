@@ -27,8 +27,7 @@ class calendarHandler{
 		}else{
 			return false;
 		}
-		this.filters = this.getFilters();
-		console.log(this.filters);
+		
 
 		this.permutationWithFilter = this.checkOverlap(this.permutation);
 		self.loadMoreContent(self);
@@ -74,7 +73,13 @@ class calendarHandler{
 			this.addCourse(input.add, input.color, input.callback);
 		}else if(input.deleteCourse){
 			this.deleteCourse(input.deleteCourse);
+		}else if (input.updateFilters){
+			this.updateFilters();
+			this.updateCalendars();
 		}
+	}
+	updateFilters(){
+		this.filters = this.getFilters();
 	}
 	addCourse(code, color, callback){
 		var self = this;
@@ -115,24 +120,40 @@ class calendarHandler{
 			"T" : "Tuesday",
 			"W" : "Wednesday",
 			"R" : "Thursday",
-			"F" : "Friday"
+			"F" : "Friday",
+			1 : "Period 1",
+			2 : "Period 2",
+			3 : "Period 3",
+			4 : "Period 4",
+			5 : "Period 5",
+			6 : "Period 6",
+			7 : "Period 7",
+			8 : "Period 8",
+			9 : "Period 9",
+			10 : "Period 10",
+			11 : "Period 11",
+			12 : "Period E1",
+			13 : "Period E2",
+			14 : "Period E3"
 
-				};
+		};
 		var result = self.filters.find(function(element) {
 		  return element.name == map[day];
 		});
 		
-		//console.log(day);
-		//console.log(map[day]);
-		//console.log(result);
+		
 		if(!result.val){
 			return false;
 		}
-		/*
-		if(!map[time]){
+		var result = self.filters.find(function(element) {
+		  return element.name == map[time];
+		});
+		console.log(time);
+		console.log(map[time]);
+		console.log(result);
+		if(!result.val){
 			return false;
 		}
-		*/
 		return true;
 	}
 	checkOverlap(input){
@@ -156,7 +177,7 @@ class calendarHandler{
 						for(var l = parseInt(convertToNum(sectionMeetTimes[b].meetPeriodBegin), 10);  l < (parseInt(convertToNum(sectionMeetTimes[b].meetPeriodEnd),10)+1); l++){
 							var key = " " + l + " " + convertToNum(sectionMeetTimes[b].meetDays[k]);
 							//console.log(key);
-							if(hit[key] || !this.checkFilter(sectionMeetTimes[b].meetDays[k], convertToNum(sectionMeetTimes[b].meetDays[k]))) {
+							if(hit[key] || !this.checkFilter(sectionMeetTimes[b].meetDays[k], l)) {
 									//console.log("hit" + key);
 									toDelete=true;
 							}else{

@@ -14,16 +14,19 @@ class Main{
 		this.calendarHandly = new calendarHandler($('#results'));
 		this.searchy = new searchHandler($('#search'));
 		this.filters = new filterHandler($('#filters'));
-
+		//Get color
 		this.searchy.attachColorGetter(function(){
 			return self.getColor();
 		});
+		//Change of courses
 		this.searchy.attachDataSend(function(input){
 			self.calendarHandly.handleInputUpdate(input);
 		});
-
-		//this.calendarHandly.attachGetCourses(this.searchy.getCourses());
-		
+		//Change of filters
+		this.filters.attachOnFilterClick(function(){
+			self.calendarHandly.handleInputUpdate({"updateFilters":true});
+		});
+		//Get filters
 		this.calendarHandly.attachGetFilters(function(){
 			return self.filters.getValues();
 		});

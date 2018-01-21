@@ -4,7 +4,6 @@ class filterHandler{
 		this.addHtml();
 	}
 	addHtml(){
-		var name = "swag";
 		var element = $(`
 			<div class="ui styled inverted fluid accordion" style="background-color: #ffffff00;
     box-shadow: none;">
@@ -16,18 +15,45 @@ class filterHandler{
 		    
 		  `);
 		element.accordion(); 
-		var underTheFold = $(`<div class="content"></div>`);
+		var underTheFold = $(`<div class="ui grid content"></div>`);
+		var days = $(`<div class="eight wide column"></div>`);
+		var times = $(`<div class="eight wide column"></div>`);
 		this.filterArray = [
-			{name: "Monday" , val: true},
-			{name: "Tuesday" , val: true},
-			{name: "Wednesday" , val: true},
-			{name: "Thursday" , val: true},
-			{name: "Friday" , val: true},
+			{name: "Monday" , val: true , type: "day"},
+			{name: "Tuesday" , val: true, type: "day"},
+			{name: "Wednesday" , val: true, type: "day"},
+			{name: "Thursday" , val: true, type: "day"},
+			{name: "Friday" , val: true, type: "day"},
+			{name: "Period 1" , val: true, type: "time"},
+			{name: "Period 2" , val: true, type: "time"},
+			{name: "Period 3" , val: true, type: "time"},
+			{name: "Period 4" , val: true, type: "time"},
+			{name: "Period 5" , val: true, type: "time"},
+			{name: "Period 6" , val: true, type: "time"},
+			{name: "Period 7" , val: true, type: "time"},
+			{name: "Period 8" , val: true, type: "time"},
+			{name: "Period 9" , val: true, type: "time"},
+			{name: "Period 10" , val: true, type: "time"},
+			{name: "Period 11" , val: true, type: "time"},
+			{name: "Period E1" , val: true, type: "time"},
+			{name: "Period E2" , val: true, type: "time"},
+			{name: "Period E3" , val: true, type: "time"}
 				];
 		for(var i=0; i<this.filterArray.length; i++){
-			var filter = new filterBox(this.filterArray[i].name, underTheFold);
+			if(this.filterArray[i].type == "day"){
+				var filter = new filterBox(this.filterArray[i].name, days);
+			}else if(this.filterArray[i].type == "time"){
+				var filter = new filterBox(this.filterArray[i].name, times);
+			}
+			var self =this;
+			filter.attachOnChange(function(){
+				self.filterClicked();
+			});
 			this.filterArray[i].filterBox = filter;
 		}
+		underTheFold.append(days);
+		underTheFold.append(times);
+		
 		element.append(underTheFold);
 		this.divToBindTo.append(element);
 	}
@@ -38,6 +64,9 @@ class filterHandler{
 		console.log(this.filterArray);
 		return this.filterArray;
 	}
+	attachOnFilterClick(callback){
+		this.filterClicked = callback;
+	}
 }
 class filterBox{
 	constructor(name, divToBindTo){
@@ -46,16 +75,26 @@ class filterBox{
 		this.addHtml();
 	}
 	addHtml(){
-		this.checkbox = $(`<div class="ui toggle checkbox"></div>`);
+		this.outer =$(`<div class="inline field"></div>`);
+		this.checkbox = $(`<div class="ui checked toggle checkbox"></div>`);
 		this.actualBox =$(`
-			      <input type="checkbox" tabindex="0" class="hidden">
+			      <input type="checkbox" checked="" tabindex="0" class="hidden">
 			      <label>${this.name}</label>
 			      `);
+
 		this.checkbox.checkbox();
+		var self =this;
+		this.checkbox.on("click", function(){
+			self.onChange();
+		});
 		this.checkbox.append(this.actualBox);
-		this.divToBindTo.append(this.checkbox);
+		this.outer.append(this.checkbox);
+		this.divToBindTo.append(this.outer);
 	}
 	getValue(){
 		return this.actualBox.is(":checked");
+	}
+	attachOnChange(callback){
+		this.onChange = callback;
 	}
 }
