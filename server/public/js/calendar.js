@@ -72,41 +72,74 @@ class calendar{
 		this.days["U"]=$(`<div class="two wide column"><div style="overflow:hidden;">Sunday</div></div>`);
 		var keys = Object.keys(this.days);
 
-        innerElement.append(`<div class="two wide column"></div>`);
-        for(var i = 0; i< keys.length; i++){
-        	innerElement.append(this.days[keys[i]]);
-        }
-        
-	}
-	addTimes(periods){
-		 var text = '';
-		var times=[" (7:25 - 8:15)", " (8:30 - 9:20)", " (9:35 - 10:25)", " (10:40 - 11:30)", " (11:45 - 12:35)", " (12:50 - 1:40)", " (1:55 - 2:45)", " (3:00 - 3:50)", " (4:05 - 4:55)", " (5:10 - 6:00)", " (6:15 - 7:05)", " (7:20 - 8:10)", " (8:20 - 9:10)", " (9:20 - 10:10)" ];
-    	for(var i = 0; i < periods.length; i++){
-			text += `<div style="height:20px; margin-bottom:20px; overflow:hidden; position:relative;"> <h4>${periods[i]}<span class="thin">${times[i]}</span></h4> </div>`;
-		}
-        return $(`<div class="two wide column">${text}</div>`);
-	}
-	addDividers(periods){
-		var text = "";
-        for(var i = 0; i < periods.length; i++){
-			text += `<div style="top: ${i*24+40}px;     width: 100%; position:relative;"><div class="ui  divider"></div></div>`;
-		}
-		return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
-	}
-	addBaseHtml(){
+    innerElement.append(`<div class="two wide column"></div>`);
+    for (var i = 0; i < keys.length; i++) {
+      innerElement.append(this.days[keys[i]]);
+    }
+  }
+  addTimes(periods) {
+    var text = "";
+    var times = [
+      " (7:25 - 8:15)",
+      " (8:30 - 9:20)",
+      " (9:35 - 10:25)",
+      " (10:40 - 11:30)",
+      " (11:45 - 12:35)",
+      " (12:50 - 1:40)",
+      " (1:55 - 2:45)",
+      " (3:00 - 3:50)",
+      " (4:05 - 4:55)",
+      " (5:10 - 6:00)",
+      " (6:15 - 7:05)",
+      " (7:20 - 8:10)",
+      " (8:20 - 9:10)",
+      " (9:20 - 10:10)"
+    ];
+    for (var i = 0; i < periods.length; i++) {
+      text += `<div style="height:20px; margin-bottom:20px; overflow:hidden; position:relative;"> <h4>${
+        periods[i]
+      }<span class="thin">${times[i]}</span></h4> </div>`;
+    }
+    return $(`<div class="two wide column">${text}</div>`);
+  }
+  addDividers(periods) {
+    var text = "";
+    for (var i = 0; i < periods.length; i++) {
+      text += `<div style="top: ${i * 24 +
+        40}px;     width: 100%; position:relative;"><div class="ui  divider"></div></div>`;
+    }
+    return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
+  }
+  addBaseHtml() {
+    var element = $(`<div  class="pushable"> </div>`);
+    var pusher = $(
+      `<div  style="background-color:#2196f3; " class="pusher"> </div>`
+    );
+    var innerElement = $(`<div  class="ui grid " ></div>`);
 
-		var element = $(`<div  class="pushable"> </div>`);
-		var pusher = $(`<div  style="background-color:#2196f3; " class="pusher"> </div>`);
-        var innerElement = $(`<div  class="ui grid " ></div>`);
-        
-		//Add day columns
-		this.addDayColumns(innerElement);
-		var periods=["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
+    //Add day columns
+    this.addDayColumns(innerElement);
+    var periods = [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "E1",
+      "E2",
+      "E3"
+    ];
 
-        innerElement.append(this.addTimes(periods));
-        innerElement.append(this.addDividers(periods));
-     	this.sideBar = this.addSideBar();
-     	element.append(this.sideBar);
+    innerElement.append(this.addTimes(periods));
+    innerElement.append(this.addDividers(periods));
+    this.sideBar = this.addSideBar();
+    element.append(this.sideBar);
 
         //add Schedule name and attach every thing
         pusher.append(`<h2 style="width:100%; text-align:center;">Option: ${this.calendarNumber+1}</h2>`);
@@ -120,33 +153,41 @@ class calendar{
 		delete this;
 	}
 }
-class sectionMeetTime{
-	constructor(divToBindTo){
-		this.divToBindTo = divToBindTo;
-		this.element = $(`<div style=" width:100%; z-index:3;" class="ui middle aligned centered grid" ></div>`);
-	}
-	render(){
-		this.divToBindTo.append(this.element);
-	}
-	addStartStop(start, stop){
-		this.element.css({"position":"absolute", "margin-top":"0", "top":`${((start*40)+14)}px`, "height":`${((stop-start)+1)*40}px`});
-	}
-	addSectionName(sectionName){
-		this.element.append(`<div class="column" style="padding:0px;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`);
-	}
-	deleteMe(){
-		this.element.remove();
-	}
-	addSideBarHandler(callback, info, self){
-		var x = callback;
-		var box = this;
-		this.element.click(function(){
-			box.element.transition('pulse');
-			x(info, self);
-		});
-	}
-	addColor(color){
-		
-		this.element.css("background-color", color);
-	}
+class sectionMeetTime {
+  constructor(divToBindTo) {
+    this.divToBindTo = divToBindTo;
+    this.element = $(
+      `<div style=" width:100%; z-index:3;" class="ui middle aligned centered grid" ></div>`
+    );
+  }
+  render() {
+    this.divToBindTo.append(this.element);
+  }
+  addStartStop(start, stop) {
+    this.element.css({
+      position: "absolute",
+      "margin-top": "0",
+      top: `${start * 40 + 14}px`,
+      height: `${(stop - start + 1) * 40}px`
+    });
+  }
+  addSectionName(sectionName) {
+    this.element.append(
+      `<div class="column" style="padding:0px;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`
+    );
+  }
+  deleteMe() {
+    this.element.remove();
+  }
+  addSideBarHandler(callback, info, self) {
+    var x = callback;
+    var box = this;
+    this.element.click(function() {
+      box.element.transition("pulse");
+      x(info, self);
+    });
+  }
+  addColor(color) {
+    this.element.css("background-color", color);
+  }
 }

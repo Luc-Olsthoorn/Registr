@@ -232,6 +232,7 @@ class calendarHandler{
 	}
 	attachGetFilters(callback){
 		this.getFilters = callback;
+		this.updateFilters();
 	}
 }
 //UF has late classes with special codes, this strips them and returns an integer 
