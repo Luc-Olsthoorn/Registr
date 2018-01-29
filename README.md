@@ -1,4 +1,4 @@
-# Registr v 1.0.2
+# Registr v 1.0.3
 
 ## About
 

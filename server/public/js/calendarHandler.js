@@ -10,13 +10,14 @@ class calendarHandler{
 	deleteCalendars(){
 		this.permutation = {};
 		this.permutationWithFilter = {};
-		$('#' + this.divToBindTo).empty();
+		this.divToBindTo.empty();
 		for(var i =0; i < this.calendars.length; i++){
 			this.calendars[i].deleteMe();
 		}
 		this.calendars = [];
 	}
 	updateCalendars(){
+
 		this.currCal=0; //reset counter
 		this.deleteCalendars();
 		var self =this;
@@ -26,13 +27,14 @@ class calendarHandler{
 		}else{
 			return false;
 		}
+		
 
-		this.permutationWithFilter = this.checkOverlap(this.permutation); //TODO create switch for this
+		this.permutationWithFilter = this.checkOverlap(this.permutation);
 		self.loadMoreContent(self);
 		//TODO put this in its own box/function
 		
-		$('#' + this.divToBindTo).prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
-		$('#' + this.divToBindTo).visibility({
+		this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
+		this.divToBindTo.visibility({
 		    once: false,
 		    observeChanges: true,
 		    onBottomVisible: function() {
@@ -48,19 +50,38 @@ class calendarHandler{
 			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
 				//adds to calendar the sectiion based on the permutation
+				var course = self.permutationWithFilter[i][j].course;
+				var section = self.permutationWithFilter[i][j].section;
 				calendary.addSection({
-					"sectionMeetTimes": self.courses[self.permutationWithFilter[i][j].course].getSectionTimes(self.permutationWithFilter[i][j].section), 
-					"section": self.courses[self.permutationWithFilter[i][j].course].getSectionNumber(self.permutationWithFilter[i][j].section), 
-					"color" :self.courses[self.permutationWithFilter[i][j].course].getColor()
+					"sectionMeetTimes": self.courses[course].getSectionTimes(section), 
+					"section": self.courses[course].getSectionNumber(section), 
+					"color" :self.courses[course].getColor(),
+					"code" : self.courses[course].getCourseCode(),
+					"name" : self.courses[course].getCourseName(),
+					"deptName" : self.courses[course].getDeptName(section) , 
+					"credits" :  self.courses[course].getCredits(section),
+					"courseFee" : self.courses[course].getCourseFee(section)
 				});	
 			}
 			self.calendars.push(calendary);
 			self.currCal++;
 		}
 	}
-	
+	handleInputUpdate(input){
+
+		if(input.add){
+			this.addCourse(input.add, input.color, input.callback);
+		}else if(input.deleteCourse){
+			this.deleteCourse(input.deleteCourse);
+		}else if (input.updateFilters){
+			this.updateFilters();
+			this.updateCalendars();
+		}
+	}
+	updateFilters(){
+		this.filters = this.getFilters();
+	}
 	addCourse(code, color, callback){
-		//Check that it isnt already in use
 		var self = this;
 		//Make request	
 		serverGetRequest(code, function(result){
@@ -73,22 +94,67 @@ class calendarHandler{
 				coursey.addColor(color);
 				self.courses.push(coursey);
 				callback({"success": coursey});
+				self.updateCalendars();
 			}
 			else{
 				//error
 				callback({"error":"doesNotExist"});
 			}
-
 		});
 	}
+
 	deleteCourse(course){
 		for(var i=0; i<this.courses.length; i++){
 			if(this.courses[i]==course){
 				this.courses.splice(i, 1);
+				this.updateCalendars();
 				return;
 			}
 		}
-		console.log("delete failed"); //TODO make this better
+	}
+	checkFilter(day, time){
+		var self = this;
+		//console.log(self.filters);
+		var map ={ 
+			"M" : "Monday",
+			"T" : "Tuesday",
+			"W" : "Wednesday",
+			"R" : "Thursday",
+			"F" : "Friday",
+			1 : "Period 1",
+			2 : "Period 2",
+			3 : "Period 3",
+			4 : "Period 4",
+			5 : "Period 5",
+			6 : "Period 6",
+			7 : "Period 7",
+			8 : "Period 8",
+			9 : "Period 9",
+			10 : "Period 10",
+			11 : "Period 11",
+			12 : "Period E1",
+			13 : "Period E2",
+			14 : "Period E3"
+
+		};
+		var result = self.filters.find(function(element) {
+		  return element.name == map[day];
+		});
+		
+		
+		if(!result.val){
+			return false;
+		}
+		var result = self.filters.find(function(element) {
+		  return element.name == map[time];
+		});
+		console.log(time);
+		console.log(map[time]);
+		console.log(result);
+		if(!result.val){
+			return false;
+		}
+		return true;
 	}
 	checkOverlap(input){
 		//looping through every possible calender
@@ -111,7 +177,7 @@ class calendarHandler{
 						for(var l = parseInt(convertToNum(sectionMeetTimes[b].meetPeriodBegin), 10);  l < (parseInt(convertToNum(sectionMeetTimes[b].meetPeriodEnd),10)+1); l++){
 							var key = " " + l + " " + convertToNum(sectionMeetTimes[b].meetDays[k]);
 							//console.log(key);
-							if(hit[key]){
+							if(hit[key] || !this.checkFilter(sectionMeetTimes[b].meetDays[k], l)) {
 									//console.log("hit" + key);
 									toDelete=true;
 							}else{
@@ -163,6 +229,10 @@ class calendarHandler{
 		}
 		console.log(newArr);
 		return newArr;
+	}
+	attachGetFilters(callback){
+		this.getFilters = callback;
+		this.updateFilters();
 	}
 }
 //UF has late classes with special codes, this strips them and returns an integer 
