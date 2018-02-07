@@ -60,8 +60,10 @@ class calendarHandler{
 					"name" : self.courses[course].getCourseName(),
 					"deptName" : self.courses[course].getDeptName(section) , 
 					"credits" :  self.courses[course].getCredits(section),
+					"sectWeb"  : self.courses[course].getIsWeb(section),
 					"courseFee" : self.courses[course].getCourseFee(section)
 				});	
+				console.log(calendary);
 			}
 			self.calendars.push(calendary);
 			self.currCal++;
