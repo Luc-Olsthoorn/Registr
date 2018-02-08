@@ -63,7 +63,7 @@ class calendarHandler{
 					"sectWeb"  : self.courses[course].getIsWeb(section),
 					"courseFee" : self.courses[course].getCourseFee(section)
 				});	
-				console.log(calendary);
+				
 			}
 			self.calendars.push(calendary);
 			self.currCal++;
@@ -78,15 +78,29 @@ class calendarHandler{
 		}else if (input.updateFilters){
 			this.updateFilters();
 			this.updateCalendars();
+		}else if (input.updateSettings){
+			console.log("settings changed pt.5");
+			this.updateSettings();
+			this.updateCalendars();
 		}
 	}
 	updateFilters(){
 		this.filters = this.getFilters();
 	}
+	updateSettings(){
+		this.settings = this.getSettings();
+		console.log(this.settings);
+	}
 	addCourse(code, color, callback){
 		var self = this;
-		//Make request	
-		serverGetRequest(code, function(result){
+		//Extract year and semester from the settings
+		var year = self.settings.find(function(element) {
+		  return element.name == "Year";
+		});
+		var semester = self.settings.find(function(element) {
+		  return element.name == "Semester";
+		});
+		serverGetRequest(year.val, semester.val, code, function(result){
 			if(!result){
 				callback({"error":"serverNoResponse"});
 			}else if(JSON.parse(result)[0].TOTALROWS != null){
@@ -150,13 +164,19 @@ class calendarHandler{
 		var result = self.filters.find(function(element) {
 		  return element.name == map[time];
 		});
-		console.log(time);
-		console.log(map[time]);
-		console.log(result);
+		//console.log(time);
+		//console.log(map[time]);
+		//console.log(result);
 		if(!result.val){
 			return false;
 		}
 		return true;
+	}
+	setCurrentYear(inputYear){
+		this.currentYear = inputYear;
+	}
+	setCurrentSemester(inputSemester){
+		this.currentSemester = inputSemester;
 	}
 	checkOverlap(input){
 		//looping through every possible calender
@@ -229,12 +249,16 @@ class calendarHandler{
 		else{
 			newArr = oldArray.slice();
 		}
-		console.log(newArr);
+		//console.log(newArr);
 		return newArr;
 	}
 	attachGetFilters(callback){
 		this.getFilters = callback;
 		this.updateFilters();
+	}
+	attachGetSettings(callback){
+		this.getSettings = callback;
+		this.updateSettings();
 	}
 }
 //UF has late classes with special codes, this strips them and returns an integer 
@@ -255,7 +279,7 @@ function convertToNum(inputTime){
 	}
 }
 //Make get note server request
-function serverGetRequest(course, callback) {
+function serverGetRequest(year, semester, course, callback) {
 	if(course==""){
 		callback(false);
 	}else{
@@ -263,7 +287,9 @@ function serverGetRequest(course, callback) {
 			type: "POST",
 			url: "/getCourseInfo",
 			data: JSON.stringify({
-				"course": course
+				"course": course,
+				"year" : year,
+				"semester" : semester
 			}),
 			success: function(data) {
 				callback(data);

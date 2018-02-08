@@ -9,7 +9,7 @@ class SearchBox{
 		this.render();
 	}
 	addHtml(){
-		this.element = $(`<div class="ui inverted card"></div>`);
+		this.element = $(`<div class="ui inverted card" style="box-shadow: none;"></div>`);
       	var innerHtml =$(`<div class="ui icon input "></div>`);
         this.searchBox = $(`<input type="text" placeholder="Enter Course">`);	
         var searchIcon = $(`<i class="search icon "></i>`);
