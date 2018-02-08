@@ -31,6 +31,9 @@ class Course {
   getRawJSON() {
     return this.rawJSON;
   }
+  getIsWeb(i){
+    return this.sectionArray[i].sectWeb=="P";
+  }
   addColor(color) {
     this.color = color;
   }

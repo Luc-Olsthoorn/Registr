@@ -9,19 +9,32 @@ class calendar{
 		//Create elements
 		var tempArr=[];
 		var self =this;
-		for(var i=0; i < options.sectionMeetTimes.length; i++){
-			for(var j =0; j< options.sectionMeetTimes[i].meetDays.length; j++){
-				var sectionMeetTimey = new sectionMeetTime(this.days[options.sectionMeetTimes[i].meetDays[j]]);
-				sectionMeetTimey.addSectionName(options.section);
-				sectionMeetTimey.addStartStop(convertToNum(options.sectionMeetTimes[i].meetPeriodBegin), convertToNum(options.sectionMeetTimes[i].meetPeriodEnd));
-				
-				sectionMeetTimey.addColor(options.color);
-				sectionMeetTimey.render();
-				var info = "swag";
-				sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
-				tempArr.push(sectionMeetTimey);
-			}
-		}
+    //Its web
+    if(options.sectWeb){
+          var sectionMeetTimey = new sectionMeetTime(this.webDiv);
+          sectionMeetTimey.addSectionName(options.section); 
+          sectionMeetTimey.addColor(options.color);
+          sectionMeetTimey.render();
+          sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
+          tempArr.push(sectionMeetTimey);
+        }
+    //Its non-web
+    else{
+  		for(var i=0; i < options.sectionMeetTimes.length; i++){
+  			for(var j =0; j< options.sectionMeetTimes[i].meetDays.length; j++){
+         
+          var sectionMeetTimey = new sectionMeetTime(this.days[options.sectionMeetTimes[i].meetDays[j]]);
+          sectionMeetTimey.addSectionName(options.section);
+          sectionMeetTimey.addStartStop(convertToNum(options.sectionMeetTimes[i].meetPeriodBegin), convertToNum(options.sectionMeetTimes[i].meetPeriodEnd));
+          
+  				sectionMeetTimey.addColor(options.color);
+  				sectionMeetTimey.render();
+  				sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
+  				tempArr.push(sectionMeetTimey);
+          
+  			}
+  		}
+    }
 		this.boxArr[options.section] = tempArr;
 	}
 
@@ -138,9 +151,11 @@ class calendar{
 
     innerElement.append(this.addTimes(periods));
     innerElement.append(this.addDividers(periods));
+
+    this.webDiv = $(`<div style="width:100%;"></div>`);
+    innerElement.append(this.webDiv);
     this.sideBar = this.addSideBar();
     element.append(this.sideBar);
-
         //add Schedule name and attach every thing
         pusher.append(`<h2 style="width:100%; text-align:center;">Option: ${this.calendarNumber+1}</h2>`);
     	pusher.append(innerElement);

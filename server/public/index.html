@@ -13,44 +13,78 @@
 <style>
 body{
   height:100%; 
-  background-color:#f44336;  
+  background-color:#2196f3;  
   font-family:roboto !important;
   color:white;
 }
-
+#mainPage{
+   background-color:#2196f3; 
+}
 </style>
   <body>
 
 <!---MainPage-->
 
-<div id="mainPage" class="ui container basic segment" >
+
   
-     <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%;font-size:10vw; margin:0px;">Registr</h1> 
-     <h2>What is this website?</h2>
+     
+
+
+  <div class="ui grid stackable">
+  <div class="four wide column black">
+    <div id="menu" class="ui vertical   inverted menu" style="
+    overflow-y: auto;    width: inherit; height: 100%;">
+      <script>
+        function resize(){
+          if($( window ).width() > 767){
+            $('#menu').addClass("fixed");
+          }else {
+            $('#menu').removeClass("fixed");
+          }
+        }
+        $( window ).resize(function() {
+          resize();
+        });
+        resize();
+      </script>
+     <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%; font-size: 60px; margin:0px;">Registr</h1> 
+     <div class="ui divider inverted"></div>
+    <div id ="settings"></div>
+    <div class="ui divider inverted"></div>
+    <div  class="ui container basic segment" >
+    <div id="search" class="ui two cards"></div> 
+  </div>
+    <div class="ui divider inverted"></div>
+    <div id ="filters"></div>
+  </div>
+</div>
+ <div class="twelve wide stretched column" style="min-height:100%;">
+    <div  class="ui  basic segment" >
+
+   
+
+    
+     
+    <div id="results"><div style="text-align:center; top:50%;"><div class="ui divider inverted"></div>     <h2>What is this website?</h2>
         This creates all the different schedules possible with your courses entered, without them overlapping <br>
         Currently built for UF only <br>
         If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com<br>
-    <div class="ui horizontal divider"></div>
-    <div id="search" class="ui doubling six cards"></div> 
-    <div class="ui divider inverted"></div>
-    <div id ="filters"></div>
-     <div class="ui divider inverted"></div>
+<div class="ui divider inverted"></div>
 </div>
- <div  class="ui container basic segment" >
-    
-    <div id="results">
-      </div>
-       
 </div>
-
-<div class="ui horizontal divider"></div>
-
-</div>
-<div id ="footer" class="container basic segment ui">
-  <div class="ui divider inverted"></div>
-  <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
+    </div>
+    <div id ="footer" class="container basic segment ui" style="position:absolute; bottom:0px;">
+      <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
   
+    </div>
+       
+
 </div>
+
+
+</div>
+
+
 
 
 <!--JS -->
@@ -64,6 +98,7 @@ body{
 <script src="js/search.js"></script>
 <script src="js/searchHandler.js"></script>
 <script src="js/filterHandler.js"></script>
+<script src="js/settingsHandler.js"></script>
 <script src="js/course.js"></script>
 <script src="js/main.js"></script>
 

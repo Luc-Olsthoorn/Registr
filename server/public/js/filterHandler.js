@@ -61,7 +61,7 @@ class filterHandler{
 		for(var i=0; i<this.filterArray.length; i++){
 			this.filterArray[i].val = this.filterArray[i].filterBox.getValue();
 		}
-		console.log(this.filterArray);
+		//console.log(this.filterArray);
 		return this.filterArray;
 	}
 	attachOnFilterClick(callback){
@@ -79,7 +79,7 @@ class filterBox{
 		this.checkbox = $(`<div class="ui checked toggle checkbox"></div>`);
 		this.actualBox =$(`
 			      <input type="checkbox" checked="" tabindex="0" class="hidden">
-			      <label>${this.name}</label>
+			      <label style="color: white !important;">${this.name}</label>
 			      `);
 
 		this.checkbox.checkbox();
