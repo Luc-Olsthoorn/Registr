@@ -21,23 +21,26 @@ class searchHandler{
 		});
 		this.searchBoxes.push(searchy);
 		searchy.attachEnterPressHandler(function(inputText){
+			searchy.startLoad();
 			searchy.addColor("#f44336");
 			self.sendData({
 				"add" : inputText, 
 				"color" :color, 
 				"callback" : function(result){
 					if(result.success){
-						console.log(result.success);
 						searchy.addColor(color);
+						searchy.endLoad();
 						searchy.attachCoursePointer(result.success);
 					}
 					if(result.error == "doesNotExist"){
 						searchy.addColor("#ffeb3b");
+						searchy.endLoad();
 						searchy.popup("Invalid Course Code");
 						
 					}
 					if(result.error == "serverNoResponse"){
 						searchy.popup("Cannot connect to one.uf. Contact me pls");
+						searchy.endLoad();
 						searchy.addColor("#000000");
 					}
 				}
