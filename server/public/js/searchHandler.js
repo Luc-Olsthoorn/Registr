@@ -3,10 +3,35 @@ class searchHandler{
 		this.divToBindTo = divToBindTo;
 		this.searchBoxes=[];
 		var self = this;
-		var button = new searchButton(divToBindTo);
-		button.attachClickHandler(function(){
-			self.newSearchBox(button.element);
+		this.addHtml();
+		this.button = new searchButton(this.underTheFold);
+		this.divToBindTo.append(this.accordion);
+		this.button.attachClickHandler(function(){
+			self.newSearchBox(self.button.element);
 		});
+		
+	}
+	getButtonElement(){
+		return this.button.element;
+	}
+	addHtml(){
+		this.accordion = $(`
+			<div class="ui styled inverted fluid accordion " style="background-color: #ffffff00;
+    			box-shadow: none;">
+			  <div class="title">
+			    <i class="dropdown icon"></i>
+			    Add courses
+			  </div>
+
+			 </div>
+		    
+		  `);
+		var outer = $(`<div class="ui content"></div>`);
+		this.underTheFold = $(`<div class="ui cards two"></div>`);
+		outer.append(this.underTheFold);
+		this.accordion.append(outer);
+		this.accordion.accordion();
+
 	}
 	attachSearchBoxHandler(handler){
 		this.searchBoxHandler = handler;
@@ -56,6 +81,7 @@ class searchHandler{
 	attachDataSend(callback){
 		this.sendData = callback;
 	}
+
 }
 class searchButton{
 	constructor(divToBindTo){

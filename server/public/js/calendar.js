@@ -124,7 +124,7 @@ class calendar{
     return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
   }
   addBaseHtml() {
-    var element = $(`<div  class="pushable"> </div>`);
+    var element = $(`<div  class="pushable"     style="overflow-x: inherit;"> </div>`);
     var pusher = $(
       `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );

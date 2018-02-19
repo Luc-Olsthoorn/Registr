@@ -25,6 +25,7 @@ class calendarHandler{
 		if(this.courses.length>0){
 			this.permutation = this.createPermutation();
 		}else{
+			this.runOnEmpty();
 			return false;
 		}
 		
@@ -42,6 +43,9 @@ class calendarHandler{
 		    }
 	  	});
 		
+	}
+	attachRunOnEmpty(callback){
+		this.runOnEmpty = callback;
 	}
 	loadMoreContent(self){
 		for(var i =0; i< Math.min(10, self.permutationWithFilter.length-self.currCal); i++){
