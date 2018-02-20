@@ -7,9 +7,19 @@ $(document).ready(function() {
 class Main{
 	constructor(){
 		this.colorCounter = 0;
-		this.colorArray = ["#e91e63","#9c27b0","#3f51b5","#2196f3","#00bcd4","#4caf50","#ff9800"];
+		this.colorArray = ["#e91e63","#9c27b0","#3f51b5","#00bcd4","#4caf50","#ff9800"];
 	}
 	main(){
+		var nothingSelected = $(`
+			<div id= "nothingSelected">
+			
+	  </div>
+	    <div style="text-align:center; top: 24%; ">
+	       <h1 class="header inverted thin " style="text-align:center; font-size: 60px; margin:0px;"> Oops you have nothing selected. </h1>
+	      <h6 class="header inverted thin "> Enjoy this photo</h6>
+	      <img src="img/file.svg">
+
+	    </div></div`);	
 		var self =this;
 		this.settings = new settingsHandler($('#settings'));
 		this.calendarHandly = new calendarHandler($('#results'));
@@ -19,6 +29,8 @@ class Main{
 		this.searchy.attachColorGetter(function(){
 			return self.getColor();
 		});
+		//Add a single search manually
+		this.searchy.newSearchBox(this.searchy.getButtonElement());
 		//Change of courses
 		this.searchy.attachDataSend(function(input){
 			self.calendarHandly.handleInputUpdate(input);
@@ -39,6 +51,10 @@ class Main{
 		this.calendarHandly.attachGetSettings(function(){
 			return self.settings.getValues();
 		});
+		//Attach empty result
+		this.calendarHandly.attachRunOnEmpty(function(){
+			$('#results').append(nothingSelected);
+		});
 		
 	}
 	getColor(){
@@ -46,5 +62,6 @@ class Main{
 		var color = this.colorArray[this.colorCounter];
 		this.colorCounter = (this.colorCounter + 1) % this.colorArray.length;
 		return color;
-	}	
+	}
+	
 }

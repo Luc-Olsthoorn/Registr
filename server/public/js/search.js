@@ -10,18 +10,22 @@ class SearchBox{
 	}
 	addHtml(){
 		this.element = $(`<div class="ui inverted card" style="box-shadow: none;"></div>`);
-      	var innerHtml =$(`<div class="ui icon input "></div>`);
-        this.searchBox = $(`<input type="text" placeholder="Enter Course">`);	
-        var searchIcon = $(`<i class="search icon "></i>`);
+      	this.innerHtml =$(`<div class="ui icon input "></div>`);
+        this.searchBox = $(`<input type="search" placeholder="Enter Course">`);	
+        this.searchIcon = $(`<i class=" circular link search icon "></i>`);
         var self = this;
-        searchIcon.click(function(){
-        	self.enterPressed;
+        this.searchIcon.click(function(){
+        	console.log("pressed");
+        	if(!this.active){
+				self.startActive();
+				self.enterPressed(self.inputText);
+			}
         });
-      	innerHtml.append(this.searchBox);
-      	innerHtml.append(searchIcon);
-      	this.element.append(innerHtml);
+      	this.innerHtml.append(this.searchBox);
+      	this.innerHtml.append(this.searchIcon);
+      	this.element.append(this.innerHtml);
 
-      	this.label = $(` <div class="content" > </div>`);
+      	this.label = $(` <div class="content" ></div></div>`);
 		this.element.prepend(this.label)
 	}
 	addSwitch(){
@@ -44,6 +48,27 @@ class SearchBox{
 	addColor(color){
 		this.label.css("background-color", color);
 	}
+	startLoad(){
+		this.innerHtml.addClass('loading');
+		this.innerHtml.addClass('disabled');
+	}
+	
+	endLoad(){
+		this.innerHtml.removeClass('loading');
+		this.innerHtml.removeClass('disabled');
+	}
+
+	startActive(){
+		this.active = true;
+		this.searchIcon.addClass('disabled');
+		this.searchIcon.removeClass('link');
+	}
+	endActive(){
+		this.active=false;
+		this.searchIcon.removeClass('disabled');
+		this.searchIcon.addClass('link');
+	}
+
 	addRemoveIcon(callback){
 		this.removeIcon = $(`<i class=" remove icon"></i>`); 
 		this.removeIcon.on('click', function(){
@@ -72,18 +97,15 @@ class SearchBox{
 		var self = this;
 		this.element.keydown(function(e) {
 			setTimeout(function() {
-				if(this.active && e.keyCode != 13){
-					this.active=false;
-					self.deleteCourseCallback(self.coursePointer);
-					
+				console.log(self.active);
+				if(self.active && e.keyCode != 13){ //delete as long as enter not pressed, and its still active
+					self.endActive();
+					self.deleteCourseCallback(self.coursePointer);			
 				}
 				self.refreshKey();
-				if (e.keyCode == 13) {
-					if(!this.active){
-						this.active = self.inputText;
-						self.enterPressed(self.inputText);
-					}
-
+				if (!self.active && e.keyCode == 13) { //enter is pressed  and its not already active
+					self.startActive();
+					self.enterPressed(self.inputText);
 				}
 			}, 20);
 		});

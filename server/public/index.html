@@ -1,106 +1,91 @@
 <html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <link rel="icon " type = "image/x-icon" href="img/icon.png"/>
-    <!-- CSS  -->
-    <link href="css/fonts.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="css/semantic.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
-
-</head>
-<script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
-<style>
-body{
-  height:100%; 
-  background-color:#2196f3;  
-  font-family:roboto !important;
-  color:white;
-}
-#mainPage{
-   background-color:#2196f3; 
-}
-</style>
-  <body>
-
-<!---MainPage-->
+   <head>
+      <!---ICON -->
+      <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+      <link rel="manifest" href="icon/site.webmanifest">
+      <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
 
 
-  
-     
-
-
-  <div class="ui grid stackable">
-  <div class="four wide column black">
-    <div id="menu" class="ui vertical   inverted menu" style="
-    overflow-y: auto;    width: inherit; height: 100%;">
-      <script>
-        function resize(){
-          if($( window ).width() > 767){
-            $('#menu').addClass("fixed");
-          }else {
-            $('#menu').removeClass("fixed");
-          }
-        }
-        $( window ).resize(function() {
-          resize();
-        });
-        resize();
-      </script>
-     <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%; font-size: 60px; margin:0px;">Registr</h1> 
-     <div class="ui divider inverted"></div>
-    <div id ="settings"></div>
-    <div class="ui divider inverted"></div>
-    <div  class="ui container basic segment" >
-    <div id="search" class="ui two cards"></div> 
-  </div>
-    <div class="ui divider inverted"></div>
-    <div id ="filters"></div>
-  </div>
-</div>
- <div class="twelve wide stretched column" style="min-height:100%;">
-    <div  class="ui  basic segment" >
-
-   
-
-    
-     
-    <div id="results"><div style="text-align:center; top:50%;"><div class="ui divider inverted"></div>     <h2>What is this website?</h2>
-        This creates all the different schedules possible with your courses entered, without them overlapping <br>
-        Currently built for UF only <br>
-        If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com<br>
-<div class="ui divider inverted"></div>
-</div>
-</div>
-    </div>
-    <div id ="footer" class="container basic segment ui" style="position:absolute; bottom:0px;">
-      <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
-  
-    </div>
-       
-
-</div>
-
-
-</div>
-
-
-
-
-<!--JS -->
-<script>
-
-
-</script>
-<script src="js/semantic.js"></script>
-<script src="js/calendar.js"></script>
-<script src="js/calendarHandler.js"></script>
-<script src="js/search.js"></script>
-<script src="js/searchHandler.js"></script>
-<script src="js/filterHandler.js"></script>
-<script src="js/settingsHandler.js"></script>
-<script src="js/course.js"></script>
-<script src="js/main.js"></script>
-
-</body>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+      <!-- CSS  -->
+      <link href="css/fonts.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link href="css/semantic.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+   </head>
+   <script   src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+   <style>
+      body{
+      height:100%; 
+      background-color:#2196f3;  
+      font-family:roboto !important;
+      color:white;
+      }
+      #mainPage{
+      background-color:#2196f3; 
+      }
+   </style>
+   <body>
+      <!---MainPage-->
+      <div class="ui grid stackable">
+         <div class="four wide column black">
+            <div id="menu" class="ui vertical   inverted menu" style="
+               overflow-y: auto;    width: inherit; height: 100%;">
+               <script>
+                  function resize(){
+                    if($( window ).width() > 767){
+                      $('#menu').addClass("fixed");
+                    }else {
+                      $('#menu').removeClass("fixed");
+                    }
+                  }
+                  $( window ).resize(function() {
+                    resize();
+                  });
+                  resize();
+               </script>
+               <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%; font-size: 60px; margin:0px;">Registr</h1>
+               <div class="ui divider inverted"></div>
+               <div id ="settings"></div>
+               <div class="ui divider inverted"></div>
+               <div id="search" ></div>
+               <div class="ui divider inverted"></div>
+               <div id ="filters"></div>
+            </div>
+         </div>
+         <div class="twelve wide stretched column" style="min-height:100%;">
+            <div  class="ui  basic segment" >
+               <div id="results">
+                  <div style="text-align:center; top:50%;">
+                     <div class="ui divider inverted"></div>
+                     <h2>What is this website?</h2>
+                     This creates all the different schedules possible with your courses entered, without them overlapping <br>
+                     Currently built for UF only <br>
+                     If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com<br>
+                     <div class="ui divider inverted"></div>
+                     <img src="img/file.svg">
+                  </div>
+               </div>
+            </div>
+            <div id ="footer" class="container basic segment ui" style="position:absolute; bottom:0px;">
+               <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
+            </div>
+         </div>
+      </div>
+      <!--JS -->
+      <script></script>
+      <script src="js/semantic.js"></script>
+      <script src="js/calendar.js"></script>
+      <script src="js/calendarHandler.js"></script>
+      <script src="js/search.js"></script>
+      <script src="js/searchHandler.js"></script>
+      <script src="js/filterHandler.js"></script>
+      <script src="js/settingsHandler.js"></script>
+      <script src="js/course.js"></script>
+      <script src="js/main.js"></script>
+   </body>
 </html>

@@ -47,7 +47,7 @@ class calendar{
 	toggleSideBar(info, self){
 		self.sideBar.empty();
 		self.sideBar.append(`
-			<div class="ui container">
+			<div class="ui segment container" style="height:100%; background-color: ${info.color}">
 			<h3 class="ui header">${info.code}</h3>
 			<h2 class="ui sub header"><i>${info.name}</i></h2> 
 			<div class="ui  divider"></div>
@@ -124,7 +124,7 @@ class calendar{
     return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
   }
   addBaseHtml() {
-    var element = $(`<div  class="pushable"> </div>`);
+    var element = $(`<div  class="pushable"     style="overflow-x: inherit;"> </div>`);
     var pusher = $(
       `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );
