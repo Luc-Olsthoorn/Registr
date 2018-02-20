@@ -7,25 +7,17 @@ $(document).ready(function() {
 class Main{
 	constructor(){
 		this.colorCounter = 0;
-		this.colorArray = ["#e91e63","#9c27b0","#3f51b5","#2196f3","#00bcd4","#4caf50","#ff9800"];
+		this.colorArray = ["#e91e63","#9c27b0","#3f51b5","#00bcd4","#4caf50","#ff9800"];
 	}
 	main(){
 		var nothingSelected = $(`
 			<div id= "nothingSelected">
-			<div style ="    background-image: url(img/daddy.jpg);
-	    height: 120%;
-	    background-position: center;
-	    background-repeat: no-repeat;
-	    z-index: -1;
-	    background-size: cover;
-	    position: absolute;
-	    width: 125%;
-	    top: -75px;
-	    left: -50px;">
+			
 	  </div>
 	    <div style="text-align:center; top: 24%; ">
-	       <h1 class="header inverted thin " style="text-align:center; background: rgba(0, 0, 0, 0.4); font-size: 60px; margin:0px;"> Oops you have nothing selected. </h1>
+	       <h1 class="header inverted thin " style="text-align:center; font-size: 60px; margin:0px;"> Oops you have nothing selected. </h1>
 	      <h6 class="header inverted thin "> Enjoy this photo</h6>
+	      <img src="img/file.svg">
 
 	    </div></div`);	
 		var self =this;

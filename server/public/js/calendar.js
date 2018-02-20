@@ -47,7 +47,7 @@ class calendar{
 	toggleSideBar(info, self){
 		self.sideBar.empty();
 		self.sideBar.append(`
-			<div class="ui container">
+			<div class="ui segment container" style="height:100%; background-color: ${info.color}">
 			<h3 class="ui header">${info.code}</h3>
 			<h2 class="ui sub header"><i>${info.name}</i></h2> 
 			<div class="ui  divider"></div>

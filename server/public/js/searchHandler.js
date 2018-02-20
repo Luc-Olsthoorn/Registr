@@ -93,7 +93,7 @@ class searchButton{
 		this.element = $(`<button style="margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 15px;
-    height: 40px;" class="ui  icon button" data-tooltip="Add more courses" data-inverted="">
+    height: 40px;" class="ui  icon button" data-tooltip="Add more courses" data-inverted="" data-position="right center">
   			<i class="add icon"></i>
 			</button>`);
 	}
