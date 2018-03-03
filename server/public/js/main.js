@@ -30,7 +30,8 @@ class Main{
 			return self.getColor();
 		});
 		//Add a single search manually
-		this.searchy.newSearchBox(this.searchy.getButtonElement());
+		this.searchy.newSearchBox(this.searchy.getUnderTheFold());
+		
 		//Change of courses
 		this.searchy.attachDataSend(function(input){
 			self.calendarHandly.handleInputUpdate(input);

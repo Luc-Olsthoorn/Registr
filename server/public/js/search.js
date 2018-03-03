@@ -1,15 +1,17 @@
 
 class SearchBox{
-	constructor(divToBindBefore){
+	constructor(divToBindTo, callback){
 		//Order matters
-		this.divToBindBefore = divToBindBefore;
+		this.divToBindTo = divToBindTo;
 		this.active=false;
 		this.addHtml();
 		this.attachKeydownHandler();
 		this.render();
+		this.makeDisabled(callback);
 	}
+	
 	addHtml(){
-		this.element = $(`<div class="ui inverted card" style="box-shadow: none;"></div>`);
+		this.element = $(`<div class="ui inverted card" style="background:black; box-shadow: none;"></div>`);
       	this.innerHtml =$(`<div class="ui icon input "></div>`);
         this.searchBox = $(`<input type="search" placeholder="Enter Course">`);	
         this.searchIcon = $(`<i class=" circular link search icon "></i>`);
@@ -27,6 +29,33 @@ class SearchBox{
 
       	this.label = $(` <div class="content" ></div></div>`);
 		this.element.prepend(this.label)
+	}
+	makeDisabled(callback){
+		this.innerHtml.addClass("disabled");
+		this.label.css("opacity",".45");
+		this.button=$(`<button style=" 
+			position: absolute;
+		    z-index: 2;
+		    width: 20%;
+		    min-width: 45px;
+		    left: 37.5%;
+		    height: 25%;
+		    min-height: 45px;
+    		top: 20px;" 
+    		class="ui inverted icon button" data-tooltip="Add more courses" data-inverted="" data-position="right center">
+  			<i class="add icon"></i>
+			</button>`);
+		this.element.append(this.button);
+		var self =this;
+		this.button.on('click', function(){
+			callback();
+			self.removeDisabled();
+		});
+	}
+	removeDisabled(){
+		this.innerHtml.removeClass("disabled");
+		this.label.css("opacity","1");
+		this.button.remove();
 	}
 	addSwitch(){
 		$(this.element).append(`<div class="content"><div class="ui toggle checkbox">
@@ -77,7 +106,7 @@ class SearchBox{
 		this.label.append(this.removeIcon);
 	}
 	render(){
-		this.divToBindBefore.before(this.element);
+		this.divToBindTo.append(this.element);
 		
 	}
 	deleteMe(){
