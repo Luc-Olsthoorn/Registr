@@ -30,8 +30,8 @@ class Main{
 			return self.getColor();
 		});
 		//Add a single search manually
-		this.searchy.newSearchBox(this.searchy.getUnderTheFold());
-		
+		this.searchy.newSearchBox(this.searchy.getUnderTheFold(), true);
+
 		//Change of courses
 		this.searchy.attachDataSend(function(input){
 			self.calendarHandly.handleInputUpdate(input);
@@ -55,6 +55,11 @@ class Main{
 		//Attach empty result
 		this.calendarHandly.attachRunOnEmpty(function(){
 			$('#results').append(nothingSelected);
+		});
+		
+		//TEST
+		$("#tryItOutBtn").on("click", function(){
+			self.searchy.addArtificialText(["cop3502","cop4600","iuf1000"]);
 		});
 		
 	}

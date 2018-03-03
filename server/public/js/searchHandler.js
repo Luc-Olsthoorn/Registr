@@ -8,9 +8,9 @@ class searchHandler{
 	}
 	addHtml(){
 		this.accordion = $(`
-			<div class="ui styled inverted fluid accordion " style="background-color: RGBA(255, 255, 255, 0);
+			<div class="ui styled inverted fluid accordion active" style="background-color: RGBA(255, 255, 255, 0);
     			box-shadow: none;">
-			  <div class="title">
+			  <div class="title active">
 			    <i class="dropdown icon"></i>
 			    Add courses
 			  </div>
@@ -18,12 +18,18 @@ class searchHandler{
 			 </div>
 		    
 		  `);
-		var outer = $(`<div class="ui content"></div>`);
+		var outer = $(`<div class="ui content active"></div>`);
 		this.underTheFold = $(`<div class="ui cards two"></div>`);
 		outer.append(this.underTheFold);
 		this.accordion.append(outer);
 		this.accordion.accordion();
 
+	}
+	addArtificialText(inputs){
+		for(var i =0; i < inputs.length; i++){
+			var x =this.newSearchBox(this.underTheFold, false);
+			x.artificialText(inputs[i]);
+		}
 	}
 	getUnderTheFold(){
 		return this.underTheFold;
@@ -31,11 +37,16 @@ class searchHandler{
 	attachSearchBoxHandler(handler){
 		this.searchBoxHandler = handler;
 	}
-	newSearchBox(divToBindTo){
+	newSearchBox(divToBindTo, isAddMoreBox){
 		var self = this;
-		var searchy = new SearchBox(divToBindTo, function(){
-			self.newSearchBox(divToBindTo);
-		});
+		if(isAddMoreBox){
+			var searchy = new SearchBox(divToBindTo, function(){
+				self.newSearchBox(divToBindTo, true);
+			});
+		}else{
+			var searchy = new SearchBox(divToBindTo);
+		}
+
 		var color = this.returnColor();
 		searchy.addColor(color);
 		searchy.addRemoveIcon(function(){
@@ -71,6 +82,7 @@ class searchHandler{
 		searchy.attachDeleteHandler(function(course){
 			self.sendData({"deleteCourse": course});
 		});
+		return searchy;
 	}
 	attachColorGetter(callback){
 		this.returnColor = callback;

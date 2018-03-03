@@ -7,7 +7,9 @@ class SearchBox{
 		this.addHtml();
 		this.attachKeydownHandler();
 		this.render();
-		this.makeDisabled(callback);
+		if(callback){
+			this.makeDisabled(callback);
+		}
 	}
 	
 	addHtml(){
@@ -29,6 +31,12 @@ class SearchBox{
 
       	this.label = $(` <div class="content" ></div></div>`);
 		this.element.prepend(this.label)
+	}
+	artificialText(textInput){
+		this.searchBox.val(textInput);
+		this.refreshKey();
+		this.startActive();
+		this.enterPressed(this.inputText);
 	}
 	makeDisabled(callback){
 		this.innerHtml.addClass("disabled");
