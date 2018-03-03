@@ -16,7 +16,7 @@ class searchHandler{
 	}
 	addHtml(){
 		this.accordion = $(`
-			<div class="ui styled inverted fluid accordion " style="background-color: #ffffff00;
+			<div class="ui styled inverted fluid accordion " style="background-color: RGBA(255, 255, 255, 0);
     			box-shadow: none;">
 			  <div class="title">
 			    <i class="dropdown icon"></i>
