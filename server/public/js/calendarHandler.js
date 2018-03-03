@@ -19,21 +19,22 @@ class calendarHandler{
 	updateCalendars(){
 
 		this.currCal=0; //reset counter
-		this.deleteCalendars();
-		var self =this;
+		this.deleteCalendars(); //Delete everything currently
 
-		if(this.courses.length>0){
+		var self =this;
+		if(this.courses.length>0){ //Run only if there is courses is actually some courses 
 			this.permutation = this.createPermutation();
 		}else{
 			this.runOnEmpty();
 			return false;
 		}
 		
-
+		console.log(this.permutation);
 		this.permutationWithFilter = this.checkOverlap(this.permutation);
+		console.log(this.permutationWithFilter);
+
+		//UI
 		self.loadMoreContent(self);
-		//TODO put this in its own box/function
-		
 		this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
 		this.divToBindTo.visibility({
 		    once: false,
@@ -47,13 +48,19 @@ class calendarHandler{
 	attachRunOnEmpty(callback){
 		this.runOnEmpty = callback;
 	}
+	//Loads more content based on last calendar loaded.
 	loadMoreContent(self){
-		for(var i =0; i< Math.min(10, self.permutationWithFilter.length-self.currCal); i++){
+		//Adds all courses up to 10 
+		var amountToAdd = 10;
+		for(var i =0; i < amountToAdd && self.currCal < self.permutationWithFilter.length; i++, self.currCal++){
 			var calendary = new calendar(self.divToBindTo, self.currCal);
 			calendary.addBaseHtml();
+			console.log("attempting to display course:"+ self.currCal);
+			console.log("displaying" + i);
+			//Adds all sections of a course
 			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
-				//adds to calendar the sectiion based on the permutation
+				//adds to calendar the section based on the permutation
 				var course = self.permutationWithFilter[i][j].course;
 				var section = self.permutationWithFilter[i][j].section;
 				calendary.addSection({
@@ -70,7 +77,7 @@ class calendarHandler{
 				
 			}
 			self.calendars.push(calendary);
-			self.currCal++;
+			
 		}
 	}
 	handleInputUpdate(input){
