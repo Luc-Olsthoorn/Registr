@@ -25,11 +25,13 @@ class Main{
 		this.calendarHandly = new calendarHandler($('#results'));
 		this.searchy = new searchHandler($('#search'));
 		this.filters = new filterHandler($('#filters'));
+		var temp = new filterHandler($('#filtersExample'));
 		//Get color
 		this.searchy.attachColorGetter(function(){
 			return self.getColor();
 		});
 		//Add a single search manually
+		this.searchy.newSearchBox(this.searchy.getUnderTheFold(), false);
 		this.searchy.newSearchBox(this.searchy.getUnderTheFold(), true);
 
 		//Change of courses
