@@ -19,41 +19,80 @@ class calendarHandler{
 	updateCalendars(){
 
 		this.currCal=0; //reset counter
-		this.deleteCalendars();
-		var self =this;
+		this.deleteCalendars(); //Delete everything currently
 
-		if(this.courses.length>0){
+		var self =this;
+		if(this.courses.length>0){ //Run only if there is courses is actually some courses 
 			this.permutation = this.createPermutation();
 		}else{
 			this.runOnEmpty();
 			return false;
 		}
 		
-
+		console.log(this.permutation);
 		this.permutationWithFilter = this.checkOverlap(this.permutation);
-		self.loadMoreContent(self);
-		//TODO put this in its own box/function
+		if(this.permutationWithFilter.length>0){
+			console.log(this.permutationWithFilter);
+
+			//UI
+			self.loadMoreBtn = $(`
+				<div style="
+    			text-align: center;
+    			padding-bottom: 20px;
+				"></div>
+				
+			`);
+			var innerHTML = $(`<button class="ui white basic button">Load more</button>`);
+			self.loadMoreBtn.append(innerHTML);
+			innerHTML.on("click", function(){
+				self.loadMoreBtn.detach();
+				self.loadMoreContent(self);
+				if(self.currCal < self.permutationWithFilter.length){
+					self.divToBindTo.append(self.loadMoreBtn);
+				}
+				
+			});
+			self.loadMoreContent(self);
+
+			if(self.currCal < self.permutationWithFilter.length){
+				self.divToBindTo.append(self.loadMoreBtn);
+			}
+			this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
+			this.divToBindTo.visibility({
+			    once: false,
+			    observeChanges: true,
+			    onBottomVisible: function() {
+			    	self.loadMoreBtn.detach();
+			    	self.loadMoreContent(self);
+			    	if(self.currCal < self.permutationWithFilter.length){
+						self.divToBindTo.append(self.loadMoreBtn);
+					}
+			    }
+		  	});
+		}else{
+			this.runOnEmpty();
+			return false;
+		}
 		
-		this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
-		this.divToBindTo.visibility({
-		    once: false,
-		    observeChanges: true,
-		    onBottomVisible: function() {
-		      self.loadMoreContent(self);
-		    }
-	  	});
 		
 	}
 	attachRunOnEmpty(callback){
 		this.runOnEmpty = callback;
 	}
+	//Loads more content based on last calendar loaded.
 	loadMoreContent(self){
-		for(var i =0; i< Math.min(10, self.permutationWithFilter.length-self.currCal); i++){
+		//console.log("adding more");
+		//Adds all courses up to 10 
+		var amountToAdd = 10;
+		for(var i =0; i < amountToAdd && self.currCal < self.permutationWithFilter.length; i++, self.currCal++){
 			var calendary = new calendar(self.divToBindTo, self.currCal);
 			calendary.addBaseHtml();
+			//console.log("attempting to display course:"+ self.currCal);
+			//console.log("displaying" + i);
+			//Adds all sections of a course
 			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
-				//adds to calendar the sectiion based on the permutation
+				//adds to calendar the section based on the permutation
 				var course = self.permutationWithFilter[i][j].course;
 				var section = self.permutationWithFilter[i][j].section;
 				calendary.addSection({
@@ -69,9 +108,12 @@ class calendarHandler{
 				});	
 				
 			}
+
 			self.calendars.push(calendary);
-			self.currCal++;
+			
 		}
+		
+
 	}
 	handleInputUpdate(input){
 
@@ -83,7 +125,7 @@ class calendarHandler{
 			this.updateFilters();
 			this.updateCalendars();
 		}else if (input.updateSettings){
-			console.log("settings changed pt.5");
+			
 			this.updateSettings();
 			this.updateCalendars();
 		}
@@ -98,16 +140,18 @@ class calendarHandler{
 	addCourse(code, color, callback){
 		var self = this;
 		//Extract year and semester from the settings
-		var year = self.settings.find(function(element) {
-		  return element.name == "Year";
+		var category = self.settings.find(function(element) {
+		  return element.name == "Categories";
 		});
 		var semester = self.settings.find(function(element) {
 		  return element.name == "Semester";
 		});
-		serverGetRequest(year.val, semester.val, code, function(result){
+		serverGetRequest(category.val, semester.val, code, function(result){
+			//console.log(category.val);
 			if(!result){
 				callback({"error":"serverNoResponse"});
-			}else if(JSON.parse(result)[0].TOTALROWS != null){
+			}else if(JSON.parse(result)[0].TOTALROWS != 0 && JSON.parse(result)[0].TOTALROWS != null){
+				console.log(result);
 				//not empty
 				var coursey = new Course();
 				coursey.setRawJSON(JSON.parse(result));
@@ -283,7 +327,7 @@ function convertToNum(inputTime){
 	}
 }
 //Make get note server request
-function serverGetRequest(year, semester, course, callback) {
+function serverGetRequest(category, semester, course, callback) {
 	if(course==""){
 		callback(false);
 	}else{
@@ -292,7 +336,7 @@ function serverGetRequest(year, semester, course, callback) {
 			url: "/getCourseInfo",
 			data: JSON.stringify({
 				"course": course,
-				"year" : year,
+				"category" : category,
 				"semester" : semester
 			}),
 			success: function(data) {

@@ -32,7 +32,7 @@ class Course {
     return this.rawJSON;
   }
   getIsWeb(i){
-    return this.sectionArray[i].sectWeb=="P" || this.sectionArray[i].sectWeb=="A";
+    return this.sectionArray[i].meetTimes.length == 0;
   }
   addColor(color) {
     this.color = color;

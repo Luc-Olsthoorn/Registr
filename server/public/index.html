@@ -48,7 +48,7 @@
                   });
                   resize();
                </script>
-               <h1 class="header inverted thin " style="text-align:center; color:white; top:10%; width:100%; font-size: 60px; margin:0px;">Registr</h1>
+               <h1 class="header inverted thin " style=" color:white; position:relative; top:10px; left:10px; width:100%; font-size: 20px; margin:0px;">Registr</h1>
                <div class="ui divider inverted"></div>
                <div id ="settings"></div>
                <div class="ui divider inverted"></div>
@@ -57,21 +57,61 @@
                <div id ="filters"></div>
             </div>
          </div>
-         <div class="twelve wide stretched column" style="min-height:100%;">
-            <div  class="ui  basic segment" >
-               <div id="results">
-                  <div style="text-align:center; top:50%;">
-                     <div class="ui divider inverted"></div>
-                     <h2>What is this website?</h2>
-                     This creates all the different schedules possible with your courses entered, without them overlapping <br>
-                     Currently built for UF only <br>
-                     If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com<br>
-                     <div class="ui divider inverted"></div>
-                     <img src="img/file.svg">
-                  </div>
+         <div class="twelve wide stretched column" style="padding:inherit !important; min-height:100%;">
+               <div id="results" style="padding:5%;">
+                  <div style="width:100%; text-align:center;">
+                        <h1 class="header inverted thin " style="text-align:center; color:white; position:relative; top:10%; width:100%; font-size: 60px; margin:0px; padding-top:10%; padding-bottom:6%;"><i>Find your perfect schedule on Registr.</i></h1>
+
+                        <button  id="tryItOutBtn"class="ui inverted button" >Try it out</button>
+                        <div style="padding:1%;"></div>
+                        
+                     </div>
+
+                  <div style="padding:10%;" class="ui padded grid">
+                     <div class="ui divider inverted" style="width:100%;  border-width: 2px;"></div>
+                     <div class ="two column stackable row" style="padding-top:5%; padding-bottom:5%;">
+                        <div class="column">
+                           <img class="ui centered medium image" src ="img/calendar.png">
+                        </div>
+                        <div class="column">
+                           <h2>Generate possible schedules</h2>
+                           <p> Given as many classes as you want, we will find all the different possible schedule combinations for you <p>
+                        </div>
+                     
+                     </div>
+                     <div class="ui divider inverted" style="width:100%;  border-width: 2px;"></div>
+                      <div class ="two column stackable row" style="padding-top:5%; padding-bottom:5%;">
+                        <div class="column">
+                           <h2>Hate morning classes?</h2>
+                           <p>Filters allow you to select what times you want your courses<p>
+                        </div>
+                        <div class="column">
+                           <div id ="filtersExample"></div>
+                        </div>
+                        
+                     
+                           
+                     </div>
+                     <div class="ui divider inverted" style="width:100%;  border-width: 2px;"></div>
+                     <div class ="two column stackable row" style="padding-top:5%; padding-bottom:5%;">
+                        <div class="column">
+                           <img class="ui centered medium image" src ="img/code.svg">
+                        </div>
+
+                        <div class="column" >
+                           <h2>Like to code?</h2>
+                           <p>Great! This project is <a style="color: gainsboro; text-decoration: underline;" href ="https://github.com/Luc-Olsthoorn/Registr/">open sourced</a> and we are always looking for more help! <p>
+                           <p>You can also submit bugs <a style="color: gainsboro; text-decoration: underline;" href="https://github.com/Luc-Olsthoorn/Registr/issues">here</a></p>
+                           <p><a style="color: gainsboro; text-decoration: underline;" href="https://github.com/Rolstenhouse/uf_api">Or build your own UF app</a></p>
+                           <p>If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com</p>
+                        </div>
+                        
+           
+
+               </div>
                </div>
             </div>
-            <div id ="footer" class="container basic segment ui" style="position:absolute; bottom:0px;">
+            <div id ="footer" class="container basic segment ui" style=" bottom:0px;">
                <h5 class="ui  header center aligned" style="color:white;">Made with<a class="ui red circular label">Love</a> by  <a href="http://www.lucolsthoorn.com">Luc Olsthoorn</a></h5>
             </div>
          </div>

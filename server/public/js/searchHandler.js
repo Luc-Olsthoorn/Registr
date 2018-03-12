@@ -4,21 +4,13 @@ class searchHandler{
 		this.searchBoxes=[];
 		var self = this;
 		this.addHtml();
-		this.button = new searchButton(this.underTheFold);
 		this.divToBindTo.append(this.accordion);
-		this.button.attachClickHandler(function(){
-			self.newSearchBox(self.button.element);
-		});
-		
-	}
-	getButtonElement(){
-		return this.button.element;
 	}
 	addHtml(){
 		this.accordion = $(`
-			<div class="ui styled inverted fluid accordion " style="background-color: #ffffff00;
+			<div class="ui styled inverted fluid accordion active" style="background-color: RGBA(255, 255, 255, 0);
     			box-shadow: none;">
-			  <div class="title">
+			  <div class="title active">
 			    <i class="dropdown icon"></i>
 			    Add courses
 			  </div>
@@ -26,19 +18,39 @@ class searchHandler{
 			 </div>
 		    
 		  `);
-		var outer = $(`<div class="ui content"></div>`);
+		var outer = $(`<div class="ui content active"></div>`);
 		this.underTheFold = $(`<div class="ui cards two"></div>`);
 		outer.append(this.underTheFold);
 		this.accordion.append(outer);
 		this.accordion.accordion();
 
 	}
+	addArtificialText(inputs){
+		for(var i =0; i< this.searchBoxes.length; i++){
+			this.searchBoxes[i].deleteMe();
+		}
+		for(var i =0; i < inputs.length; i++){
+			var x =this.newSearchBox(this.underTheFold, false);
+			x.artificialText(inputs[i]);
+		}
+		this.newSearchBox(this.getUnderTheFold(), true);
+	}
+	getUnderTheFold(){
+		return this.underTheFold;
+	}
 	attachSearchBoxHandler(handler){
 		this.searchBoxHandler = handler;
 	}
-	newSearchBox(divToBindBefore){
+	newSearchBox(divToBindTo, isAddMoreBox){
 		var self = this;
-		var searchy = new SearchBox(divToBindBefore);
+		if(isAddMoreBox){
+			var searchy = new SearchBox(divToBindTo, function(){
+				self.newSearchBox(divToBindTo, true);
+			});
+		}else{
+			var searchy = new SearchBox(divToBindTo);
+		}
+
 		var color = this.returnColor();
 		searchy.addColor(color);
 		searchy.addRemoveIcon(function(){
@@ -74,6 +86,7 @@ class searchHandler{
 		searchy.attachDeleteHandler(function(course){
 			self.sendData({"deleteCourse": course});
 		});
+		return searchy;
 	}
 	attachColorGetter(callback){
 		this.returnColor = callback;
@@ -82,27 +95,4 @@ class searchHandler{
 		this.sendData = callback;
 	}
 
-}
-class searchButton{
-	constructor(divToBindTo){
-		this.divToBindTo = divToBindTo;
-		this.addHtml();
-		this.render();
-	}
-	addHtml(){
-		this.element = $(`<button style="margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 15px;
-    height: 40px;" class="ui  icon button" data-tooltip="Add more courses" data-inverted="" data-position="right center">
-  			<i class="add icon"></i>
-			</button>`);
-	}
-	attachClickHandler(callback){
-		this.element.on('click', function(){
-			callback();
-		});
-	}
-	render(){
-		$(this.divToBindTo).append(this.element);
-	}
 }

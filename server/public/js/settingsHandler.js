@@ -1,11 +1,17 @@
 class settingsHandler{
-	constructor(divToBindTo){
+	constructor(divToBindTo, callback){
 		this.divToBindTo = divToBindTo;
-		this.addHtml();
+		var self =this;
+		this.serverRequest(function(result){
+			self.settingsArray = JSON.parse(result);
+			//console.log(self.settingsArray);
+			self.addHtml();
+			callback();
+		});
 	}
 	addHtml(){
 		var element = $(`
-			<div class="ui styled inverted fluid accordion" style="background-color: #ffffff00;
+			<div class="ui styled inverted fluid accordion" style="background-color: RGBA(255, 255, 255, 0);
     box-shadow: none;">
 			  <div class="title">
 			    <i class="dropdown icon"></i>
@@ -16,30 +22,7 @@ class settingsHandler{
 		  `);
 		element.accordion(); 
 		var underTheFold = $(`<div class="ui grid content"></div>`);
-		this.settingsArray = [
-			{
-				name: "Semester" , 
-				val: "Spring", 
-				options: [
-					"Spring",
-					"Summer",
-					"Fall"
-					],
-				defaultVal: "Spring"
-			},
-			{
-				name: "Year" , 
-				val: 2018, 
-				options: [
-					2016,
-					2017,
-					2018,
-					2019
-					],
-				defaultVal: "2018" 				
-			}
-			
-				];
+		
 		for(var i=0; i<this.settingsArray.length; i++){
 			
 			var dropDownBoxy = new dropDownBox(this.settingsArray[i].name, this.settingsArray[i].options, this.settingsArray[i].defaultVal, underTheFold);
@@ -47,28 +30,39 @@ class settingsHandler{
 			var self =this;
 			dropDownBoxy.attachOnChange(function(){
 				self.filterClicked();
-				console.log("settings changed pt.2");
+				
 			});
 			this.settingsArray[i].settingsDropDown = dropDownBoxy;
 		}
 		element.append(underTheFold);
 		this.divToBindTo.append(element);
 	}
+	serverRequest(callback){
+		$.ajax({
+			type: "GET",
+			url: "/getMenuSettings",
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				callback(false);
+			},
+			contentType: 'application/json'
+		});
+	}
 	getValues(){
 		for(var i=0; i<this.settingsArray.length; i++){
 			this.settingsArray[i].val = this.settingsArray[i].settingsDropDown.getValue();
 		}
-		console.log(this.settingsArray);
+		//console.log(this.settingsArray);
 		return this.settingsArray;
 	}
 	attachOnSettingsClick(callback){
-		console.log("settings changed pt.3");
 		this.filterClicked = callback;
-
 	}
 }
 class dropDownBox{
-	constructor(name, options, defaultVal,divToBindTo){
+	constructor(name, options, defaultVal, divToBindTo){
 		this.options = options; 
 		this.name = name;
 		this.divToBindTo = divToBindTo;
@@ -80,21 +74,23 @@ class dropDownBox{
 			    background-color: transparent;
 			    border: 2px solid white;
 			    color: white;
+			    margin-top: 10px;
+			    margin-left:10px;
 			">
 			<input type="hidden">
 		  	<i class="dropdown icon"></i>
-		  	<div class="default text">${this.defaultVal}</div>
+		  	<div class="default text" style="color:white;">${this.name}</div>
 
 		</div>`);
 		
+		
 		this.inner = $(`<div class="menu"></div>`);
 		for(var i=0; i<this.options.length; i++){
-			this.inner.append(`<div class="item" data-value="${this.options[i]}">${this.options[i]}</div>`);
+			this.inner.append(`<div class="item" data-value="${this.options[i].val}">${this.options[i].name}</div>`);
 		}
 		
 		var self = this;
 		this.inner.on("click", function(){
-			console.log("clicked settiings");
 			self.onChange();
 		});
 		this.outer.append(this.inner);

@@ -172,7 +172,7 @@ class sectionMeetTime {
   constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     this.element = $(
-      `<div style=" width:100%; z-index:3;" class="ui middle aligned centered grid" ></div>`
+      `<div style=" width:100%; z-index:3; cursor: pointer;" class="ui middle aligned centered grid" ></div>`
     );
   }
   render() {

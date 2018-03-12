@@ -2,10 +2,11 @@ class filterHandler{
 	constructor(divToBindTo){
 		this.divToBindTo = divToBindTo;
 		this.addHtml();
+		//console.log(this);
 	}
 	addHtml(){
-		var element = $(`
-			<div class="ui styled inverted fluid accordion" style="background-color: #ffffff00;
+		this.element = $(`
+			<div class="ui styled inverted fluid accordion" style="background-color: RGBA(255, 255, 255, 0);
     box-shadow: none;">
 			  <div class="title">
 			    <i class="dropdown icon"></i>
@@ -14,7 +15,7 @@ class filterHandler{
 			 </div>
 		    
 		  `);
-		element.accordion(); 
+		this.element.accordion(); 
 		var underTheFold = $(`<div class="ui grid content"></div>`);
 		var days = $(`<div class="eight wide column"></div>`);
 		var times = $(`<div class="eight wide column"></div>`);
@@ -54,8 +55,8 @@ class filterHandler{
 		underTheFold.append(days);
 		underTheFold.append(times);
 		
-		element.append(underTheFold);
-		this.divToBindTo.append(element);
+		this.element.append(underTheFold);
+		this.divToBindTo.append(this.element);
 	}
 	getValues(){
 		for(var i=0; i<this.filterArray.length; i++){
@@ -63,6 +64,9 @@ class filterHandler{
 		}
 		//console.log(this.filterArray);
 		return this.filterArray;
+	}
+	openAccordion(){
+		this.element.accordion('open', 0);;
 	}
 	attachOnFilterClick(callback){
 		this.filterClicked = callback;
@@ -76,7 +80,7 @@ class filterBox{
 	}
 	addHtml(){
 		this.outer =$(`<div class="inline field"></div>`);
-		this.checkbox = $(`<div class="ui checked toggle checkbox"></div>`);
+		this.checkbox = $(`<div class="ui checked toggle checkbox" style="padding: 5px;"></div>`);
 		this.actualBox =$(`
 			      <input type="checkbox" checked="" tabindex="0" class="hidden">
 			      <label style="color: white !important;">${this.name}</label>
