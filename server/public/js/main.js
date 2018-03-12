@@ -48,7 +48,6 @@ class Main{
 			});
 			//Change of settings (year / semester)
 			self.settings.attachOnSettingsClick(function(input){
-				console.log("settings changed pt.4");
 				self.calendarHandly.handleInputUpdate({"updateSettings":true});
 			});
 		});

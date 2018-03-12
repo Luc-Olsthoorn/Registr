@@ -4,7 +4,7 @@ class settingsHandler{
 		var self =this;
 		this.serverRequest(function(result){
 			self.settingsArray = JSON.parse(result);
-			console.log(self.settingsArray);
+			//console.log(self.settingsArray);
 			self.addHtml();
 			callback();
 		});
@@ -30,7 +30,7 @@ class settingsHandler{
 			var self =this;
 			dropDownBoxy.attachOnChange(function(){
 				self.filterClicked();
-				console.log("settings changed pt.2");
+				
 			});
 			this.settingsArray[i].settingsDropDown = dropDownBoxy;
 		}
@@ -54,11 +54,10 @@ class settingsHandler{
 		for(var i=0; i<this.settingsArray.length; i++){
 			this.settingsArray[i].val = this.settingsArray[i].settingsDropDown.getValue();
 		}
-		console.log(this.settingsArray);
+		//console.log(this.settingsArray);
 		return this.settingsArray;
 	}
 	attachOnSettingsClick(callback){
-		console.log("settings changed pt.3");
 		this.filterClicked = callback;
 	}
 }
@@ -80,7 +79,7 @@ class dropDownBox{
 			">
 			<input type="hidden">
 		  	<i class="dropdown icon"></i>
-		  	<div class="default text">${this.name}</div>
+		  	<div class="default text" style="color:white;">${this.name}</div>
 
 		</div>`);
 		
@@ -96,7 +95,7 @@ class dropDownBox{
 		});
 		this.outer.append(this.inner);
 		this.outer.dropdown();
-		//this.outer.dropdown('set value', this.defaultVal);
+		this.outer.dropdown('set value', this.defaultVal);
 		
 		this.divToBindTo.append(this.outer);
 	}

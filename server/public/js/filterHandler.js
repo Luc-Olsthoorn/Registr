@@ -2,7 +2,7 @@ class filterHandler{
 	constructor(divToBindTo){
 		this.divToBindTo = divToBindTo;
 		this.addHtml();
-		console.log(this);
+		//console.log(this);
 	}
 	addHtml(){
 		this.element = $(`

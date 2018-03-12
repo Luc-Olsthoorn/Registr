@@ -35,13 +35,38 @@ class calendarHandler{
 			console.log(this.permutationWithFilter);
 
 			//UI
+			self.loadMoreBtn = $(`
+				<div style="
+    			text-align: center;
+    			padding-bottom: 20px;
+				"></div>
+				
+			`);
+			var innerHTML = $(`<button class="ui white basic button">Load more</button>`);
+			self.loadMoreBtn.append(innerHTML);
+			innerHTML.on("click", function(){
+				self.loadMoreBtn.detach();
+				self.loadMoreContent(self);
+				if(self.currCal < self.permutationWithFilter.length){
+					self.divToBindTo.append(self.loadMoreBtn);
+				}
+				
+			});
 			self.loadMoreContent(self);
+
+			if(self.currCal < self.permutationWithFilter.length){
+				self.divToBindTo.append(self.loadMoreBtn);
+			}
 			this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
 			this.divToBindTo.visibility({
 			    once: false,
 			    observeChanges: true,
 			    onBottomVisible: function() {
-			      self.loadMoreContent(self);
+			    	self.loadMoreBtn.detach();
+			    	self.loadMoreContent(self);
+			    	if(self.currCal < self.permutationWithFilter.length){
+						self.divToBindTo.append(self.loadMoreBtn);
+					}
 			    }
 		  	});
 		}else{
@@ -56,13 +81,14 @@ class calendarHandler{
 	}
 	//Loads more content based on last calendar loaded.
 	loadMoreContent(self){
+		//console.log("adding more");
 		//Adds all courses up to 10 
 		var amountToAdd = 10;
 		for(var i =0; i < amountToAdd && self.currCal < self.permutationWithFilter.length; i++, self.currCal++){
 			var calendary = new calendar(self.divToBindTo, self.currCal);
 			calendary.addBaseHtml();
-			console.log("attempting to display course:"+ self.currCal);
-			console.log("displaying" + i);
+			//console.log("attempting to display course:"+ self.currCal);
+			//console.log("displaying" + i);
 			//Adds all sections of a course
 			for(var j=0; j< self.permutationWithFilter[i].length; j++)
 			{
@@ -82,9 +108,12 @@ class calendarHandler{
 				});	
 				
 			}
+
 			self.calendars.push(calendary);
 			
 		}
+		
+
 	}
 	handleInputUpdate(input){
 
@@ -96,7 +125,7 @@ class calendarHandler{
 			this.updateFilters();
 			this.updateCalendars();
 		}else if (input.updateSettings){
-			console.log("settings changed pt.5");
+			
 			this.updateSettings();
 			this.updateCalendars();
 		}
@@ -118,10 +147,10 @@ class calendarHandler{
 		  return element.name == "Semester";
 		});
 		serverGetRequest(category.val, semester.val, code, function(result){
-			console.log(category.val);
+			//console.log(category.val);
 			if(!result){
 				callback({"error":"serverNoResponse"});
-			}else if(JSON.parse(result)[0].TOTALROWS != 0){
+			}else if(JSON.parse(result)[0].TOTALROWS != 0 && JSON.parse(result)[0].TOTALROWS != null){
 				console.log(result);
 				//not empty
 				var coursey = new Course();
