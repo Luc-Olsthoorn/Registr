@@ -31,7 +31,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
-
+app.get("/getMenuSettings", function(req, res) {
+  schools["UF"].getSettingsMenu(res);
+});
 app.post("/getCourseInfo", function(req, res) {
   console.log("course:" + req.body.course);
 

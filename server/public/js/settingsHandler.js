@@ -1,7 +1,13 @@
 class settingsHandler{
-	constructor(divToBindTo){
+	constructor(divToBindTo, callback){
 		this.divToBindTo = divToBindTo;
-		this.addHtml();
+		var self =this;
+		this.serverRequest(function(result){
+			self.settingsArray = JSON.parse(result);
+			console.log(self.settingsArray);
+			self.addHtml();
+			callback();
+		});
 	}
 	addHtml(){
 		var element = $(`
@@ -16,30 +22,7 @@ class settingsHandler{
 		  `);
 		element.accordion(); 
 		var underTheFold = $(`<div class="ui grid content"></div>`);
-		this.settingsArray = [
-			{
-				name: "Semester" , 
-				val: "Fall", 
-				options: [
-					"Spring",
-					"Summer",
-					"Fall"
-					],
-				defaultVal: "Fall"
-			},
-			{
-				name: "Year" , 
-				val: 218, 
-				options: [
-					2016,
-					2017,
-					218,
-					2019
-					],
-				defaultVal: "218" 				
-			}
-			
-				];
+		
 		for(var i=0; i<this.settingsArray.length; i++){
 			
 			var dropDownBoxy = new dropDownBox(this.settingsArray[i].name, this.settingsArray[i].options, this.settingsArray[i].defaultVal, underTheFold);
@@ -54,6 +37,19 @@ class settingsHandler{
 		element.append(underTheFold);
 		this.divToBindTo.append(element);
 	}
+	serverRequest(callback){
+		$.ajax({
+			type: "GET",
+			url: "/getMenuSettings",
+			success: function(data) {
+				callback(data);
+			},
+			error: function() {
+				callback(false);
+			},
+			contentType: 'application/json'
+		});
+	}
 	getValues(){
 		for(var i=0; i<this.settingsArray.length; i++){
 			this.settingsArray[i].val = this.settingsArray[i].settingsDropDown.getValue();
@@ -64,11 +60,10 @@ class settingsHandler{
 	attachOnSettingsClick(callback){
 		console.log("settings changed pt.3");
 		this.filterClicked = callback;
-
 	}
 }
 class dropDownBox{
-	constructor(name, options, defaultVal,divToBindTo){
+	constructor(name, options, defaultVal, divToBindTo){
 		this.options = options; 
 		this.name = name;
 		this.divToBindTo = divToBindTo;
@@ -85,23 +80,23 @@ class dropDownBox{
 			">
 			<input type="hidden">
 		  	<i class="dropdown icon"></i>
-		  	<div class="default text">${this.defaultVal}</div>
+		  	<div class="default text">${this.name}</div>
 
 		</div>`);
 		
+		
 		this.inner = $(`<div class="menu"></div>`);
 		for(var i=0; i<this.options.length; i++){
-			this.inner.append(`<div class="item" data-value="${this.options[i]}">${this.options[i]}</div>`);
+			this.inner.append(`<div class="item" data-value="${this.options[i].val}">${this.options[i].name}</div>`);
 		}
 		
 		var self = this;
 		this.inner.on("click", function(){
-			console.log("clicked settiings");
 			self.onChange();
 		});
 		this.outer.append(this.inner);
 		this.outer.dropdown();
-		this.outer.dropdown('set value', this.defaultVal);
+		//this.outer.dropdown('set value', this.defaultVal);
 		
 		this.divToBindTo.append(this.outer);
 	}

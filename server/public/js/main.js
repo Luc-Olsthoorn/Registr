@@ -19,7 +19,7 @@ class Main{
 
 	    </div></div`);	
 		var self =this;
-		this.settings = new settingsHandler($('#settings'));
+		
 		this.calendarHandly = new calendarHandler($('#results'));
 		this.searchy = new searchHandler($('#search'));
 		this.filters = new filterHandler($('#filters'));
@@ -42,18 +42,21 @@ class Main{
 		this.filters.attachOnFilterClick(function(){
 			self.calendarHandly.handleInputUpdate({"updateFilters":true});
 		});
-		//Change of settings (year / semester)
-		this.settings.attachOnSettingsClick(function(input){
-			console.log("settings changed pt.4");
-			self.calendarHandly.handleInputUpdate({"updateSettings":true});
+		this.settings = new settingsHandler($('#settings'),function(){
+			self.calendarHandly.attachGetSettings(function(){
+				return self.settings.getValues();
+			});
+			//Change of settings (year / semester)
+			self.settings.attachOnSettingsClick(function(input){
+				console.log("settings changed pt.4");
+				self.calendarHandly.handleInputUpdate({"updateSettings":true});
+			});
 		});
 		//Get filters
 		this.calendarHandly.attachGetFilters(function(){
 			return self.filters.getValues();
 		});
-		this.calendarHandly.attachGetSettings(function(){
-			return self.settings.getValues();
-		});
+		
 		//Attach empty result
 		this.calendarHandly.attachRunOnEmpty(function(){
 			$('#results').append(nothingSelected);

@@ -111,13 +111,14 @@ class calendarHandler{
 	addCourse(code, color, callback){
 		var self = this;
 		//Extract year and semester from the settings
-		var year = self.settings.find(function(element) {
-		  return element.name == "Year";
+		var category = self.settings.find(function(element) {
+		  return element.name == "Categories";
 		});
 		var semester = self.settings.find(function(element) {
 		  return element.name == "Semester";
 		});
-		serverGetRequest(year.val, semester.val, code, function(result){
+		serverGetRequest(category.val, semester.val, code, function(result){
+			console.log(category.val);
 			if(!result){
 				callback({"error":"serverNoResponse"});
 			}else if(JSON.parse(result)[0].TOTALROWS != 0){
@@ -297,7 +298,7 @@ function convertToNum(inputTime){
 	}
 }
 //Make get note server request
-function serverGetRequest(year, semester, course, callback) {
+function serverGetRequest(category, semester, course, callback) {
 	if(course==""){
 		callback(false);
 	}else{
@@ -306,7 +307,7 @@ function serverGetRequest(year, semester, course, callback) {
 			url: "/getCourseInfo",
 			data: JSON.stringify({
 				"course": course,
-				"year" : year,
+				"category" : category,
 				"semester" : semester
 			}),
 			success: function(data) {
