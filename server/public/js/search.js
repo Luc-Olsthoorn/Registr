@@ -1,14 +1,15 @@
 
 class SearchBox{
-	constructor(divToBindTo, callback){
+	constructor(divToBindTo, isAnAddButton){
 		//Order matters
 		this.divToBindTo = divToBindTo;
 		this.active=false;
 		this.addHtml();
 		this.attachKeydownHandler();
+		this.addRemoveIcon();
 		this.render();
-		if(callback){
-			this.makeDisabled(callback);
+		if(isAnAddButton){
+			this.makeDisabled(isAnAddButton);
 		}
 	}
 	
@@ -39,6 +40,7 @@ class SearchBox{
 		this.enterPressed(this.inputText);
 	}
 	makeDisabled(callback){
+		//REMOVE
 		this.innerHtml.addClass("disabled");
 		this.label.css("opacity",".45");
 		this.button=$(`<button style=" 
@@ -53,8 +55,11 @@ class SearchBox{
     		class="ui inverted icon button" data-tooltip="Add more courses" data-inverted="" data-position="right center">
   			<i class="add icon"></i>
 			</button>`);
+		this.removeIcon.detach();
+		//ADD
 		this.element.append(this.button);
 		var self =this;
+
 		this.button.on('click', function(){
 			callback();
 			self.removeDisabled();
@@ -63,6 +68,7 @@ class SearchBox{
 	removeDisabled(){
 		this.innerHtml.removeClass("disabled");
 		this.label.css("opacity","1");
+		this.label.append(this.removeIcon);
 		this.button.remove();
 	}
 	addSwitch(){
@@ -106,10 +112,11 @@ class SearchBox{
 		this.searchIcon.addClass('link');
 	}
 
-	addRemoveIcon(callback){
+	addRemoveIcon(){
 		this.removeIcon = $(`<i class=" remove icon"></i>`); 
+		var self =this;
 		this.removeIcon.on('click', function(){
-			callback();
+			self.deleteMe();
 		});
 		this.label.append(this.removeIcon);
 	}

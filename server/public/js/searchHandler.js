@@ -53,9 +53,6 @@ class searchHandler{
 
 		var color = this.returnColor();
 		searchy.addColor(color);
-		searchy.addRemoveIcon(function(){
-			searchy.deleteMe();
-		});
 		this.searchBoxes.push(searchy);
 		searchy.attachEnterPressHandler(function(inputText){
 			searchy.startLoad();
