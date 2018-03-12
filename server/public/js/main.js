@@ -16,8 +16,6 @@ class Main{
 	  </div>
 	    <div style="text-align:center; top: 24%; ">
 	       <h1 class="header inverted thin " style="text-align:center; font-size: 60px; margin:0px;"> Oops you have nothing selected. </h1>
-	      <h6 class="header inverted thin "> Enjoy this photo</h6>
-	      <img src="img/file.svg">
 
 	    </div></div`);	
 		var self =this;
@@ -25,7 +23,9 @@ class Main{
 		this.calendarHandly = new calendarHandler($('#results'));
 		this.searchy = new searchHandler($('#search'));
 		this.filters = new filterHandler($('#filters'));
+		//Fake filters 
 		var temp = new filterHandler($('#filtersExample'));
+		temp.openAccordion();
 		//Get color
 		this.searchy.attachColorGetter(function(){
 			return self.getColor();

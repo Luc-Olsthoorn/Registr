@@ -31,18 +31,24 @@ class calendarHandler{
 		
 		console.log(this.permutation);
 		this.permutationWithFilter = this.checkOverlap(this.permutation);
-		console.log(this.permutationWithFilter);
+		if(this.permutationWithFilter.length>0){
+			console.log(this.permutationWithFilter);
 
-		//UI
-		self.loadMoreContent(self);
-		this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
-		this.divToBindTo.visibility({
-		    once: false,
-		    observeChanges: true,
-		    onBottomVisible: function() {
-		      self.loadMoreContent(self);
-		    }
-	  	});
+			//UI
+			self.loadMoreContent(self);
+			this.divToBindTo.prepend(`<h3>${this.permutationWithFilter.length} options generated</h3>`);
+			this.divToBindTo.visibility({
+			    once: false,
+			    observeChanges: true,
+			    onBottomVisible: function() {
+			      self.loadMoreContent(self);
+			    }
+		  	});
+		}else{
+			this.runOnEmpty();
+			return false;
+		}
+		
 		
 	}
 	attachRunOnEmpty(callback){
@@ -114,7 +120,8 @@ class calendarHandler{
 		serverGetRequest(year.val, semester.val, code, function(result){
 			if(!result){
 				callback({"error":"serverNoResponse"});
-			}else if(JSON.parse(result)[0].TOTALROWS != null){
+			}else if(JSON.parse(result)[0].TOTALROWS != 0){
+				console.log(result);
 				//not empty
 				var coursey = new Course();
 				coursey.setRawJSON(JSON.parse(result));

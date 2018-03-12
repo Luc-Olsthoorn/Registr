@@ -10,8 +10,9 @@ class UF {
       "Fall": 8,
       "Summer": 5
     };
+    //https://one.uf.edu/apix/soc/schedule/?category=CWSP&class-num=&course-code=cop3502&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term=2188&wr-2000=&wr-4000=&wr-6000=&writing=
     let url =
-      "https://one.uf.edu/apix/soc/schedule/?category=RES&course-code=" +
+      "https://one.uf.edu/apix/soc/schedule/?category=CWSP&course-code=" +
       req.body.course +
       "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t" +
       "=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d" +

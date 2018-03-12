@@ -19,24 +19,24 @@ class settingsHandler{
 		this.settingsArray = [
 			{
 				name: "Semester" , 
-				val: "Spring", 
+				val: "Fall", 
 				options: [
 					"Spring",
 					"Summer",
 					"Fall"
 					],
-				defaultVal: "Spring"
+				defaultVal: "Fall"
 			},
 			{
 				name: "Year" , 
-				val: 2018, 
+				val: 218, 
 				options: [
 					2016,
 					2017,
-					2018,
+					218,
 					2019
 					],
-				defaultVal: "2018" 				
+				defaultVal: "218" 				
 			}
 			
 				];
@@ -80,6 +80,8 @@ class dropDownBox{
 			    background-color: transparent;
 			    border: 2px solid white;
 			    color: white;
+			    margin-top: 10px;
+			    margin-left:10px;
 			">
 			<input type="hidden">
 		  	<i class="dropdown icon"></i>

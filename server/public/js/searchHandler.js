@@ -26,10 +26,14 @@ class searchHandler{
 
 	}
 	addArtificialText(inputs){
+		for(var i =0; i< this.searchBoxes.length; i++){
+			this.searchBoxes[i].deleteMe();
+		}
 		for(var i =0; i < inputs.length; i++){
 			var x =this.newSearchBox(this.underTheFold, false);
 			x.artificialText(inputs[i]);
 		}
+		this.newSearchBox(this.getUnderTheFold(), true);
 	}
 	getUnderTheFold(){
 		return this.underTheFold;
