@@ -11,16 +11,10 @@ class settingsHandler{
 	}
 	addHtml(){
 		var element = $(`
-			<div class="ui styled inverted fluid accordion" style="background-color: RGBA(255, 255, 255, 0);
-    box-shadow: none;">
-			  <div class="title">
-			    <i class="dropdown icon"></i>
-			    Settings
-			  </div>
+			<div style="padding: .75em;">
 			 </div>
 		    
 		  `);
-		element.accordion(); 
 		var underTheFold = $(`<div class="ui grid content"></div>`);
 		
 		for(var i=0; i<this.settingsArray.length; i++){
