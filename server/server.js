@@ -34,6 +34,13 @@ app.get("/", function(req, res) {
 app.get("/getMenuSettings", function(req, res) {
   schools["UF"].getSettingsMenu(res);
 });
+
+app.get("/generateAllPossibleCourses", function(req, res) {
+  schools["UF"].generatePossibleCourses(res);
+});
+app.get("/getAllPossibleCourses", function(req, res) {
+  schools["UF"].getPossibleCourses(res);
+});
 app.post("/getCourseInfo", function(req, res) {
   console.log("course:" + req.body.course);
 

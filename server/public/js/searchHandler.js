@@ -5,6 +5,7 @@ class searchHandler{
 		var self = this;
 		this.addHtml();
 		this.divToBindTo.append(this.accordion);
+		this.addPossibleCoursesList();
 	}
 	addHtml(){
 		this.accordion = $(`
@@ -41,7 +42,36 @@ class searchHandler{
 	attachSearchBoxHandler(handler){
 		this.searchBoxHandler = handler;
 	}
+	addPossibleCoursesList(){
+		var self = this;
+			$.ajax({
+				type: "GET",
+				url: "/getAllPossibleCourses",
+				success: function(data) {
+					console.log(data);
+					var temp={};
+					var output =[];
+					for(var i =0; i< data.length; i++){
+						if(!temp[data[i]]){
+							output.push({"title" : data[i]});
+							temp[data[i]]=true;
+						}
+					}
+					
+					self.possibleCoursesList = output;
+					for(var i=0; i< self.searchBoxes.length;i++){
+						self.searchBoxes[i].addAutoComplete(self.possibleCoursesList);
+					}
+				},
+				error: function() {
+					console.log(error);
+				},
+				contentType: 'application/json'
+			});
+		
+	}
 	newSearchBox(divToBindTo, isAddMoreBox){
+		
 		var self = this;
 		if(isAddMoreBox){
 			var searchy = new SearchBox(divToBindTo, function(){
@@ -53,9 +83,10 @@ class searchHandler{
 
 		var color = this.returnColor();
 		searchy.addColor(color);
-		searchy.addRemoveIcon(function(){
-			searchy.deleteMe();
-		});
+		if(this.possibleCoursesList){
+			searchy.addAutoComplete(self.possibleCoursesList);
+		}
+		
 		this.searchBoxes.push(searchy);
 		searchy.attachEnterPressHandler(function(inputText){
 			searchy.startLoad();
@@ -74,6 +105,11 @@ class searchHandler{
 						searchy.endLoad();
 						searchy.popup("Invalid Course Code");
 						
+					}
+					if(result.error == "length"){
+						searchy.addColor("#ffeb3b");
+						searchy.endLoad();
+						searchy.popup("Invalid Length");
 					}
 					if(result.error == "serverNoResponse"){
 						searchy.popup("Cannot connect to one.uf. Contact me pls");

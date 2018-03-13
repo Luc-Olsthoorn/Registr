@@ -1,22 +1,31 @@
 
 class SearchBox{
-	constructor(divToBindTo, callback){
+	constructor(divToBindTo, isAnAddButton){
 		//Order matters
 		this.divToBindTo = divToBindTo;
 		this.active=false;
 		this.addHtml();
 		this.attachKeydownHandler();
+		this.addRemoveIcon();
 		this.render();
-		if(callback){
-			this.makeDisabled(callback);
+		if(isAnAddButton){
+			this.makeDisabled(isAnAddButton);
 		}
 	}
 	
 	addHtml(){
-		this.element = $(`<div class="ui inverted card" style="background:black; box-shadow: none;"></div>`);
-      	this.innerHtml =$(`<div class="ui icon input "></div>`);
-        this.searchBox = $(`<input type="search" placeholder="Enter Course">`);	
+		this.element = $(`<div class="ui inverted  card" style="background:black; box-shadow: none;"></div>`);
+		this.searchWrapper = $(`<div class="ui fluid search"></div>`);
+      	this.innerHtml =$(`<div class="ui icon input " style="width:100%;"></div>`);
+        this.searchBox = $(`<input class="prompt" style="border-radius: 4px;" type="search" placeholder="Enter Course">`);	
         this.searchIcon = $(`<i class=" circular link search icon "></i>`);
+        this.results =$(`<style>.ui.search > .results .result{
+        	padding:0px;
+        }
+        .ui.search > .results .result .content{
+        	padding:0px;
+        }
+        	</style><div class="results"></div>`);
         var self = this;
         this.searchIcon.click(function(){
         	console.log("pressed");
@@ -27,10 +36,15 @@ class SearchBox{
         });
       	this.innerHtml.append(this.searchBox);
       	this.innerHtml.append(this.searchIcon);
-      	this.element.append(this.innerHtml);
-
+      	this.searchWrapper.append(this.innerHtml);
+      	this.searchWrapper.append(this.results);
+      	this.element.append(this.searchWrapper);
+      	
       	this.label = $(` <div class="content" ></div></div>`);
 		this.element.prepend(this.label)
+	}
+	addAutoComplete(content){
+		this.element.search({source: content});
 	}
 	artificialText(textInput){
 		this.searchBox.val(textInput);
@@ -39,6 +53,7 @@ class SearchBox{
 		this.enterPressed(this.inputText);
 	}
 	makeDisabled(callback){
+		//REMOVE
 		this.innerHtml.addClass("disabled");
 		this.label.css("opacity",".45");
 		this.button=$(`<button style=" 
@@ -53,8 +68,11 @@ class SearchBox{
     		class="ui inverted icon button" data-tooltip="Add more courses" data-inverted="" data-position="right center">
   			<i class="add icon"></i>
 			</button>`);
+		this.removeIcon.detach();
+		//ADD
 		this.element.append(this.button);
 		var self =this;
+
 		this.button.on('click', function(){
 			callback();
 			self.removeDisabled();
@@ -63,6 +81,7 @@ class SearchBox{
 	removeDisabled(){
 		this.innerHtml.removeClass("disabled");
 		this.label.css("opacity","1");
+		this.label.append(this.removeIcon);
 		this.button.remove();
 	}
 	addSwitch(){
@@ -96,6 +115,7 @@ class SearchBox{
 	}
 
 	startActive(){
+		this.label.popup('destroy');
 		this.active = true;
 		this.searchIcon.addClass('disabled');
 		this.searchIcon.removeClass('link');
@@ -106,10 +126,11 @@ class SearchBox{
 		this.searchIcon.addClass('link');
 	}
 
-	addRemoveIcon(callback){
+	addRemoveIcon(){
 		this.removeIcon = $(`<i class=" remove icon"></i>`); 
+		var self =this;
 		this.removeIcon.on('click', function(){
-			callback();
+			self.deleteMe();
 		});
 		this.label.append(this.removeIcon);
 	}
@@ -133,6 +154,9 @@ class SearchBox{
 	attachKeydownHandler(){
 		var self = this;
 		this.element.keydown(function(e) {
+			if(e.which === 32){
+				e.preventDefault();
+			}
 			setTimeout(function() {
 				console.log(self.active);
 				if(self.active && e.keyCode != 13){ //delete as long as enter not pressed, and its still active

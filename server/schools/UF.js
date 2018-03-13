@@ -1,5 +1,5 @@
 const request = require("request");
-
+const fs = require('fs');
 class UF {
   constructor() {}
   getCoursePeriods(req, res) {}
@@ -30,9 +30,61 @@ class UF {
     ];
     res.send(JSON.stringify(outputSettingsMenu));
   }
-  
+  recourse(x, res){
+    var self =this;
+      console.log("Made " + x + " request");
+      var url = "https://one.uf.edu/apix/soc/schedule/?category=CWSP&term=2188&last-control-number=" + x;
+        request(url, function(error, response, html) {
+          if (!error) {
+            var temp = JSON.parse(html);
+            for(var i =0; i<temp[0].COURSES.length; i++){
+              self.courses.push(temp[0].COURSES[i].code);
+              console.log(temp[0].COURSES[i].code);
+            }
+            if(x+50>10832){
+              fs.writeFile("/public/json/allPossibleCourses.json", JSON.stringify(self.courses), 'utf8', function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+              });
+            } 
+            else{
+              self.recourse(x+50, res);
+            }
+            
+          }
+        });
+      
+  }
+  generatePossibleCourses(res){
+    var x =0;
+    this.courses = [];
+    this.recourse(x, res);
+  }
+  getPossibleCourses(res){
+    var self = this;
+    if(this.possibleCourses){
+      res.send(JSON.stringify(self.possibleCourses));
+    }else{
+      fs.readFile('/public/json/allPossibleCourses.json', 'utf8', function(err, data) {
+        if(!err){
+          res.header("Content-Type",'application/json');
+          self.possibleCourses = JSON.parse(data);
+          console.log(self.possibleCourses);
+          res.send(JSON.stringify(self.possibleCourses));
+        }else{
+          console.log(err);
+        }
+        
+        
+      });
+    }
+  }
   getCourseInfo(req, res) {
-    
+    if(req.body.course.length < 6 ||req.body.course.length > 10){
+      res.send(JSON.stringify({"error": "length"}));
+    }
     var fallMap = {
       "UFO" : "UFOL",
       "RES": "CWSP"
