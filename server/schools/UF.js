@@ -37,8 +37,9 @@ class UF {
         request(url, function(error, response, html) {
           if (!error) {
             var temp = JSON.parse(html);
-            for(var i =0; i<temp.length; i++){
+            for(var i =0; i<temp[0].COURSES.length; i++){
               self.courses.push(temp[0].COURSES[i].code);
+              console.log(temp[0].COURSES[i].code);
             }
             if(x+50>10832){
               fs.writeFile("/public/json/allPossibleCourses.json", JSON.stringify(self.courses), 'utf8', function (err) {
@@ -70,7 +71,7 @@ class UF {
         if(!err){
           res.header("Content-Type",'application/json');
           self.possibleCourses = JSON.parse(data);
-          //console.log(self.possibleCourses);
+          console.log(self.possibleCourses);
           res.send(JSON.stringify(self.possibleCourses));
         }else{
           console.log(err);

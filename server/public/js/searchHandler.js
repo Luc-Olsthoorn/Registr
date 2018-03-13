@@ -48,11 +48,16 @@ class searchHandler{
 				type: "GET",
 				url: "/getAllPossibleCourses",
 				success: function(data) {
-					var temp = JSON.parse(data);
+					console.log(data);
+					var temp={};
 					var output =[];
-					for(var i =0; i< temp.length;i++){
-						output.push({"title" : temp[i]});
+					for(var i =0; i< data.length; i++){
+						if(!temp[data[i]]){
+							output.push({"title" : data[i]});
+							temp[data[i]]=true;
+						}
 					}
+					
 					self.possibleCoursesList = output;
 					for(var i=0; i< self.searchBoxes.length;i++){
 						self.searchBoxes[i].addAutoComplete(self.possibleCoursesList);

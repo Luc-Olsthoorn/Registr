@@ -115,6 +115,7 @@ class SearchBox{
 	}
 
 	startActive(){
+		this.label.popup('destroy');
 		this.active = true;
 		this.searchIcon.addClass('disabled');
 		this.searchIcon.removeClass('link');
