@@ -153,6 +153,9 @@ class SearchBox{
 	attachKeydownHandler(){
 		var self = this;
 		this.element.keydown(function(e) {
+			if(e.which === 32){
+				e.preventDefault();
+			}
 			setTimeout(function() {
 				console.log(self.active);
 				if(self.active && e.keyCode != 13){ //delete as long as enter not pressed, and its still active
