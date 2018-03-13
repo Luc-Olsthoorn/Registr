@@ -20,19 +20,31 @@ class SearchBox{
         this.searchBox = $(`<input class="prompt" style="border-radius: 4px;" type="search" placeholder="Enter Course">`);	
         this.searchIcon = $(`<i class=" circular link search icon "></i>`);
         this.results =$(`<style>.ui.search > .results .result{
-        	padding:0px;
-        }
-        .ui.search > .results .result .content{
-        	padding:0px;
-        }
-        	</style><div class="results"></div>`);
+	        	padding:0px;
+	        }
+	        .ui.search > .results .result .content{
+	        	padding:0px;
+	        }
+        	</style><div class="results"></div>
+        `);
+        var self =this;
+        this.results.on("click",function(){
+        	setTimeout(function() {
+	        	self.refreshKey();
+				self.startActive();
+				self.enterPressed(self.inputText);
+			},20);
+        });
         var self = this;
         this.searchIcon.click(function(){
         	console.log("pressed");
-        	if(!this.active){
+        	
+        		self.refreshKey();
 				self.startActive();
+
+				console.log(self.inputText);
 				self.enterPressed(self.inputText);
-			}
+			
         });
       	this.innerHtml.append(this.searchBox);
       	this.innerHtml.append(this.searchIcon);
@@ -115,6 +127,10 @@ class SearchBox{
 	}
 
 	startActive(){
+		if(this.coursePointer){
+			this.deleteCourseCallback(this.coursePointer);
+		}
+		
 		this.label.popup('destroy');
 		this.active = true;
 		this.searchIcon.addClass('disabled');
@@ -158,14 +174,16 @@ class SearchBox{
 				e.preventDefault();
 			}
 			setTimeout(function() {
-				console.log(self.active);
+				//console.log(self.active);
 				if(self.active && e.keyCode != 13){ //delete as long as enter not pressed, and its still active
 					self.endActive();
 					self.deleteCourseCallback(self.coursePointer);			
 				}
 				self.refreshKey();
-				if (!self.active && e.keyCode == 13) { //enter is pressed  and its not already active
+				if (e.keyCode == 13) { //enter is pressed  and its not already active
+					self.refreshKey();
 					self.startActive();
+					//console.log(self.inputText);
 					self.enterPressed(self.inputText);
 				}
 			}, 20);
