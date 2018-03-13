@@ -70,7 +70,7 @@ class dropDownBox{
 		this.addHtml();
 	}
 	addHtml(){
-		this.outer = $(`<div class="ui selection dropdown" style="
+		this.outer = $(`<div class="ui selection transition dropdown" style="
 			    background-color: transparent;
 			    border: 2px solid white;
 			    color: white;
@@ -78,14 +78,15 @@ class dropDownBox{
 			    margin-left:10px;
 			">
 			<input type="hidden">
-		  	<i class="dropdown icon"></i>
+		  	
 		  	<div class="default text" style="color:white;">${this.name}</div>
+		  	<i class="dropdown icon"></i>
 
 		</div>`);
 		
 		
-		this.inner = $(`<div class="menu"></div>`);
-		for(var i=0; i<this.options.length; i++){
+		this.inner = $(`<div class="menu transition hidden" ></div>`);
+		for(var i=0; i<this.options.length; i++){ 
 			this.inner.append(`<div class="item" data-value="${this.options[i].val}">${this.options[i].name}</div>`);
 		}
 		

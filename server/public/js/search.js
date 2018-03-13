@@ -14,10 +14,18 @@ class SearchBox{
 	}
 	
 	addHtml(){
-		this.element = $(`<div class="ui inverted card" style="background:black; box-shadow: none;"></div>`);
-      	this.innerHtml =$(`<div class="ui icon input "></div>`);
-        this.searchBox = $(`<input type="search" placeholder="Enter Course">`);	
+		this.element = $(`<div class="ui inverted  card" style="background:black; box-shadow: none;"></div>`);
+		this.searchWrapper = $(`<div class="ui fluid search"></div>`);
+      	this.innerHtml =$(`<div class="ui icon input " style="width:100%;"></div>`);
+        this.searchBox = $(`<input class="prompt" style="border-radius: 4px;" type="search" placeholder="Enter Course">`);	
         this.searchIcon = $(`<i class=" circular link search icon "></i>`);
+        this.results =$(`<style>.ui.search > .results .result{
+        	padding:0px;
+        }
+        .ui.search > .results .result .content{
+        	padding:0px;
+        }
+        	</style><div class="results"></div>`);
         var self = this;
         this.searchIcon.click(function(){
         	console.log("pressed");
@@ -28,10 +36,15 @@ class SearchBox{
         });
       	this.innerHtml.append(this.searchBox);
       	this.innerHtml.append(this.searchIcon);
-      	this.element.append(this.innerHtml);
-
+      	this.searchWrapper.append(this.innerHtml);
+      	this.searchWrapper.append(this.results);
+      	this.element.append(this.searchWrapper);
+      	
       	this.label = $(` <div class="content" ></div></div>`);
 		this.element.prepend(this.label)
+	}
+	addAutoComplete(content){
+		this.element.search({source: content});
 	}
 	artificialText(textInput){
 		this.searchBox.val(textInput);
