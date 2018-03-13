@@ -150,6 +150,8 @@ class calendarHandler{
 			//console.log(category.val);
 			if(!result){
 				callback({"error":"serverNoResponse"});
+			}else if(JSON.parse(result).error){
+				callback(JSON.parse(result));
 			}else if(JSON.parse(result)[0].TOTALROWS != 0 && JSON.parse(result)[0].TOTALROWS != null){
 				console.log(result);
 				//not empty

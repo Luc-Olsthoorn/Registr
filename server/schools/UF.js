@@ -81,7 +81,9 @@ class UF {
     }
   }
   getCourseInfo(req, res) {
-    
+    if(req.body.course.length < 6 ||req.body.course.length > 10){
+      res.send(JSON.stringify({"error": "length"}));
+    }
     var fallMap = {
       "UFO" : "UFOL",
       "RES": "CWSP"

@@ -101,6 +101,11 @@ class searchHandler{
 						searchy.popup("Invalid Course Code");
 						
 					}
+					if(result.error == "length"){
+						searchy.addColor("#ffeb3b");
+						searchy.endLoad();
+						searchy.popup("Invalid Length");
+					}
 					if(result.error == "serverNoResponse"){
 						searchy.popup("Cannot connect to one.uf. Contact me pls");
 						searchy.endLoad();
