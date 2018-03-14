@@ -48,13 +48,13 @@ class searchHandler{
 				type: "GET",
 				url: "/getAllPossibleCourses",
 				success: function(data) {
-					console.log(data);
+					var tempData=JSON.parse(data);
 					var temp={};
 					var output =[];
-					for(var i =0; i< data.length; i++){
-						if(!temp[data[i]]){
-							output.push({"title" : data[i]});
-							temp[data[i]]=true;
+					for(var i =0; i< tempData.length; i++){
+						if(!temp[tempData[i]]){
+							output.push({"title" : tempData[i]});
+							temp[tempData[i]]=true;
 						}
 					}
 					
