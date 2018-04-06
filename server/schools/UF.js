@@ -81,10 +81,38 @@ class UF {
       });
     }
   }
+  function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
   getCourseInfo(req, res) {
     if(req.body.course.length < 6 ||req.body.course.length > 10){
       res.send(JSON.stringify({"error": "length"}));
     }
+
+    if(isNumeric(req.body.course) && req.body.course.length == 5){
+      //This is a "Class#" we were given (https://i.gyazo.com/96f3d31f3b875cbf37b531ccb5aac579.png)
+      //and we should handle it as a fixed section being demanded of us.
+      //handler format: https://one.uf.edu/apix/soc/schedule/?category=CWSP&class-num=11898&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term=2188&wr-2000=&wr-4000=&wr-6000=&writing=
+      let url =
+      "https://one.uf.edu/apix/"+
+      prefix+
+      "/schedule/?category="+
+       cat + 
+       "&class-num=" + req.body.course+
+      "&course-code=" +
+      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
+      req.body.semester+
+      "&wr-2000=&wr-4000=&wr-6000=&writing=";
+      console.log(url);
+      request(url, function(error, response, html) {
+      if (!error) {
+        console.log("got it");
+        res.send(html);
+      }
+    });
+    }
+    else{
     var fallMap = {
       "UFO" : "UFOL",
       "RES": "CWSP"
@@ -109,16 +137,12 @@ class UF {
       prefix+
       "/schedule/?category="+
        cat + 
-      "&course-code=" +
-      req.body.course +
-      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t" +
-      "=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d" +
-      "=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-row=0&level-max=--&level-min" +
-      "=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e" +
-      "=&prog-level=+&section=&term="+
-     req.body.semester + "&var-cred=true&writing=";
-
-    console.log(url);
+       "&class-num="+
+      "&course-code=" + req.body.course+
+      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
+      req.body.semester+
+      "&wr-2000=&wr-4000=&wr-6000=&writing=";
+      console.log(url);
     request(url, function(error, response, html) {
       if (!error) {
         console.log("got it");
@@ -126,6 +150,7 @@ class UF {
       }
     });
   }
+}
 }
 
 module.exports = new UF();
