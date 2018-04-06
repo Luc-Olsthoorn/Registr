@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "jasmine"
+    "test": "jasmine",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+  "*.js": ["eslint --fix", "git add"]
   },
   "dependencies": {
     "http": "latest",
@@ -18,6 +22,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jasmine": "^3.1.0"
+    "husky": "^0.14.3",
+    "jasmine": "^3.1.0",
+    "lint-staged": "^7.0.4",
+    "prettier": "1.11.1"
   }
+
 }

@@ -31,7 +31,7 @@ class Course {
   getRawJSON() {
     return this.rawJSON;
   }
-  getIsWeb(i){
+  getIsWeb(i) {
     return this.sectionArray[i].meetTimes.length == 0;
   }
   addColor(color) {
@@ -41,3 +41,5 @@ class Course {
     return this.color;
   }
 }
+
+module.exports = course;
