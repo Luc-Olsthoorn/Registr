@@ -133,16 +133,12 @@ class UF {
       prefix+
       "/schedule/?category="+
        cat + 
-      "&course-code=" +
-      req.body.course +
-      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t" +
-      "=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d" +
-      "=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-row=0&level-max=--&level-min" +
-      "=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e" +
-      "=&prog-level=+&section=&term="+
-     req.body.semester + "&var-cred=true&writing=";
-
-    console.log(url);
+       "&class-num="+
+      "&course-code=" + req.body.course+
+      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
+      req.body.semester+
+      "&wr-2000=&wr-4000=&wr-6000=&writing=";
+      console.log(url);
     request(url, function(error, response, html) {
       if (!error) {
         console.log("got it");
