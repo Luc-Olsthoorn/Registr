@@ -22,8 +22,7 @@ class settingsHandler{
 
 			var self =this;
 			dropDownBoxy.attachOnChange(function(){
-				//deprecated as of rn
-				//self.filterClicked();
+				self.settingsClicked();
 				
 			});
 			this.settingsArray[i].settingsDropDown = dropDownBoxy;
@@ -53,7 +52,7 @@ class settingsHandler{
 	}
 	attachOnSettingsClick(callback){
 		//deprecated as of rn
-		//this.filterClicked = callback;
+		this.settingsClicked = callback;
 	}
 }
 class dropDownBox{

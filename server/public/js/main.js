@@ -69,7 +69,17 @@ class Main{
 			self.updateCalenders();
 		});
 
-		//
+		//-------------------
+		//Change of settings
+		//-------------------
+		this.settingsHandley.attachOnSettingsClick(function(){
+			let currentCourseCodes=[];
+			let courses = self.courseHandly.getCourses();
+			for(let i=0; i< courses.length; i++){
+				currentCourseCodes.push(courses[i].getCourseCode());
+			}
+			self.searchHandley.addArtificialText(currentCourseCodes);
+		})
 
 		
 		//TEST
