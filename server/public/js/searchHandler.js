@@ -32,6 +32,7 @@ class searchHandler{
 		}
 		for(var i =0; i < inputs.length; i++){
 			var x =this.newSearchBox(this.underTheFold, false);
+			console.log(inputs[i]);
 			x.artificialText(inputs[i]);
 		}
 		this.newSearchBox(this.getUnderTheFold(), true);
@@ -104,6 +105,12 @@ class searchHandler{
 						searchy.addColor("#ffeb3b");
 						searchy.endLoad();
 						searchy.popup("Invalid Course Code");
+						
+					}
+					if(result.error == "noSemesterSupport"){
+						searchy.addColor("#ffeb3b");
+						searchy.endLoad();
+						searchy.popup("This semester does not support course numbers");
 						
 					}
 					if(result.error == "length"){

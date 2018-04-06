@@ -4,6 +4,19 @@ class Course {
     this.rawJSON = input;
     this.sectionArray = this.rawJSON[0].COURSES[0].sections;
   }
+  getClassNum(i){
+    return this.sectionArray[i].classNumber;
+  }
+  getInstructor(i){
+    if(this.sectionArray[i].instructors.length!=0){
+      return this.sectionArray[i].instructors[0].name;
+    }else{
+      return "";
+    }
+  }
+  getDescription(){
+    return this.rawJSON[0].COURSES[0].description;
+  }
   getSectionTimes(i) {
     return this.sectionArray[i].meetTimes;
   }
