@@ -12,9 +12,8 @@
     "mongodb": "latest",
     "request": "~2.81.0",
     "body-parser": "latest",
-    "fs":"latest",
+    "fs": "latest",
     "express": "latest"
-
   },
   "author": "",
   "license": "ISC"
