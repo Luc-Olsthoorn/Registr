@@ -71,7 +71,7 @@ class UF {
         if(!err){
           res.header("Content-Type",'application/json');
           self.possibleCourses = JSON.parse(data);
-          console.log(self.possibleCourses);
+          //console.log(self.possibleCourses);
           res.send(JSON.stringify(self.possibleCourses));
         }else{
           console.log(err);
@@ -81,38 +81,9 @@ class UF {
       });
     }
   }
-  function isNumeric(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-  }
+
 
   getCourseInfo(req, res) {
-    if(req.body.course.length < 6 ||req.body.course.length > 10){
-      res.send(JSON.stringify({"error": "length"}));
-    }
-
-    if(isNumeric(req.body.course) && req.body.course.length == 5){
-      //This is a "Class#" we were given (https://i.gyazo.com/96f3d31f3b875cbf37b531ccb5aac579.png)
-      //and we should handle it as a fixed section being demanded of us.
-      //handler format: https://one.uf.edu/apix/soc/schedule/?category=CWSP&class-num=11898&course-code=&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term=2188&wr-2000=&wr-4000=&wr-6000=&writing=
-      let url =
-      "https://one.uf.edu/apix/"+
-      prefix+
-      "/schedule/?category="+
-       cat + 
-       "&class-num=" + req.body.course+
-      "&course-code=" +
-      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
-      req.body.semester+
-      "&wr-2000=&wr-4000=&wr-6000=&writing=";
-      console.log(url);
-      request(url, function(error, response, html) {
-      if (!error) {
-        console.log("got it");
-        res.send(html);
-      }
-    });
-    }
-    else{
     var fallMap = {
       "UFO" : "UFOL",
       "RES": "CWSP"
@@ -123,8 +94,10 @@ class UF {
     //h hybrid          hybrid 
     //p                 not online
     //https://one.uf.edu/apix/soc/schedule/?category=CWSP&class-num=&course-code=cop3502&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term=2188&wr-2000=&wr-4000=&wr-6000=&writing=
-    var prefix = "";
-    var cat = "";
+    let prefix = "";
+    let cat = "";
+    let classNum = "";
+    let courseCode= "";
     if(req.body.semester == "2188"){
         cat = fallMap[req.body.category]
         prefix = "soc";
@@ -132,13 +105,27 @@ class UF {
         cat = req.body.category;
         prefix = "soc-summer"
       }
+    if(!isNaN(req.body.course) && req.body.course.length == 5){
+      //Searching by class number 
+      if(req.body.semester != "2188"){
+        res.send(JSON.stringify({"error": "noSupport"}));
+        return;
+      }
+       classNum= req.body.course;
+    }else if(req.body.course.length < 6 ||req.body.course.length > 10){
+      //Searching by course code
+      courseCode = req.body.course;
+    }else{
+      res.send(JSON.stringify({"error": "length"}));
+      return;
+    }
     let url =
       "https://one.uf.edu/apix/"+
       prefix+
       "/schedule/?category="+
        cat + 
-       "&class-num="+
-      "&course-code=" + req.body.course+
+       "&class-num="+ classNum + 
+      "&course-code=" + courseCode+
       "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
       req.body.semester+
       "&wr-2000=&wr-4000=&wr-6000=&writing=";
@@ -150,7 +137,6 @@ class UF {
       }
     });
   }
-}
 }
 
 module.exports = new UF();
