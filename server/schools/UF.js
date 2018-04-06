@@ -81,6 +81,10 @@ class UF {
       });
     }
   }
+  function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
   getCourseInfo(req, res) {
     if(req.body.course.length < 6 ||req.body.course.length > 10){
       res.send(JSON.stringify({"error": "length"}));
