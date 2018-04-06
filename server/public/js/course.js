@@ -4,6 +4,7 @@ class Course {
     this.rawJSON = input;
     this.sectionArray = this.rawJSON[0].COURSES[0].sections;
   }
+  
   getSectionTimes(i) {
     return this.sectionArray[i].meetTimes;
   }

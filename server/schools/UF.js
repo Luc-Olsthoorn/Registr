@@ -112,10 +112,13 @@ class UF {
         return;
       }
        classNum= req.body.course;
-    }else if(req.body.course.length < 6 ||req.body.course.length > 10){
+    }else if(req.body.course.length > 6 && req.body.course.length < 10){
       //Searching by course code
       courseCode = req.body.course;
     }else{
+      console.log("length error");
+      console.log(req.body.course);
+      console.log(req.body.course.length);
       res.send(JSON.stringify({"error": "length"}));
       return;
     }
