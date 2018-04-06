@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test implemented\""
+    "test": "jasmine"
   },
   "dependencies": {
     "http": "latest",
@@ -16,5 +16,8 @@
     "express": "latest"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.1.0"
+  }
 }
