@@ -56,7 +56,11 @@ class SearchBox{
 		this.element.prepend(this.label)
 	}
 	addAutoComplete(content){
-		this.element.search({source: content});
+		this.element.search({
+			source: content,
+			showNoResults: false
+
+		});
 	}
 	artificialText(textInput){
 		this.searchBox.val(textInput);

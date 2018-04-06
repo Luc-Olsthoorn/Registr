@@ -106,6 +106,12 @@ class searchHandler{
 						searchy.popup("Invalid Course Code");
 						
 					}
+					if(result.error == "noSemesterSupport"){
+						searchy.addColor("#ffeb3b");
+						searchy.endLoad();
+						searchy.popup("This semester does not support course numbers");
+						
+					}
 					if(result.error == "length"){
 						searchy.addColor("#ffeb3b");
 						searchy.endLoad();

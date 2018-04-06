@@ -108,7 +108,7 @@ class UF {
     if(!isNaN(req.body.course) && req.body.course.length == 5){
       //Searching by class number 
       if(req.body.semester != "2188"){
-        res.send(JSON.stringify({"error": "noSupport"}));
+        res.send(JSON.stringify({"error": "noSemesterSupport"}));
         return;
       }
        classNum= req.body.course;
