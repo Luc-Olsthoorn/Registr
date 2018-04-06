@@ -81,11 +81,8 @@ class calendar{
 		this.days["W"]=$(`<div class="two wide column"><div style="overflow:hidden;">Wednesday</div></div>`);
 		this.days["R"]=$(`<div class="two wide column"><div style="overflow:hidden;">Thursday</div></div>`);
 		this.days["F"]=$(`<div class="two wide column"><div style="overflow:hidden;">Friday</div></div>`);
-		this.days["S"]=$(`<div class="two wide column"><div style="overflow:hidden;">Saturday</div></div>`);
-		this.days["U"]=$(`<div class="two wide column"><div style="overflow:hidden;">Sunday</div></div>`);
 		var keys = Object.keys(this.days);
 
-    innerElement.append(`<div class="two wide column"></div>`);
     for (var i = 0; i < keys.length; i++) {
       innerElement.append(this.days[keys[i]]);
     }
@@ -113,7 +110,7 @@ class calendar{
         periods[i]
       }<span class="thin">${times[i]}</span></h4> </div>`;
     }
-    return $(`<div class="two wide column">${text}</div>`);
+    return $(`<div class="two wide mobile three wide computer column">${text}</div>`);
   }
   addDividers(periods) {
     var text = "";
@@ -131,7 +128,7 @@ class calendar{
     var innerElement = $(`<div  class="ui grid " ></div>`);
 
     //Add day columns
-    this.addDayColumns(innerElement);
+    
     var periods = [
       "1",
       "2",
@@ -150,6 +147,7 @@ class calendar{
     ];
 
     innerElement.append(this.addTimes(periods));
+    this.addDayColumns(innerElement);
     innerElement.append(this.addDividers(periods));
 
     this.webDiv = $(`<div style="width:100%;"></div>`);
