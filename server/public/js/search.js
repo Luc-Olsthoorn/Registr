@@ -37,12 +37,12 @@ class SearchBox{
         });
         var self = this;
         this.searchIcon.click(function(){
-        	console.log("pressed");
+        	//console.log("pressed");
         	
         		self.refreshKey();
 				self.startActive();
 
-				console.log(self.inputText);
+				//console.log(self.inputText);
 				self.enterPressed(self.inputText);
 			
         });
@@ -66,6 +66,7 @@ class SearchBox{
 		this.searchBox.val(textInput);
 		this.refreshKey();
 		this.startActive();
+		console.log(this.inputText);
 		this.enterPressed(this.inputText);
 	}
 	makeDisabled(callback){

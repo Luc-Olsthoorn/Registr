@@ -48,9 +48,10 @@ class Main{
 			if(input.deleteCourse){
 				self.courseHandly.deleteCourse(input.deleteCourse);
 				self.updateCalenders();
-			}else{
+			}else if (input.add){
+				console.log(input);
 				let settings = self.settingsHandley.getValues();
-				console.log(input.add);
+				//console.log(input.add);
 				self.courseHandly.addCourse(input.add, input.color, function(serverResponse){
 					input.callback(serverResponse);
 					if(serverResponse.success){
@@ -75,6 +76,7 @@ class Main{
 		this.settingsHandley.attachOnSettingsClick(function(){
 			let currentCourseCodes=[];
 			let courses = self.courseHandly.getCourses();
+			console.log(courses);
 			for(let i=0; i< courses.length; i++){
 				currentCourseCodes.push(courses[i].getCourseCode());
 			}

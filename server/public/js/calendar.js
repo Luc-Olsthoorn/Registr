@@ -12,7 +12,7 @@ class calendar{
     //Its web
     if(options.sectWeb){
           var sectionMeetTimey = new sectionMeetTime(this.webDiv);
-          sectionMeetTimey.addSectionName(options.section); 
+          sectionMeetTimey.addSectionName(options.code); 
           sectionMeetTimey.addColor(options.color);
           sectionMeetTimey.render();
           sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
@@ -24,7 +24,7 @@ class calendar{
   			for(var j =0; j< options.sectionMeetTimes[i].meetDays.length; j++){
          
           var sectionMeetTimey = new sectionMeetTime(this.days[options.sectionMeetTimes[i].meetDays[j]]);
-          sectionMeetTimey.addSectionName(options.section);
+          sectionMeetTimey.addSectionName(options.code);
           sectionMeetTimey.addStartStop(convertToNum(options.sectionMeetTimes[i].meetPeriodBegin), convertToNum(options.sectionMeetTimes[i].meetPeriodEnd));
           
   				sectionMeetTimey.addColor(options.color);
@@ -46,26 +46,41 @@ class calendar{
 	}
 	toggleSideBar(info, self){
 		self.sideBar.empty();
+    let header ="";
+    if(info.classNum){
+      header = info.classNum;
+    }else{
+      header = info.section;
+    }
 		self.sideBar.append(`
 			<div class="ui segment container" style="height:100%; background-color: ${info.color}">
-			<h3 class="ui header">${info.code}</h3>
+			<h3 class="ui header">${header}</h3>
 			<h2 class="ui sub header"><i>${info.name}</i></h2> 
 			<div class="ui  divider"></div>
 			<div class="ui list">
-			  	<div class="item">
-			    	<div class="header">Department Name</div>
-			    	${info.deptName}
-				</div>
+      <div class="item">
+            <div class="header">Instructor</div>
+             ${info.instructor}
+        </div>
+			  	
 			 
 				<div class="item">
 				    <div class="header">Credits</div>
 				    ${info.credits}
 				</div>
-				 
+				 <div class="item">
+            <div class="header">Department Name</div>
+            ${info.deptName}
+        </div>
 				<div class="item">
 				    <div class="header">Cost</div>
 				     ${info.courseFee}
 				</div>
+        
+        <div class="item">
+            <div class="header">About</div>
+            ${info.description}
+        </div>
 			 </div>
 		  </div>`);
 		self.sideBar
@@ -186,7 +201,7 @@ class sectionMeetTime {
   }
   addSectionName(sectionName) {
     this.element.append(
-      `<div class="column" style="padding:0px;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`
+      `<div class="column" style="padding:0px; overflow: hidden;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`
     );
   }
   deleteMe() {

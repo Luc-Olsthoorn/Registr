@@ -30,7 +30,7 @@ class courseHandler{
 			}else if(JSON.parse(result).error){
 				callback(JSON.parse(result));
 			}else if(JSON.parse(result)[0].TOTALROWS != 0 && JSON.parse(result)[0].TOTALROWS != null){
-				console.log(result);
+				//console.log(result);
 				//not empty
 				var coursey = new Course();
 				coursey.setRawJSON(JSON.parse(result));

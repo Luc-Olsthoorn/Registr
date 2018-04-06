@@ -85,6 +85,9 @@ class calendarHandler{
 					"deptName" : self.courses[course].getDeptName(section) , 
 					"credits" :  self.courses[course].getCredits(section),
 					"sectWeb"  : self.courses[course].getIsWeb(section),
+					"classNum"	: self.courses[course].getClassNum(section),
+					"instructor" : self.courses[course].getInstructor(section),
+					"description" : self.courses[course].getDescription(section),
 					"courseFee" : self.courses[course].getCourseFee(section)
 				});	
 				

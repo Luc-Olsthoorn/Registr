@@ -32,6 +32,7 @@ class searchHandler{
 		}
 		for(var i =0; i < inputs.length; i++){
 			var x =this.newSearchBox(this.underTheFold, false);
+			console.log(inputs[i]);
 			x.artificialText(inputs[i]);
 		}
 		this.newSearchBox(this.getUnderTheFold(), true);
