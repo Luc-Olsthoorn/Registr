@@ -10,7 +10,13 @@ Currently built for UF only
 
 If you have a bug or ui/ux request ping me @ me@lucolsthoorn.com
 
-## Run
+## Local Server
+- `npm install`
+- `npm run build`
+- `npm start`
+
+
+## Docker Server
 
 docker-compose up
 

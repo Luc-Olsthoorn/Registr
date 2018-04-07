@@ -9,4 +9,6 @@ ADD schools/ /schools
 ADD public/ /public
 ADD server.js /server.js
 
+RUN npm run build
+
 CMD npm start
