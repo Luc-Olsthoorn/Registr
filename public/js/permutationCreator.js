@@ -1,4 +1,6 @@
-class permutationCreator {
+import { convertToNum } from "./utils";
+
+export default class permutationCreator {
   run(courses, filters) {
     let permutation = this.createPermutation(courses);
     let filtered = this.removeOverlapAndFilter(permutation, courses, filters);
@@ -146,22 +148,5 @@ class permutationCreator {
       return false;
     }
     return true;
-  }
-}
-//UF has late classes with special codes, this strips them and returns an integer
-function convertToNum(inputTime) {
-  switch (inputTime) {
-    case "E1":
-      return 12;
-      break;
-    case "E2":
-      return 13;
-      break;
-    case "E3":
-      return 14;
-      break;
-    default:
-      return inputTime;
-      break;
   }
 }

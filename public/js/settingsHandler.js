@@ -1,7 +1,7 @@
-require("jquery-ui");
 var $ = require("jquery");
+require("jquery-ui");
 
-export class settingsHandler {
+export default class settingsHandler {
   constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     var self = this;

@@ -1,12 +1,15 @@
 // Imports
 import calendarHandler from "./calendarHandler";
 import filterHandler from "./filterHandler";
-
+import courseHandler from "./courseHandler";
 import searchHandler from "./searchHandler";
 import settingsHandler from "./settingsHandler";
+import permutationCreator from "./permutationCreator";
 
 import "jquery-ui";
 var $ = require("jquery");
+// export for others scripts to use
+window.$ = $;
 window.jQuery = $;
 
 require("../../semantic/dist/semantic");
@@ -17,6 +20,7 @@ $(document).ready(function() {
   $("body").css("background-color", "#2196f3");
   main.main();
 });
+
 class Main {
   constructor() {
     this.colorCounter = 0;

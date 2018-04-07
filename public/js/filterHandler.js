@@ -1,6 +1,6 @@
-import { $ } from "jquery";
+var $ = require("jquery");
 
-export class filterHandler {
+export default class filterHandler {
   constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     this.addHtml();

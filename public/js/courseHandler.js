@@ -1,5 +1,9 @@
+var $ = require("jquery");
+
+import Course from "./course";
+
 //Make get note server request
-class courseHandler {
+export default class courseHandler {
   constructor() {
     this.courses = [];
   }

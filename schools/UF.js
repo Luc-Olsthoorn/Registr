@@ -42,7 +42,7 @@ class UF {
           console.log(temp[0].COURSES[i].code);
         }
         if(x+50>10832){
-          fs.writeFile("/public/json/allPossibleCourses.json", JSON.stringify(self.courses), 'utf8', function (err) {
+          fs.writeFile("public/json/allPossibleCourses.json", JSON.stringify(self.courses), 'utf8', function (err) {
             if (err) {
               return console.log(err);
             }
@@ -67,7 +67,7 @@ class UF {
     if(this.possibleCourses){
       res.send(JSON.stringify(self.possibleCourses));
     }else{
-      fs.readFile('/public/json/allPossibleCourses.json', 'utf8', function(err, data) {
+      fs.readFile('public/json/allPossibleCourses.json', 'utf8', function(err, data) {
         if(!err){
           res.header("Content-Type",'application/json');
           self.possibleCourses = JSON.parse(data);

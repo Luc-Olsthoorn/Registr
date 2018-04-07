@@ -1,6 +1,6 @@
-import { $ } from "jquery";
+var $ = require("jquery");
 
-export class SearchBox {
+export default class SearchBox {
   constructor(divToBindTo, isAnAddButton) {
     //Order matters
     this.divToBindTo = divToBindTo;

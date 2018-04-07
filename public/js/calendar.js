@@ -1,8 +1,8 @@
-import convertToNum from "./utils";
-import "jquery-ui";
-import { $ } from "jquery";
+require("jquery-ui");
+var $ = require("jquery");
+import { convertToNum } from "./utils";
 
-export class calendar {
+export default class calendar {
   constructor(divToBindTo, calendarNumber) {
     this.divToBindTo = divToBindTo;
     this.boxArr = {};

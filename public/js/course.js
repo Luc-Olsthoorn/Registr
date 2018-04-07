@@ -1,4 +1,4 @@
-export class Course {
+export default class Course {
   setRawJSON(input) {
     console.log(input);
     this.rawJSON = input;
