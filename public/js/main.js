@@ -5,7 +5,7 @@ import filterHandler from "./filterHandler";
 import searchHandler from "./searchHandler";
 import settingsHandler from "./settingsHandler";
 
-require("jquery-ui");
+import "jquery-ui";
 var $ = require("jquery");
 window.jQuery = $;
 
@@ -17,7 +17,6 @@ $(document).ready(function() {
   $("body").css("background-color", "#2196f3");
   main.main();
 });
-
 class Main {
   constructor() {
     this.colorCounter = 0;
@@ -43,60 +42,86 @@ class Main {
     });
     resize();
 
-    var nothingSelected = $(`
+    this.nothingSelected = $(`
 			<div id= "nothingSelected">
 			
-	  </div>
-	    <div style="text-align:center; top: 24%; ">
+	  		</div>
+	    	<div style="text-align:center; top: 24%; ">
 	       <h1 class="header inverted thin " style="text-align:center; font-size: 60px; margin:0px;"> Oops you have nothing selected. </h1>
 
 	    </div></div`);
-    var self = this;
 
+    var self = this;
     this.calendarHandly = new calendarHandler($("#results"));
-    this.searchy = new searchHandler($("#search"));
-    this.filters = new filterHandler($("#filters"));
+    this.courseHandly = new courseHandler();
+    this.permutationCreaty = new permutationCreator();
+    this.searchHandley = new searchHandler($("#search"));
+    this.filtersHandley = new filterHandler($("#filters"));
+    this.settingsHandley = new settingsHandler($("#settings"));
+
     //Fake filters
     var temp = new filterHandler($("#filtersExample"));
     temp.openAccordion();
     //Get color
-    this.searchy.attachColorGetter(function() {
+    this.searchHandley.attachColorGetter(function() {
       return self.getColor();
     });
     //Add a single search manually
-    this.searchy.newSearchBox(this.searchy.getUnderTheFold(), false);
-    this.searchy.newSearchBox(this.searchy.getUnderTheFold(), true);
+    this.searchHandley.newSearchBox(
+      this.searchHandley.getUnderTheFold(),
+      false
+    );
+    this.searchHandley.newSearchBox(this.searchHandley.getUnderTheFold(), true);
 
+    //------------------
     //Change of courses
-    this.searchy.attachDataSend(function(input) {
-      self.calendarHandly.handleInputUpdate(input);
-    });
-    //Change of filters
-    this.filters.attachOnFilterClick(function() {
-      self.calendarHandly.handleInputUpdate({ updateFilters: true });
-    });
-    this.settings = new settingsHandler($("#settings"), function() {
-      self.calendarHandly.attachGetSettings(function() {
-        return self.settings.getValues();
-      });
-      //Change of settings (year / semester)
-      self.settings.attachOnSettingsClick(function(input) {
-        self.calendarHandly.handleInputUpdate({ updateSettings: true });
-      });
-    });
-    //Get filters
-    this.calendarHandly.attachGetFilters(function() {
-      return self.filters.getValues();
+    //------------------
+    this.searchHandley.attachDataSend(function(input, color) {
+      //TODO, getcourses
+      if (input.deleteCourse) {
+        self.courseHandly.deleteCourse(input.deleteCourse);
+        self.updateCalenders();
+      } else if (input.add) {
+        console.log(input);
+        let settings = self.settingsHandley.getValues();
+        //console.log(input.add);
+        self.courseHandly.addCourse(
+          input.add,
+          input.color,
+          function(serverResponse) {
+            input.callback(serverResponse);
+            if (serverResponse.success) {
+              self.updateCalenders();
+            }
+          },
+          settings
+        );
+      }
     });
 
-    //Attach empty result
-    this.calendarHandly.attachRunOnEmpty(function() {
-      $("#results").append(nothingSelected);
+    //-------------------
+    //Change of filters
+    //-------------------
+    this.filtersHandley.attachOnFilterClick(function() {
+      self.updateCalenders();
+    });
+
+    //-------------------
+    //Change of settings
+    //-------------------
+    this.settingsHandley.attachOnSettingsClick(function() {
+      let currentCourseCodes = [];
+      let courses = self.courseHandly.getCourses();
+      console.log(courses);
+      for (let i = 0; i < courses.length; i++) {
+        currentCourseCodes.push(courses[i].getCourseCode());
+      }
+      self.searchHandley.addArtificialText(currentCourseCodes);
     });
 
     //TEST
     $("#tryItOutBtn").on("click", function() {
-      self.searchy.addArtificialText(["cop3502", "cop4600", "iuf1000"]);
+      self.searchHandley.addArtificialText(["cop3502", "cop4600", "iuf1000"]);
     });
   }
   getColor() {
@@ -104,5 +129,17 @@ class Main {
     var color = this.colorArray[this.colorCounter];
     this.colorCounter = (this.colorCounter + 1) % this.colorArray.length;
     return color;
+  }
+  updateCalenders() {
+    this.calendarHandly.deleteAll();
+
+    let filters = this.filtersHandley.getValues();
+    let courses = this.courseHandly.getCourses();
+    if (courses.length != 0) {
+      let permutation = this.permutationCreaty.run(courses, filters);
+      this.calendarHandly.addCalendars(courses, permutation);
+    } else {
+      $("#results").append(this.nothingSelected);
+    }
   }
 }

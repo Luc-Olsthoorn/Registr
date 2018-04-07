@@ -2,14 +2,13 @@ require("jquery-ui");
 var $ = require("jquery");
 
 export class settingsHandler {
-  constructor(divToBindTo, callback) {
+  constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     var self = this;
     this.serverRequest(function(result) {
       self.settingsArray = JSON.parse(result);
       //console.log(self.settingsArray);
       self.addHtml();
-      callback();
     });
   }
   addHtml() {
@@ -30,7 +29,7 @@ export class settingsHandler {
 
       var self = this;
       dropDownBoxy.attachOnChange(function() {
-        self.filterClicked();
+        self.settingsClicked();
       });
       this.settingsArray[i].settingsDropDown = dropDownBoxy;
     }
@@ -60,7 +59,8 @@ export class settingsHandler {
     return this.settingsArray;
   }
   attachOnSettingsClick(callback) {
-    this.filterClicked = callback;
+    //deprecated as of rn
+    this.settingsClicked = callback;
   }
 }
 class dropDownBox {

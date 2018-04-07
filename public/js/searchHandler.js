@@ -27,7 +27,6 @@ export class searchHandler {
     this.underTheFold = $(`<div class="ui cards two"></div>`);
     outer.append(this.underTheFold);
     this.accordion.append(outer);
-
     this.accordion.accordion();
   }
   addArtificialText(inputs) {
@@ -36,6 +35,7 @@ export class searchHandler {
     }
     for (var i = 0; i < inputs.length; i++) {
       var x = this.newSearchBox(this.underTheFold, false);
+      console.log(inputs[i]);
       x.artificialText(inputs[i]);
     }
     this.newSearchBox(this.getUnderTheFold(), true);
@@ -52,12 +52,13 @@ export class searchHandler {
       type: "GET",
       url: "/getAllPossibleCourses",
       success: function(data) {
+        var tempData = JSON.parse(data);
         var temp = {};
         var output = [];
-        for (var i = 0; i < data.length; i++) {
-          if (!temp[data[i]]) {
-            output.push({ title: data[i] });
-            temp[data[i]] = true;
+        for (var i = 0; i < tempData.length; i++) {
+          if (!temp[tempData[i]]) {
+            output.push({ title: tempData[i] });
+            temp[tempData[i]] = true;
           }
         }
 
@@ -92,12 +93,10 @@ export class searchHandler {
     searchy.attachEnterPressHandler(function(inputText) {
       searchy.startLoad();
       searchy.addColor("#f44336");
-      console.log(inputText);
       self.sendData({
         add: inputText,
         color: color,
         callback: function(result) {
-          console.log(result);
           if (result.success) {
             searchy.addColor(color);
             searchy.endLoad();

@@ -9,25 +9,25 @@ export class calendar {
     this.calendarNumber = calendarNumber;
   }
   addSection(options) {
-    // Create elements
-    let tempArr = [];
-    let self = this;
-    // Its web
+    //Create elements
+    var tempArr = [];
+    var self = this;
+    //Its web
     if (options.sectWeb) {
       var sectionMeetTimey = new sectionMeetTime(this.webDiv);
-      sectionMeetTimey.addSectionName(options.section);
+      sectionMeetTimey.addSectionName(options.code);
       sectionMeetTimey.addColor(options.color);
       sectionMeetTimey.render();
       sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
       tempArr.push(sectionMeetTimey);
     } else {
-      // Its non-web
-      for (let i = 0; i < options.sectionMeetTimes.length; i++) {
-        for (let j = 0; j < options.sectionMeetTimes[i].meetDays.length; j++) {
+      //Its non-web
+      for (var i = 0; i < options.sectionMeetTimes.length; i++) {
+        for (var j = 0; j < options.sectionMeetTimes[i].meetDays.length; j++) {
           var sectionMeetTimey = new sectionMeetTime(
             this.days[options.sectionMeetTimes[i].meetDays[j]]
           );
-          sectionMeetTimey.addSectionName(options.section);
+          sectionMeetTimey.addSectionName(options.code);
           sectionMeetTimey.addStartStop(
             convertToNum(options.sectionMeetTimes[i].meetPeriodBegin),
             convertToNum(options.sectionMeetTimes[i].meetPeriodEnd)
@@ -51,28 +51,43 @@ export class calendar {
   }
   toggleSideBar(info, self) {
     self.sideBar.empty();
+    let header = "";
+    if (info.classNum) {
+      header = info.classNum;
+    } else {
+      header = info.section;
+    }
     self.sideBar.append(`
 			<div class="ui segment container" style="height:100%; background-color: ${
         info.color
       }">
-			<h3 class="ui header">${info.code}</h3>
+			<h3 class="ui header">${header}</h3>
 			<h2 class="ui sub header"><i>${info.name}</i></h2> 
 			<div class="ui  divider"></div>
 			<div class="ui list">
-			  	<div class="item">
-			    	<div class="header">Department Name</div>
-			    	${info.deptName}
-				</div>
+      <div class="item">
+            <div class="header">Instructor</div>
+             ${info.instructor}
+        </div>
+			  	
 			 
 				<div class="item">
 				    <div class="header">Credits</div>
 				    ${info.credits}
 				</div>
-				 
+				 <div class="item">
+            <div class="header">Department Name</div>
+            ${info.deptName}
+        </div>
 				<div class="item">
 				    <div class="header">Cost</div>
 				     ${info.courseFee}
 				</div>
+        
+        <div class="item">
+            <div class="header">About</div>
+            ${info.description}
+        </div>
 			 </div>
 		  </div>`);
     self.sideBar
@@ -98,22 +113,15 @@ export class calendar {
     this.days["F"] = $(
       `<div class="two wide column"><div style="overflow:hidden;">Friday</div></div>`
     );
-    this.days["S"] = $(
-      `<div class="two wide column"><div style="overflow:hidden;">Saturday</div></div>`
-    );
-    this.days["U"] = $(
-      `<div class="two wide column"><div style="overflow:hidden;">Sunday</div></div>`
-    );
-    let keys = Object.keys(this.days);
+    var keys = Object.keys(this.days);
 
-    innerElement.append(`<div class="two wide column"></div>`);
-    for (let i = 0; i < keys.length; i++) {
+    for (var i = 0; i < keys.length; i++) {
       innerElement.append(this.days[keys[i]]);
     }
   }
   addTimes(periods) {
-    let text = "";
-    let times = [
+    var text = "";
+    var times = [
       " (7:25 - 8:15)",
       " (8:30 - 9:20)",
       " (9:35 - 10:25)",
@@ -129,33 +137,35 @@ export class calendar {
       " (8:20 - 9:10)",
       " (9:20 - 10:10)"
     ];
-    for (let i = 0; i < periods.length; i++) {
+    for (var i = 0; i < periods.length; i++) {
       text += `<div style="height:20px; margin-bottom:20px; overflow:hidden; position:relative;"> <h4>${
         periods[i]
       }<span class="thin">${times[i]}</span></h4> </div>`;
     }
-    return $(`<div class="two wide column">${text}</div>`);
+    return $(
+      `<div class="two wide mobile three wide computer column">${text}</div>`
+    );
   }
   addDividers(periods) {
-    let text = "";
-    for (let i = 0; i < periods.length; i++) {
+    var text = "";
+    for (var i = 0; i < periods.length; i++) {
       text += `<div style="top: ${i * 24 +
         40}px;     width: 100%; position:relative;"><div class="ui  divider"></div></div>`;
     }
     return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
   }
   addBaseHtml() {
-    let element = $(
+    var element = $(
       `<div  class="pushable"     style="    min-height: 740px;"> </div>`
     );
-    let pusher = $(
+    var pusher = $(
       `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );
-    let innerElement = $(`<div  class="ui grid " ></div>`);
+    var innerElement = $(`<div  class="ui grid " ></div>`);
 
-    // Add day columns
-    this.addDayColumns(innerElement);
-    let periods = [
+    //Add day columns
+
+    var periods = [
       "1",
       "2",
       "3",
@@ -173,13 +183,14 @@ export class calendar {
     ];
 
     innerElement.append(this.addTimes(periods));
+    this.addDayColumns(innerElement);
     innerElement.append(this.addDividers(periods));
 
     this.webDiv = $(`<div style="width:100%;"></div>`);
     innerElement.append(this.webDiv);
     this.sideBar = this.addSideBar();
     element.append(this.sideBar);
-    // add Schedule name and attach every thing
+    //add Schedule name and attach every thing
     pusher.append(
       `<h2 style="width:100%; text-align:center;">Option: ${this
         .calendarNumber + 1}</h2>`
@@ -214,15 +225,15 @@ class sectionMeetTime {
   }
   addSectionName(sectionName) {
     this.element.append(
-      `<div class="column" style="padding:0px;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`
+      `<div class="column" style="padding:0px; overflow: hidden;"><h3 style="text-align:center; width:100%; ">${sectionName}</h3></div>`
     );
   }
   deleteMe() {
     this.element.remove();
   }
   addSideBarHandler(callback, info, self) {
-    let x = callback;
-    let box = this;
+    var x = callback;
+    var box = this;
     this.element.click(function() {
       box.element.transition("pulse");
       x(info, self);
