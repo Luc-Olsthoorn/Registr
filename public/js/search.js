@@ -1,4 +1,4 @@
-import { $ } from 'jquery';
+import { $ } from "jquery";
 
 export class SearchBox {
   constructor(divToBindTo, isAnAddButton) {

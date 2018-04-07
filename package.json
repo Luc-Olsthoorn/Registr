@@ -10,7 +10,10 @@
     "build": "webpack"
   },
   "lint-staged": {
-    "{,!(semantic)/**/}!(bundle.*)*.{js,json,css,md}": ["prettier --write"]
+    "{,!(semantic)/**/}!(bundle.*)*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "body-parser": "latest",

@@ -1,9 +1,9 @@
-import 'jquery-ui'
-import { $ } from 'jquery';
+import "jquery-ui";
+import { $ } from "jquery";
 
-import convertToNum from './utils'
-import Course from './course';
-import calendar from './calendar';
+import convertToNum from "./utils";
+import Course from "./course";
+import calendar from "./calendar";
 
 export class calendarHandler {
   constructor(divToBindTo) {

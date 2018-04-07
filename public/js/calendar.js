@@ -1,6 +1,6 @@
-import convertToNum from './utils';
-import 'jquery-ui';
-import { $ } from 'jquery';
+import convertToNum from "./utils";
+import "jquery-ui";
+import { $ } from "jquery";
 
 export class calendar {
   constructor(divToBindTo, calendarNumber) {

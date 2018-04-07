@@ -1,9 +1,9 @@
 // Imports
-import calendarHandler from './calendarHandler';
-import filterHandler from './filterHandler';
+import calendarHandler from "./calendarHandler";
+import filterHandler from "./filterHandler";
 
-import searchHandler from './searchHandler';
-import settingsHandler from './settingsHandler';
+import searchHandler from "./searchHandler";
+import settingsHandler from "./settingsHandler";
 
 require("jquery-ui");
 var $ = require("jquery");

@@ -1,6 +1,6 @@
-import { $ } from 'jquery';
+import { $ } from "jquery";
 
-import SearchBox from './search'
+import SearchBox from "./search";
 
 export class searchHandler {
   constructor(divToBindTo) {
@@ -92,12 +92,12 @@ export class searchHandler {
     searchy.attachEnterPressHandler(function(inputText) {
       searchy.startLoad();
       searchy.addColor("#f44336");
-      console.log(inputText)
+      console.log(inputText);
       self.sendData({
         add: inputText,
         color: color,
         callback: function(result) {
-          console.log(result)
+          console.log(result);
           if (result.success) {
             searchy.addColor(color);
             searchy.endLoad();
