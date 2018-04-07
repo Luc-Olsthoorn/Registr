@@ -1,20 +1,20 @@
-class Course {
+export default class Course {
   setRawJSON(input) {
     console.log(input);
     this.rawJSON = input;
     this.sectionArray = this.rawJSON[0].COURSES[0].sections;
   }
-  getClassNum(i){
+  getClassNum(i) {
     return this.sectionArray[i].classNumber;
   }
-  getInstructor(i){
-    if(this.sectionArray[i].instructors.length!=0){
+  getInstructor(i) {
+    if (this.sectionArray[i].instructors.length != 0) {
       return this.sectionArray[i].instructors[0].name;
-    }else{
+    } else {
       return "";
     }
   }
-  getDescription(){
+  getDescription() {
     return this.rawJSON[0].COURSES[0].description;
   }
   getSectionTimes(i) {
@@ -44,7 +44,7 @@ class Course {
   getRawJSON() {
     return this.rawJSON;
   }
-  getIsWeb(i){
+  getIsWeb(i) {
     return this.sectionArray[i].meetTimes.length == 0;
   }
   addColor(color) {

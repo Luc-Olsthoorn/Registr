@@ -1,59 +1,66 @@
+require("jquery-ui");
+var $ = require("jquery");
+import { convertToNum } from "./utils";
 
-class calendar{
-	constructor(divToBindTo, calendarNumber){
-		this.divToBindTo = divToBindTo;
-		this.boxArr = {};
-		this.calendarNumber = calendarNumber;
-	}
-	addSection(options){
-		//Create elements
-		var tempArr=[];
-		var self =this;
+export default class calendar {
+  constructor(divToBindTo, calendarNumber) {
+    this.divToBindTo = divToBindTo;
+    this.boxArr = {};
+    this.calendarNumber = calendarNumber;
+  }
+  addSection(options) {
+    //Create elements
+    var tempArr = [];
+    var self = this;
     //Its web
-    if(options.sectWeb){
-          var sectionMeetTimey = new sectionMeetTime(this.webDiv);
-          sectionMeetTimey.addSectionName(options.code); 
+    if (options.sectWeb) {
+      var sectionMeetTimey = new sectionMeetTime(this.webDiv);
+      sectionMeetTimey.addSectionName(options.code);
+      sectionMeetTimey.addColor(options.color);
+      sectionMeetTimey.render();
+      sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
+      tempArr.push(sectionMeetTimey);
+    } else {
+      //Its non-web
+      for (var i = 0; i < options.sectionMeetTimes.length; i++) {
+        for (var j = 0; j < options.sectionMeetTimes[i].meetDays.length; j++) {
+          var sectionMeetTimey = new sectionMeetTime(
+            this.days[options.sectionMeetTimes[i].meetDays[j]]
+          );
+          sectionMeetTimey.addSectionName(options.code);
+          sectionMeetTimey.addStartStop(
+            convertToNum(options.sectionMeetTimes[i].meetPeriodBegin),
+            convertToNum(options.sectionMeetTimes[i].meetPeriodEnd)
+          );
+
           sectionMeetTimey.addColor(options.color);
           sectionMeetTimey.render();
           sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
           tempArr.push(sectionMeetTimey);
         }
-    //Its non-web
-    else{
-  		for(var i=0; i < options.sectionMeetTimes.length; i++){
-  			for(var j =0; j< options.sectionMeetTimes[i].meetDays.length; j++){
-         
-          var sectionMeetTimey = new sectionMeetTime(this.days[options.sectionMeetTimes[i].meetDays[j]]);
-          sectionMeetTimey.addSectionName(options.code);
-          sectionMeetTimey.addStartStop(convertToNum(options.sectionMeetTimes[i].meetPeriodBegin), convertToNum(options.sectionMeetTimes[i].meetPeriodEnd));
-          
-  				sectionMeetTimey.addColor(options.color);
-  				sectionMeetTimey.render();
-  				sectionMeetTimey.addSideBarHandler(self.toggleSideBar, options, self);
-  				tempArr.push(sectionMeetTimey);
-          
-  			}
-  		}
+      }
     }
-		this.boxArr[options.section] = tempArr;
-	}
+    this.boxArr[options.section] = tempArr;
+  }
 
-	removeSection(section){
-		this.boxArr[section].deleteMe();
-	}
-	addSideBar(){
-		return $(`<div class="ui sidebar inverted vertical "></div>`);
-	}
-	toggleSideBar(info, self){
-		self.sideBar.empty();
-    let header ="";
-    if(info.classNum){
+  removeSection(section) {
+    this.boxArr[section].deleteMe();
+  }
+  addSideBar() {
+    return $(`<div class="ui sidebar inverted vertical "></div>`);
+  }
+  toggleSideBar(info, self) {
+    self.sideBar.empty();
+    let header = "";
+    if (info.classNum) {
       header = info.classNum;
-    }else{
+    } else {
       header = info.section;
     }
-		self.sideBar.append(`
-			<div class="ui segment container" style="height:100%; background-color: ${info.color}">
+    self.sideBar.append(`
+			<div class="ui segment container" style="height:100%; background-color: ${
+        info.color
+      }">
 			<h3 class="ui header">${header}</h3>
 			<h2 class="ui sub header"><i>${info.name}</i></h2> 
 			<div class="ui  divider"></div>
@@ -83,20 +90,30 @@ class calendar{
         </div>
 			 </div>
 		  </div>`);
-		self.sideBar
-		  .sidebar({
-		    context: self.calendarDiv
-		  })
-		  .sidebar('toggle');
-	}
-	addDayColumns(innerElement){
-		this.days = {}; 
-		this.days["M"]=$(`<div class="two wide column"><div style="overflow:hidden;">Monday</div></div>`);
-		this.days["T"]=$(`<div class="two wide column"><div style="overflow:hidden;">Tuesday</div></div>`);
-		this.days["W"]=$(`<div class="two wide column"><div style="overflow:hidden;">Wednesday</div></div>`);
-		this.days["R"]=$(`<div class="two wide column"><div style="overflow:hidden;">Thursday</div></div>`);
-		this.days["F"]=$(`<div class="two wide column"><div style="overflow:hidden;">Friday</div></div>`);
-		var keys = Object.keys(this.days);
+    self.sideBar
+      .sidebar({
+        context: self.calendarDiv
+      })
+      .sidebar("toggle");
+  }
+  addDayColumns(innerElement) {
+    this.days = {};
+    this.days["M"] = $(
+      `<div class="two wide column"><div style="overflow:hidden;">Monday</div></div>`
+    );
+    this.days["T"] = $(
+      `<div class="two wide column"><div style="overflow:hidden;">Tuesday</div></div>`
+    );
+    this.days["W"] = $(
+      `<div class="two wide column"><div style="overflow:hidden;">Wednesday</div></div>`
+    );
+    this.days["R"] = $(
+      `<div class="two wide column"><div style="overflow:hidden;">Thursday</div></div>`
+    );
+    this.days["F"] = $(
+      `<div class="two wide column"><div style="overflow:hidden;">Friday</div></div>`
+    );
+    var keys = Object.keys(this.days);
 
     for (var i = 0; i < keys.length; i++) {
       innerElement.append(this.days[keys[i]]);
@@ -125,7 +142,9 @@ class calendar{
         periods[i]
       }<span class="thin">${times[i]}</span></h4> </div>`;
     }
-    return $(`<div class="two wide mobile three wide computer column">${text}</div>`);
+    return $(
+      `<div class="two wide mobile three wide computer column">${text}</div>`
+    );
   }
   addDividers(periods) {
     var text = "";
@@ -136,14 +155,16 @@ class calendar{
     return $(`<div style="position: absolute;  width:100%;">${text}</div>`);
   }
   addBaseHtml() {
-    var element = $(`<div  class="pushable"     style="    min-height: 740px;"> </div>`);
+    var element = $(
+      `<div  class="pushable"     style="    min-height: 740px;"> </div>`
+    );
     var pusher = $(
       `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );
     var innerElement = $(`<div  class="ui grid " ></div>`);
 
     //Add day columns
-    
+
     var periods = [
       "1",
       "2",
@@ -169,17 +190,20 @@ class calendar{
     innerElement.append(this.webDiv);
     this.sideBar = this.addSideBar();
     element.append(this.sideBar);
-        //add Schedule name and attach every thing
-        pusher.append(`<h2 style="width:100%; text-align:center;">Option: ${this.calendarNumber+1}</h2>`);
-    	pusher.append(innerElement);
-    	element.append(pusher);
-		this.calendarDiv = element;
-		this.divToBindTo.append(element);
-	}
-	deleteMe(){
-		this.calendarDiv.remove();
-		delete this;
-	}
+    //add Schedule name and attach every thing
+    pusher.append(
+      `<h2 style="width:100%; text-align:center;">Option: ${this
+        .calendarNumber + 1}</h2>`
+    );
+    pusher.append(innerElement);
+    element.append(pusher);
+    this.calendarDiv = element;
+    this.divToBindTo.append(element);
+  }
+  deleteMe() {
+    this.calendarDiv.remove();
+    delete this;
+  }
 }
 class sectionMeetTime {
   constructor(divToBindTo) {
