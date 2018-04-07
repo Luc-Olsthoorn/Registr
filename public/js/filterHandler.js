@@ -1,4 +1,6 @@
-class filterHandler {
+import { $ } from 'jquery';
+
+export class filterHandler {
   constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     this.addHtml();
@@ -72,6 +74,7 @@ class filterHandler {
     this.filterClicked = callback;
   }
 }
+
 class filterBox {
   constructor(name, divToBindTo) {
     this.name = name;
@@ -87,7 +90,6 @@ class filterBox {
 			      <input type="checkbox" checked="" tabindex="0" class="hidden">
 			      <label style="color: white !important;">${this.name}</label>
 			      `);
-
     this.checkbox.checkbox();
     let self = this;
     this.checkbox.on("click", function() {
@@ -104,5 +106,3 @@ class filterBox {
     this.onChange = callback;
   }
 }
-
-module.exports = filterHandler;

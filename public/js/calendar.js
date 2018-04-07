@@ -1,4 +1,8 @@
-class calendar {
+import convertToNum from './utils';
+import 'jquery-ui';
+import { $ } from 'jquery';
+
+export class calendar {
   constructor(divToBindTo, calendarNumber) {
     this.divToBindTo = divToBindTo;
     this.boxArr = {};
@@ -228,5 +232,3 @@ class sectionMeetTime {
     this.element.css("background-color", color);
   }
 }
-
-module.exports = calendar;

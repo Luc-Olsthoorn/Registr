@@ -1,4 +1,11 @@
-class calendarHandler {
+import 'jquery-ui'
+import { $ } from 'jquery';
+
+import convertToNum from './utils'
+import Course from './course';
+import calendar from './calendar';
+
+export class calendarHandler {
   constructor(divToBindTo) {
     this.divToBindTo = divToBindTo;
     this.calendars = [];
@@ -319,23 +326,7 @@ class calendarHandler {
     this.updateSettings();
   }
 }
-// UF has late classes with special codes, this strips them and returns an integer
-function convertToNum(inputTime) {
-  switch (inputTime) {
-    case "E1":
-      return 12;
-      break;
-    case "E2":
-      return 13;
-      break;
-    case "E3":
-      return 14;
-      break;
-    default:
-      return inputTime;
-      break;
-  }
-}
+
 // Make get note server request
 function serverGetRequest(category, semester, course, callback) {
   if (course == "") {
@@ -359,5 +350,3 @@ function serverGetRequest(category, semester, course, callback) {
     });
   }
 }
-
-module.exports = calendarHandler;

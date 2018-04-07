@@ -1,4 +1,4 @@
-class Course {
+export class Course {
   setRawJSON(input) {
     console.log(input);
     this.rawJSON = input;
@@ -41,5 +41,3 @@ class Course {
     return this.color;
   }
 }
-
-module.exports = course;
