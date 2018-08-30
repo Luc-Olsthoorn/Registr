@@ -143,7 +143,7 @@ export default class calendar {
       }<span class="thin">${times[i]}</span></h4> </div>`;
     }
     return $(
-      `<div class="two wide mobile three wide computer column">${text}</div>`
+      `<div class="two wide mobile three wide computer column" style="top:50px">${text}</div>`
     );
   }
   addDividers(periods) {
