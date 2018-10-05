@@ -25,7 +25,7 @@
     "mongodb": "latest",
     "request": "~2.81.0",
     "semantic-ui": "^2.3.1",
-    "webpack": "^4.5.0",
+    "webpack": "4.19.0",
     "webpack-cli": "^2.0.14"
   },
   "author": "",

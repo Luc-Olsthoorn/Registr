@@ -7,14 +7,10 @@ class UF {
     var outputSettingsMenu = [
       {
         name: "Semester",
-        defaultVal: "2188",
+        defaultVal: "20191",
         options : [
-          {"val":"20181","name":"Spring 2018"},
-          {"val":"20185","name":"Summer 2018"},
-          {"val":"20185A","name":"Summer A 2018"},
-          {"val":"20185B","name":"Summer B 2018"},
-          {"val":"20185C","name":"Summer C 2018"},
-          {"val":"2188","name": "Fall 2018"}
+          {"val":"2188","name": "Fall 2018"},
+          {"val":"20191","name":"Spring 2019"}
         ]
       },
       {

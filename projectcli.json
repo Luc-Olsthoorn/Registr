@@ -1,0 +1,15 @@
+{
+	"name":"Registr",
+	"subCommands":[
+		{
+			"name":"Build",
+			"command": "cd /Users/lucolsthoorn/Programming/Web/Registr; docker-compose build",
+			"numArgs": 0
+		},
+		{
+			"name":"Run",
+			"command": "cd /Users/lucolsthoorn/Programming/Web/Registr; docker-compose up",
+			"numArgs": 0
+		}
+	]
+}
