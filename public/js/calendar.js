@@ -161,7 +161,7 @@ export default class calendar {
     var pusher = $(
       `<div  style="background-color:#2196f3; " class="pusher"> </div>`
     );
-    var innerElement = $(`<div  class="ui grid " ></div>`);
+    var innerElement = $(`<div style="height:670px" class="ui grid " ></div>`);
 
     //Add day columns
 

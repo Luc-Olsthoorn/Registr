@@ -10,7 +10,7 @@ class UF {
         defaultVal: "20191",
         options : [
           {"val":"2188","name": "Fall 2018"},
-          {"val":"20191","name":"Spring 2019"}
+          {"val":"2191","name":"Spring 2019"}
         ]
       },
       {
@@ -94,19 +94,21 @@ class UF {
     let cat = "";
     let classNum = "";
     let courseCode= "";
-    if(req.body.semester == "2188"){
+    /*if(req.body.semester == "2188"){*/
       cat = fallMap[req.body.category]
       prefix = "soc";
-    }else{
+    /*}else{
       cat = req.body.category;
       prefix = "soc-summer"
-    }
+    }*/
     if(!isNaN(req.body.course) && req.body.course.length == 5){
       //Searching by class number
+      /*
       if(req.body.semester != "2188"){
         res.send(JSON.stringify({"error": "noSemesterSupport"}));
         return;
       }
+      */
       classNum= req.body.course;
     }else if(req.body.course.length > 6 && req.body.course.length < 10){
       //Searching by course code
