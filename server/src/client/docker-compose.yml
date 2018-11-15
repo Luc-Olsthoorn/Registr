@@ -1,0 +1,16 @@
+version: '3'
+services:
+ exampleSeller-server:
+  build: ./exampleSeller/server
+  ports:
+   - "8080:8080"
+ exampleSeller-database:
+  build: ./exampleSeller/database
+ exampleBuyer-server:
+  build: ./exampleBuyer/server
+  ports:
+   - "8080:8080"
+ landingWebsite-server:
+  build: ./landingWebsite/server
+  ports:
+   - "8080:8080"
