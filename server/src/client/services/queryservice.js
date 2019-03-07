@@ -11,7 +11,7 @@ query.searchCourses = (courseIndex)=>{
     category: "RES",
     semester: "2198"
   }
-  let url = 'http://localhost:8080/getCourseInfo';
+  let url = 'http://'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
   let options = {
     method: 'post',
     body: data,
