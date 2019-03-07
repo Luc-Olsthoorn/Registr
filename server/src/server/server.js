@@ -23,8 +23,11 @@ app.use(bodyParser.text()); // to support JSON-encoded bodies
 
 const interfacer = require("./oneUFInterfacer");
 
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, "public")));
 
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 app.get("/getMenuSettings", function(req, res) {
   interfacer.getSettingsMenu(res);
 });
