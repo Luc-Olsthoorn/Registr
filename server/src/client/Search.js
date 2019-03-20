@@ -42,11 +42,6 @@ class App extends React.Component {
     if(e.which === 32) { //space pressed
       e.preventDefault();
     }
-    if(this.props.text.length >= 8){
-      if(e.keyCode != 8){//backspace pressed
-        e.preventDefault();
-      }
-    }
   }
   render() {
     const { classes } = this.props;
@@ -104,7 +99,7 @@ class App extends React.Component {
           {this.props.deleteHover?(
           <IconButton aria-label="delete" 
           onMouseLeave={()=>this.props.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:this.props.index, state:"success"}})}
-          onClick={()=>this.props.dispatch({type:"SEARCH_DELETE", data:{index:this.props.index}})}>
+          onClick={()=>this.props.dispatch({type:"SEARCH_DELETE", data:{index:this.props.index, courseValue:this.props.courseValue}})}>
             <ClearIcon />
           </IconButton>):(null)}
           {this.props.loading?(
@@ -130,7 +125,8 @@ const mapStateToProps = (state, ownProps) => {
     success: state.options.courseInput[ownProps.index].state == "success",
     loading: state.options.courseInput[ownProps.index].state == "loading",
     error: state.options.courseInput[ownProps.index].state == "error",
-    deleteHover: state.options.courseInput[ownProps.index].state == "deleteHover"
+    deleteHover: state.options.courseInput[ownProps.index].state == "deleteHover",
+    courseValue: state.options.courseInput[ownProps.index].courseValue
   }
 }
 const AppWithStyles = withStyles(styles)(App);

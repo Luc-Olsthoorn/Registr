@@ -7,7 +7,7 @@ const Run=()=>{
 		if(store.getState().updateCalendar){
 			
 			let courses = store.getState().courses;
-
+			console.log(courses);
 			if(courses.length>0){
 				console.log("updating");
 				console.log(courses);

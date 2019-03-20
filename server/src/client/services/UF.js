@@ -136,7 +136,7 @@ const createCalendars=(courses)=>{
 }
 export {createCalendars};
 const mergeCalender=(calendar, newCourse)=>{
-  //Checks for overlap, otherwise merges
+  //Copies current calendar to new calendar
   let newCal = {};
   let calendarKeys = Object.keys(calendar);
   for(let i=0; i<calendarKeys.length; i++){
@@ -148,25 +148,31 @@ const mergeCalender=(calendar, newCourse)=>{
       newCal[currProperty][nestedProperty] = calendar[currProperty][nestedProperty];
     }
   }
-  //let newCal = JSON.parse(JSON.stringify(calendar));
-  let keys = Object.keys(newCourse);
-  for(let i=0; i<keys.length; i++){
-    let currProperty = keys[i];
-    if(calendar[currProperty]){
-      let currPropertyKeys = Object.keys(newCourse[currProperty]);
-      for(let j=0; j<currPropertyKeys.length; j++){
-        let nestedProperty = currPropertyKeys[j];
-        if(calendar[currProperty][nestedProperty]){
-          return false;
-        }else{
-          newCal[currProperty] = newCal[currProperty] || {};
-          newCal[currProperty][nestedProperty] = newCourse[currProperty][nestedProperty];
+  //Checks overlap
+  if(newCourse["web"]){
+    newCal["web"]=newCal["web"]||[];
+    newCal["web"].push(newCourse["web"]);
+  }else{
+    let keys = Object.keys(newCourse);
+    for(let i=0; i<keys.length; i++){
+      let currProperty = keys[i];
+      if(calendar[currProperty]){
+        let currPropertyKeys = Object.keys(newCourse[currProperty]);
+        for(let j=0; j<currPropertyKeys.length; j++){
+          let nestedProperty = currPropertyKeys[j];
+          if(calendar[currProperty][nestedProperty]){
+            return false;
+          }else{
+            newCal[currProperty] = newCal[currProperty] || {};
+            newCal[currProperty][nestedProperty] = newCourse[currProperty][nestedProperty];
+          }
         }
+      }else{
+        newCal[currProperty] = newCourse[currProperty];
       }
-    }else{
-      newCal[currProperty] = newCourse[currProperty];
     }
   }
+  
   return newCal;
   //input is array of sections. 
 }
@@ -201,43 +207,60 @@ const convertCourses=(input)=>{
     for(let i=0; i< sections.length; i++){
       let section = sections[i];
       let newSection ={};
-      let meetTimes = section["meetTimes"];
-      for(let j=0; j<meetTimes.length; j++){
-        let meeting = meetTimes[j];
-        let start = periods.indexOf(meeting["meetPeriodBegin"]);
-        let end = periods.indexOf(meeting["meetPeriodEnd"]);
-        for(let k = start; k<=end; k++){
-          let period = periods[k];
-          let periodLength = 0;
-          if(k==start){
-            periodLength = ((end-start)+1);
-          }
-          //Remove duplicate teachers
-          let tempMap = {};
-          let instructors = [];
-          for(let i=0;i<section.instructors.length; i++){
-            if(!tempMap[section.instructors[i].name]){
-              instructors.push(section.instructors[i]);
-              tempMap[section.instructors[i].name] = true;
-            }
-          }
-          let data ={
+      //Remove duplicate teachers
+      let tempMap = {};
+      let instructors = [];
+      for(let i=0;i<section.instructors.length; i++){
+        if(!tempMap[section.instructors[i].name]){
+          instructors.push(section.instructors[i]);
+          tempMap[section.instructors[i].name] = true;
+        }
+      }
+      //Web Course
+      if(section.sectWeb == "AD"){
+        let data ={
             name:course.code,
             classNumber:section.classNumber,
             color:color,
-            periodLength:periodLength,
+            periodLength:1,
             description:course.description,
             title: course.name,
             instructors: instructors
           }
-          newSection[period] = newSection[period] || {};
-          for(let m=0; m< meeting.meetDays.length; m++){
-             newSection[period][meeting.meetDays[m]] = data;
+        newCourses.push({web:data});
+      }else{
+      //In person course
+        let meetTimes = section["meetTimes"];
+        for(let j=0; j<meetTimes.length; j++){
+          let meeting = meetTimes[j];
+          let start = periods.indexOf(meeting["meetPeriodBegin"]);
+          let end = periods.indexOf(meeting["meetPeriodEnd"]);
+          for(let k = start; k<=end; k++){
+            let period = periods[k];
+            let periodLength = 0;
+            if(k==start){
+              periodLength = ((end-start)+1);
+            }
+            
+            let data ={
+              name:course.code,
+              classNumber:section.classNumber,
+              color:color,
+              periodLength:periodLength,
+              description:course.description,
+              title: course.name,
+              instructors: instructors
+            }
+            newSection[period] = newSection[period] || {};
+            for(let m=0; m< meeting.meetDays.length; m++){
+               newSection[period][meeting.meetDays[m]] = data;
+            }
+           
           }
-         
         }
+        newCourses.push(newSection);
       }
-      newCourses.push(newSection);
+      
     }
   }
   console.log(newCourses);

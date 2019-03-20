@@ -46,12 +46,12 @@ class App extends React.Component {
             <div style={{paddingBottom:"40%"}}>
             <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
 
+                <Typography variant="body1" color="textSecondary" >2.0.1 Web class support</Typography> 
+                <Typography variant="body1" color="textSecondary" >2.0.0 Completley rewritten for better performance, and less bugs</Typography> 
 
-                <Typography variant="body1" color="textSecondary" >Completley rewritten for better performance, and less bugs</Typography> 
 
-                <Typography variant="body1" color="textSecondary" >New filtering</Typography> 
 
-                <Typography variant="body1" color="textSecondary" >More to come soon :)</Typography> 
+                
 
             </div>
             <Typography variant="h4" color="textSecondary" gutterBottom>Generate possible schedules</Typography> 

@@ -27,6 +27,7 @@ class App extends React.Component {
     super(props);
      this.generateHeaders = this.generateHeaders.bind(this);
      this.generatePeriods = this.generatePeriods.bind(this);
+     this.generateTableCell = this.generateTableCell.bind(this);
   }
   generateHeaders(){
     const periodHeader = (<TableCell padding="none"></TableCell>);
@@ -35,6 +36,29 @@ class App extends React.Component {
     );
     const headers = [periodHeader, dayHeaders];
     return headers;
+  }
+  generateTableCell(props){
+    let {cell, colSpan, number, key} = props;
+    return(
+          <TableCell 
+          align="center" 
+          padding="none"
+          rowSpan={cell.periodLength} 
+          colSpan={colSpan}
+          key={key}
+          onClick={()=>this.props.dispatch({
+            type:"TOGGLE_INFORMATION_DRAWER", 
+            data:{
+              number:number,
+              information: cell
+            }
+          })}
+          style={{backgroundColor:cell.color }}>
+          <Typography variant="h7" style={{color:"white"}}>
+            {cell.name}
+          </Typography>
+          </TableCell>
+      )
   }
   generatePeriods(props){
     //Generate everything
@@ -47,25 +71,7 @@ class App extends React.Component {
          {days.map((day, dayKey) =>{
             if(calendarData.meetTimes[period] && calendarData.meetTimes[period][day]){
                 if(calendarData.meetTimes[period][day].periodLength != 0){
-                return(
-                  <TableCell 
-                  align="center" 
-                  padding="none"
-                  rowSpan={calendarData.meetTimes[period][day].periodLength} 
-                  key={dayKey}
-                  onClick={()=>this.props.dispatch({
-                    type:"TOGGLE_INFORMATION_DRAWER", 
-                    data:{
-                      number:calendarData.number,
-                      information: calendarData.meetTimes[period][day]
-                    }
-                  })}
-                  style={{backgroundColor:calendarData.meetTimes[period][day].color }}>
-                  <Typography variant="h7" style={{color:"white"}}>
-                    {calendarData.meetTimes[period][day].name}
-                  </Typography>
-                  </TableCell>
-                )
+                  return (<this.generateTableCell  key={dayKey} cell={calendarData.meetTimes[period][day]} colSpan={1} number={calendarData.number}/>);
               }else{
                 return(null);
               }
@@ -77,11 +83,28 @@ class App extends React.Component {
           })}
        </TableRow>
     );
+    console.log(calendarData.meetTimes);
+    if(calendarData.meetTimes["web"]){
+
+      let web = calendarData.meetTimes["web"].map((data, key)=>
+            <TableRow key={key} style={{height:"35px"}}>
+              <TableCell align="center"  padding="none">
+                Web
+              </TableCell>
+              <this.generateTableCell key={0} cell={data} colSpan={5} number={calendarData.number}/>
+          </TableRow>
+        );
+      console.log(web);
+      rows.push(web);
+    }
+
+      
+     
     return rows;
   }
 
   render(){
-    console.log(this.props.calendar);
+    //console.log(this.props.calendar);
     return (
       <div style={{flexDirection: 'row', display:'flex'}}>
           <InformationDrawer number={this.props.calendar.number}/>

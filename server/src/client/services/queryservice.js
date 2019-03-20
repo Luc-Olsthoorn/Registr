@@ -6,8 +6,9 @@ query.searchCourses = (courseIndex)=>{
   store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"loading"}});
   let courseInfo = store.getState().options.courseInput[courseIndex];
   console.log(courseInfo);
+  let name = courseInfo.name.replace(/\s/g, '');
   let data ={
-    course: courseInfo.name,
+    course: name,
     category: "RES",
     semester: "2198"
   }
@@ -30,7 +31,7 @@ query.searchCourses = (courseIndex)=>{
       let data = convertCourses({data:body,color:courseInfo.color});
       console.log('body: ', body);
 
-      store.dispatch({type:"NEW_COURSE", data:data});
+      store.dispatch({type:"NEW_COURSE", data:{course:data, index:courseIndex}});
       store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"success"}});
     }
   })
