@@ -31,10 +31,21 @@ let mainReducer = (state = initState, action)=>{
         ...state,
     	courses:[
         ...state.courses,
-            action.data
+            action.data.course
         ],
       updateCalendar:true,
-      loading:false
+      loading:false,
+      options:{
+          ...state.options,
+          courseInput:[
+            ...state.options.courseInput.slice(0, action.data.index),
+            {
+             ...state.options.courseInput[action.data.index],
+             courseValue:state.courses.length
+            },
+            ...state.options.courseInput.slice(action.data.index+1),
+          ]
+        }
       }
     break;
     case "TOGGLE_INFORMATION_DRAWER":
@@ -114,6 +125,10 @@ let mainReducer = (state = initState, action)=>{
       }
     break;
     case "ADD_COURSE_INPUT":
+      let currColor = state.currColor+1;
+      if(state.currColor == colorArray.length-1){
+        currColor=0;
+      }
       return {
         ...state,
         options:{
@@ -127,7 +142,7 @@ let mainReducer = (state = initState, action)=>{
             }
           ]
         },
-        currColor: state.currColor+1
+        currColor: currColor
       }
     break;
 
@@ -160,8 +175,8 @@ let mainReducer = (state = initState, action)=>{
           ]
         },
         courses:[
-          ...state.courses.slice(0, action.data.index),
-          ...state.courses.slice(action.data.index+1),
+          ...state.courses.slice(0, action.data.courseValue),
+          ...state.courses.slice(action.data.courseValue+1),
         ],
         updateCalendar:true
       }
