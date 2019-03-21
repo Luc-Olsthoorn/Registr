@@ -68,6 +68,29 @@ class App extends React.Component {
           }
        </TableRow>
     );
+    let backgroundColor = "#bdbdbd";
+    let toggleValue = false;
+    if(this.props.filters["web"] && this.props.filters["web"]["web"]) {
+      backgroundColor = "transparent";
+      toggleValue = true;
+    } 
+    let web = <TableRow style={{height:"20px"}}>
+      <TableCell style={{padding:0, color:"#bdbdbd", borderRight:" 1px solid", borderBottom: "none"}}>
+          Web
+        </TableCell>
+      <TableCell 
+        colSpan={5}
+        style={{padding:0, boxShadow:"inset 0px 0px 0px 1px #bdbdbd", backgroundColor:backgroundColor, color:"white", border:"none"}}
+        onClick={()=>this.props.dispatch({type:"FILTER_TOGGLE", data:{day:"web",period:"web", value:!toggleValue}})}
+        onMouseEnter={()=>{
+          if(this.props.filterPushedDown){
+            this.props.dispatch({type:"FILTER_TOGGLE", data:{day:"web",period:"web", value:!toggleValue}})
+          }
+        }}
+     />
+
+    </TableRow>
+    rows.push(web);
     return rows;
   }
 
