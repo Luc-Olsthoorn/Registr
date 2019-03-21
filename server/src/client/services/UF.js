@@ -183,6 +183,9 @@ const filterCalendar=(calendar, filter)=>{
   for(let i=0; i<keys.length; i++){
     let currProperty = keys[i];
     if(meetTimes[currProperty]){
+      if(filter["web"] && filter["web"]["web"]){
+        return false;
+      }
       let currPropertyKeys = Object.keys(filter[currProperty]);
       for(let j=0; j<currPropertyKeys.length; j++){
         let nestedProperty = currPropertyKeys[j];
