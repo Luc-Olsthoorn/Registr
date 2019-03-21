@@ -59,6 +59,7 @@ export {colorArray};
             }
           }    
 */
+//Needs to be put in different file
 class Indexer {
   constructor(rawJSON){
     this.arrayOfLengths = this.generateArrayOfLengths(rawJSON);
@@ -108,6 +109,7 @@ class Indexer {
     return (this.arrayIndex == this.arrayOfLengths.length-1)
   }
 }
+//dif file
 const createCalendars=(courses)=>{
   let calendars=[];
   let indexer = new Indexer(courses);
@@ -135,6 +137,7 @@ const createCalendars=(courses)=>{
   return calendars;
 }
 export {createCalendars};
+//diff file
 const mergeCalender=(calendar, newCourse)=>{
   //Copies current calendar to new calendar
   let newCal = {};
@@ -176,7 +179,7 @@ const mergeCalender=(calendar, newCourse)=>{
   return newCal;
   //input is array of sections. 
 }
-
+//difff file
 const filterCalendar=(calendar, filter)=>{
   let meetTimes = calendar.meetTimes;
   let keys = Object.keys(filter);
