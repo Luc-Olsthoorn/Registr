@@ -38,7 +38,8 @@
     "@material-ui/icons": "latest",
     "@material-ui/system": "latest",
     "react-syntax-highlighter":"latest",
-    "react-infinite-scroller":"1.2.4"
+    "react-infinite-scroller":"1.2.4",
+    "react-gtm-module":"latest"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
