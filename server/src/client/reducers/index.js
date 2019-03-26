@@ -21,7 +21,9 @@ const initState = {
   filterPushedDown:false,
   numFiltered:0,
   loading:false,
-  calendarDrawers:{}
+  calendarDrawers:{},
+  pinnedCalendars:{},
+  bookMarkOnly:false
 }
 
 let mainReducer = (state = initState, action)=>{
@@ -35,6 +37,9 @@ let mainReducer = (state = initState, action)=>{
         ],
       updateCalendar:true,
       loading:false,
+      calendarDrawers:{},
+      pinnedCalendars:{},
+      numCalendarsToDisplay:10,
       options:{
           ...state.options,
           courseInput:[
@@ -61,6 +66,13 @@ let mainReducer = (state = initState, action)=>{
     return {
         ...state,
       filterPushedDown:action.data
+      }
+    break;
+    case "TOGGLE_BOOK_MARK":
+    return {
+        ...state,
+      bookMarkOnly:action.data,
+      numCalendarsToDisplay:10
       }
     break;
     case "NEW_INPUT_VALUE":
@@ -124,6 +136,16 @@ let mainReducer = (state = initState, action)=>{
         
       }
     break;
+    case "TOGGLE_PIN_CALENDAR":
+      return {
+        ...state,
+        pinnedCalendars:{
+        ...state.pinnedCalendars,
+        [action.data.number]:action.data.information     
+        }
+      }
+    break;
+
     case "ADD_COURSE_INPUT":
       let currColor = state.currColor+1;
       if(state.currColor == colorArray.length-1){
@@ -178,7 +200,9 @@ let mainReducer = (state = initState, action)=>{
           ...state.courses.slice(0, action.data.courseValue),
           ...state.courses.slice(action.data.courseValue+1),
         ],
-        updateCalendar:true
+        updateCalendar:true,
+        calendarDrawers:{},
+        pinnedCalendars:{}
       }
 
     break;

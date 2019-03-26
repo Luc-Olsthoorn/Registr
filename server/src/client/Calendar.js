@@ -12,6 +12,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Fab from '@material-ui/core/Fab';
+
+import TurnedIn from '@material-ui/icons/TurnedIn';
+import TurnedInNot from '@material-ui/icons/TurnedInNot';
 
 import {periods, days} from './services/UF.js';
 import { InformationDrawer } from './InformationDrawer.js'; 
@@ -104,48 +108,82 @@ class App extends React.Component {
   }
 
   render(){
-    //console.log(this.props.calendar);
-    return (
-      <div style={{flexDirection: 'row', display:'flex'}}>
-          <InformationDrawer number={this.props.calendar.number}/>
-        <div  
-        style={{padding:0, flex:4, width:'100%', overflow:'hidden'}}>
-          <Paper 
-            onClick={()=>{
-              if(this.props.drawerOpen){
-                this.props.dispatch({
-                type:"TOGGLE_INFORMATION_DRAWER", 
-                data:{
-                  number:this.props.calendar.number,
-                  information: false
-                }
-            })}}}
-          >
-            <Typography variant="h6" style={{paddingLeft:20}}>
-              Calender Number: {this.props.calendar.number}
-            </Typography>
-            <Table>
-              <colgroup>
-                <col width="10%" />
-                <col width="18%" />
-                <col width="18%" />
-                <col width="18%" />
-                <col width="18%" />
-                <col width="18%" />
-              </colgroup>
-              <TableHead>
-                <TableRow>
-                  <this.generateHeaders></this.generateHeaders>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                 <this.generatePeriods></this.generatePeriods>
-              </TableBody>
-            </Table>
-          </Paper>
+    if(!this.props.bookMarkOnly || this.props.pinnedCalendar){
+      return (
+        <div style={{flexDirection: 'row', display:'flex'}}>
+            <InformationDrawer number={this.props.calendar.number}/>
+          <div  
+          style={{padding:4, flex:4, width:'100%', overflow:'hidden'}}>
+            <Paper 
+              onClick={()=>{
+                if(this.props.drawerOpen){
+                  this.props.dispatch({
+                  type:"TOGGLE_INFORMATION_DRAWER", 
+                  data:{
+                    number:this.props.calendar.number,
+                    information: false
+                  }
+              })}}}
+            >
+               <Grid
+                container
+                direction="row"
+                justify="space-around"
+                alignItems="center"
+                spacing={8}
+                className={this.props.classes.root}
+              >
+                <Grid item xs={8}>
+                  <Typography variant="h6" style={{paddingLeft:20}}>
+                    Calender Number: {this.props.calendar.number}
+                  </Typography>
+                </Grid>
+                <Grid item xs={1}>
+
+                  {this.props.pinnedCalendar?(<TurnedIn 
+                  onClick={()=>this.props.dispatch({
+                    type:"TOGGLE_PIN_CALENDAR", 
+                    data:{
+                      number:this.props.calendar.number,
+                      information: false
+                    } 
+                  })}/>):(<TurnedInNot 
+                  onClick={()=>this.props.dispatch({
+                    type:"TOGGLE_PIN_CALENDAR", 
+                    data:{
+                      number:this.props.calendar.number,
+                      information: true
+                    } 
+                  })}/>)}
+
+                </Grid>
+              </Grid>
+              <Table>
+                <colgroup>
+                  <col width="10%" />
+                  <col width="18%" />
+                  <col width="18%" />
+                  <col width="18%" />
+                  <col width="18%" />
+                  <col width="18%" />
+                </colgroup>
+                <TableHead>
+                  <TableRow>
+                    <this.generateHeaders></this.generateHeaders>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                   <this.generatePeriods></this.generatePeriods>
+                </TableBody>
+              </Table>
+              
+            </Paper>
+          </div>
         </div>
-      </div>
-    )
+      )}
+      else{
+        return(null)
+      }
   }
 }
 
@@ -155,6 +193,8 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     drawerOpen: state.calendarDrawers[ownProps.calendar.number],
+    pinnedCalendar: state.pinnedCalendars[ownProps.calendar.number],
+    bookMarkOnly: state.bookMarkOnly,
   }
 }
 const AppWithStyles = withStyles(styles)(App);

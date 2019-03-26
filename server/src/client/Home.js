@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -33,7 +35,10 @@ OOPS YA FILTERED EVERYTHING</Typography>)
       return (
         
         <div className={this.props.classes.root}>
-        
+        <FormControlLabel control={<Switch 
+          value={this.props.bookMarkOnly}
+          onChange={()=>this.props.dispatch({type:"TOGGLE_BOOK_MARK", data:!this.props.bookMarkOnly})}
+            />} label="Show only Bookmarked" />
         <InfiniteScroll
               pageStart={0}
               loadMore={()=>this.props.dispatch({type:"INCREASE_NUM_CALENDARS"})}
@@ -55,9 +60,11 @@ OOPS YA FILTERED EVERYTHING</Typography>)
 const mapStateToProps = (state) => {
   return {
     calendars: state.filteredCalendars.slice(0,state.numCalendarsToDisplay),
+    pinnedCalendars: state.pinnedCalendars,
     hasMore: state.numCalendarsToDisplay <= state.filteredCalendars.length,
     numFiltered: state.numFiltered,
     totalCalendars: state.calendars.length,
+    bookMarkOnly: state.bookMarkOnly,
   }
 }
 App.propTypes = {
