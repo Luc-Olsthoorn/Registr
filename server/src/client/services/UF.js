@@ -142,19 +142,27 @@ const mergeCalender=(calendar, newCourse)=>{
   //Copies current calendar to new calendar
   let newCal = {};
   let calendarKeys = Object.keys(calendar);
-  for(let i=0; i<calendarKeys.length; i++){
-    let currProperty = calendarKeys[i];
-    let currPropertyKeys = Object.keys(calendar[currProperty]);
-    for(let j=0; j<currPropertyKeys.length; j++){
-      let nestedProperty = currPropertyKeys[j];
-      newCal[currProperty] = newCal[currProperty] || {};
-      newCal[currProperty][nestedProperty] = calendar[currProperty][nestedProperty];
+
+    for(let i=0; i<calendarKeys.length; i++){
+      let currProperty = calendarKeys[i];
+      if(currProperty == "web"){
+        newCal["web"]=newCal["web"]||[];
+        newCal["web"] = calendar[currProperty];
+      }else{
+        let currPropertyKeys = Object.keys(calendar[currProperty]);
+        for(let j=0; j<currPropertyKeys.length; j++){
+          let nestedProperty = currPropertyKeys[j];
+          newCal[currProperty] = newCal[currProperty] || {};
+          newCal[currProperty][nestedProperty] = calendar[currProperty][nestedProperty];
+        }
+      }
     }
-  }
+  
   //Checks overlap
   if(newCourse["web"]){
     newCal["web"]=newCal["web"]||[];
     newCal["web"].push(newCourse["web"]);
+    console.log(newCal["web"]);
   }else{
     let keys = Object.keys(newCourse);
     for(let i=0; i<keys.length; i++){
