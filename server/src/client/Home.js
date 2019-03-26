@@ -27,6 +27,7 @@ class App extends React.Component {
   }
 
   render(){
+
     if (this.props.numFiltered == this.props.totalCalendars && this.props.totalCalendars!=0){
       return (<Typography variant="h2" color="textSecondary" gutterBottom style={{textAlign:"center", paddingTop:100, paddingBottom:50}}>
 OOPS YA FILTERED EVERYTHING</Typography>)
@@ -43,7 +44,7 @@ OOPS YA FILTERED EVERYTHING</Typography>)
               pageStart={0}
               loadMore={()=>this.props.dispatch({type:"INCREASE_NUM_CALENDARS"})}
               hasMore={this.props.hasMore}
-              loader={<div className="loader" key={0}>Loading ...</div>}
+              loader={<div key={0}>Loading ...</div>}
             >
           {this.props.calendars.map((Calendardata, key)=><Calendar calendar={Calendardata} key={key}/>)}
           </InfiniteScroll>
@@ -60,11 +61,11 @@ OOPS YA FILTERED EVERYTHING</Typography>)
 const mapStateToProps = (state) => {
   return {
     calendars: state.filteredCalendars.slice(0,state.numCalendarsToDisplay),
-    pinnedCalendars: state.pinnedCalendars,
-    hasMore: state.numCalendarsToDisplay <= state.filteredCalendars.length,
+    hasMore: (!state.bookMarkOnly && (state.numCalendarsToDisplay <= state.filteredCalendars.length) ) || (state.bookMarkOnly&&(state.numCalendarsToDisplay <= state.numBookmarked )),
     numFiltered: state.numFiltered,
     totalCalendars: state.calendars.length,
     bookMarkOnly: state.bookMarkOnly,
+
   }
 }
 App.propTypes = {

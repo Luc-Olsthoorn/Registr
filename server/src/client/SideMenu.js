@@ -71,6 +71,7 @@ class App extends React.Component {
         </Grid>
         <Grid item xs={12}>
         <Typography  variant="subtitle1"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered</Typography>
+        <Typography  variant="subtitle1"><b>{this.props.numBookmarked} </b>Bookmarked</Typography>
         </Grid>
         <Grid item xs={12}>
           {/*<TextField
@@ -121,6 +122,7 @@ const mapStateToProps = (state, ownProps) => {
     courseInput: state.options.courseInput,
     numFiltered: state.numFiltered,
     totalCalendars: state.calendars.length,
+    numBookmarked: state.numBookmarked,
   }
 }
 const withStylesApp = withStyles(styles)(App);

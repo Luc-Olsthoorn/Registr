@@ -23,7 +23,8 @@ const initState = {
   loading:false,
   calendarDrawers:{},
   pinnedCalendars:{},
-  bookMarkOnly:false
+  bookMarkOnly:false,
+  numBookmarked:0
 }
 
 let mainReducer = (state = initState, action)=>{
@@ -69,10 +70,12 @@ let mainReducer = (state = initState, action)=>{
       }
     break;
     case "TOGGLE_BOOK_MARK":
+
     return {
         ...state,
       bookMarkOnly:action.data,
-      numCalendarsToDisplay:10
+      numCalendarsToDisplay:10,
+      
       }
     break;
     case "NEW_INPUT_VALUE":
@@ -137,12 +140,15 @@ let mainReducer = (state = initState, action)=>{
       }
     break;
     case "TOGGLE_PIN_CALENDAR":
+    let toAdd = -1;
+    if(action.data.information){toAdd=1}
       return {
         ...state,
         pinnedCalendars:{
         ...state.pinnedCalendars,
         [action.data.number]:action.data.information     
-        }
+        },
+        numBookmarked: state.numBookmarked + toAdd
       }
     break;
 
