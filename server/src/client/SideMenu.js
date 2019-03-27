@@ -38,7 +38,8 @@ const styles = theme => ({
     width: drawerWidth,
     [theme.breakpoints.down('xs')]: {
       width: '100%',
-      position:'relative'
+      position:'relative',
+      overflowY:'inherit'
     }
     //background: "#1B1C1D"
   },
