@@ -13,6 +13,9 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
@@ -25,6 +28,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import {Search} from'./Search.js';
 import {CalendarFilter} from'./CalendarFilter.js';
 import {query} from './services/queryservice.js';
+
 
 const drawerWidth = 340;
 export { drawerWidth };
@@ -47,6 +51,9 @@ const styles = theme => ({
     //background: "#1B1C1D"
   },
   toolbar: theme.mixins.toolbar,
+  formControl: {
+    margin: theme.spacing.unit,
+  },
 });
 
 class App extends React.Component {
@@ -81,18 +88,26 @@ class App extends React.Component {
           <img  src={logo} style={{width:drawerWidth-40}} />
         </Grid>
         <Grid item xs={12}>
-        <Typography  variant="subtitle1"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered</Typography>
-        <Typography  variant="subtitle1"><b>{this.props.numBookmarked} </b>Bookmarked</Typography>
+        <Typography  variant="caption"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered</Typography>
+        <Typography  variant="caption"><b>{this.props.numBookmarked} </b>Bookmarked</Typography>
         </Grid>
         <Grid item xs={12}>
-          {/*<TextField
-          select
-          id="standard-name"
-          label="Semester"
-          type="search"
-          margin="normal"
-        />*/}
-          <Typography  variant="caption">Fall 2019</Typography>
+        <FormControl>
+          <Select
+            id="standard-name"
+            label="Semester"
+            type="search"
+            margin="normal"
+            className ={this.props.classes.formControl}
+            value={this.props.semesterVal}
+            onChange={(event)=>this.props.dispatch({type:"CHANGE_SEMESTER", data:event.target.value})}
+          >
+            {this.props.choices.map((choice, key)=>
+              <MenuItem value={choice.val}>{choice.name}</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+         
 
         </Grid>
         {this.props.courseInput.map((data, key)=>{
@@ -129,6 +144,7 @@ class App extends React.Component {
           </Fab>
         </Grid>
         <Grid item xs={12}>
+         
         <CalendarFilter/>
         </Grid>
         </Grid>
@@ -148,6 +164,8 @@ const mapStateToProps = (state, ownProps) => {
     numFiltered: state.numFiltered,
     totalCalendars: state.calendars.length,
     numBookmarked: state.numBookmarked,
+    choices: state.choices,
+    semesterVal:state.semesterVal
   }
 }
 const withStylesApp = withStyles(styles)(App);
