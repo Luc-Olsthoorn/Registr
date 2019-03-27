@@ -9,8 +9,8 @@ const Run=()=>{
 			let courses = store.getState().courses;
 			console.log(courses);
 			if(courses.length>0){
-				console.log("updating");
-				console.log(courses);
+				//console.log("updating");
+				//console.log(courses);
 				let calendars = createCalendars(courses);
 				//console.log(calendars);
 				store.dispatch({type:"NEW_CALENDARS", data:calendars});

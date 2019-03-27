@@ -5,7 +5,7 @@ const initState = {
     semester: menu.semester.defaultVal,
     categories: menu.categories.defaultVal,
     courseInput:[
-    {name:"COP3502",color:colorArray[0],state:"search"},
+    {name:"",color:colorArray[0],state:"search"},
     {name:"",color:colorArray[1],state:"search"},
     {name:"",color:colorArray[2],state:"search"}
     ]
@@ -24,7 +24,7 @@ const initState = {
   calendarDrawers:{},
   pinnedCalendars:{},
   bookMarkOnly:false,
-  numBookmarked:0
+  numBookmarked:0,
 }
 
 let mainReducer = (state = initState, action)=>{

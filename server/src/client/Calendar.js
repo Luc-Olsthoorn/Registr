@@ -87,7 +87,7 @@ class App extends React.Component {
           })}
        </TableRow>
     );
-    console.log(calendarData.meetTimes);
+    //console.log(calendarData.meetTimes);
     if(calendarData.meetTimes["web"]){
 
       let web = calendarData.meetTimes["web"].map((data, key)=>

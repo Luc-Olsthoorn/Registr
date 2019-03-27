@@ -162,7 +162,6 @@ const mergeCalender=(calendar, newCourse)=>{
   if(newCourse["web"]){
     newCal["web"]=newCal["web"]||[];
     newCal["web"].push(newCourse["web"]);
-    console.log(newCal["web"]);
   }else{
     let keys = Object.keys(newCourse);
     for(let i=0; i<keys.length; i++){
