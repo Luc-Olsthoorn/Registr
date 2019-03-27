@@ -10,7 +10,21 @@ query.searchCourses = (courseIndex)=>{
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
   if(name){
-    let data ={
+    let options = generateRequest(name);
+    makeRequest(options, courseIndex, courseInfo.color);
+  }
+}
+query.searchAllCourses = ()=>{
+  store.getState().options.courseInput.forEach((element, index)=>{
+    console.log(element);
+    if(element.state!="success"){
+      query.searchCourses(index);
+    }
+  });
+}
+
+const generateRequest = (name)=>{
+  let data ={
       course: name,
       category: "RES",
       semester: "2198"
@@ -23,7 +37,10 @@ query.searchCourses = (courseIndex)=>{
       url: url,
       contentType: "application/json"
     }
-     request(options, function (err, res, body) {
+  return options;
+}
+const makeRequest = (options, courseIndex, color) =>{
+  request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
         store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
@@ -31,18 +48,20 @@ query.searchCourses = (courseIndex)=>{
       }else if(res.body.error){
         store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
       }else{
-        let data = convertCourses({data:body,color:courseInfo.color});
+        let course = convertCourses({data:body,color:color});
         console.log('body: ', body);
 
-        store.dispatch({type:"NEW_COURSE", data:{course:data, index:courseIndex}});
+        store.dispatch({type:"NEW_COURSE", data:{course:course, index:courseIndex}});
         store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"success"}});
       }
     })
-  }
 }
-
 const verifyInput = (name, otherNames, courseIndex) => {
-  let preparedName = prepareInput(name);  
+  let preparedName = prepareInput(name);
+  if(preparedName.length == 0){
+    store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
+    preparedName = false;
+  }  
   //Make sure it isnt searched 
   otherNames.forEach((element)=>{
     if(preparedName == prepareInput(element)){

@@ -13,7 +13,10 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
+
 import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+
 import Icon from '@material-ui/core/Icon';
 import TextField from "@material-ui/core/TextField";
 import logo from './assets/logo.png';
@@ -21,7 +24,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {Search} from'./Search.js';
 import {CalendarFilter} from'./CalendarFilter.js';
-
+import {query} from './services/queryservice.js';
 
 const drawerWidth = 340;
 export { drawerWidth };
@@ -102,13 +105,27 @@ class App extends React.Component {
         
         <Grid item xs={6}>
           <Fab 
-          color="primary" 
+          color="secondary" 
           size="small" 
           aria-label="Add" 
           variant="extended"
           onClick={()=>this.props.dispatch({type:"ADD_COURSE_INPUT"})}>
-            <AddIcon  />
+            
             Add More
+            <AddIcon  />
+          </Fab>
+        </Grid>
+        <Grid item xs={6}>
+          <Fab 
+          color="primary" 
+          size="small" 
+          aria-label="Add" 
+          variant="extended"
+          onClick={()=>query.searchAllCourses()}>
+            
+            
+            Search All 
+            <SearchIcon  />
           </Fab>
         </Grid>
         <Grid item xs={12}>

@@ -45,6 +45,7 @@ class App extends React.Component {
          <Grid item xs={4}>
             <div style={{paddingBottom:"40%"}}>
             <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.5 Update UX for search</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.5 Mobile support</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.4 Added bookmarking</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.3 Can't have duplicate days</Typography> 
