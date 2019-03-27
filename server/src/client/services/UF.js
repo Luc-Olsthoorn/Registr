@@ -18,10 +18,13 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2191",
+        defaultVal: "2198",
         options : [
-          {"val":"2188","name": "Fall 2018"},
-          {"val":"2191","name":"Spring 2019"}
+          {"val":"2198","name": "Fall 2019"},
+          {"val":"21956W1","name":"Summer A 2019"},
+          {"val":"21956W2", "name":"Summer B 2019"},
+          {"val":"21951", "name":"Summer C 2019"},
+          {"val":"2195", "name":"Summer 2019"}
         ]
       },
       categories:{

@@ -25,6 +25,8 @@ const initState = {
   pinnedCalendars:{},
   bookMarkOnly:false,
   numBookmarked:0,
+  choices:menu.semester.options,
+  semesterVal:menu.semester.defaultVal
 }
 
 let mainReducer = (state = initState, action)=>{
@@ -63,6 +65,13 @@ let mainReducer = (state = initState, action)=>{
           }
         }
     break;
+    case "CHANGE_SEMESTER":
+      console.log(action);
+      return {
+        ...state,
+        semesterVal: action.data
+      }
+    break; 
     case "TOGGLE_FILTERED_PUSHED_DOWN":
     return {
         ...state,

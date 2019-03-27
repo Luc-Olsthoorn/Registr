@@ -9,8 +9,9 @@ query.searchCourses = (courseIndex)=>{
   store.getState().options.courseInput.forEach((element)=>{if(element.state=="success"){otherNames.push(element.name)}});
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
+  let semester = store.getState().semesterVal;
   if(name){
-    let options = generateRequest(name);
+    let options = generateRequest(name, semester);
     makeRequest(options, courseIndex, courseInfo.color);
   }
 }
@@ -23,11 +24,11 @@ query.searchAllCourses = ()=>{
   });
 }
 
-const generateRequest = (name)=>{
+const generateRequest = (name, semester)=>{
   let data ={
       course: name,
       category: "RES",
-      semester: "2198"
+      semester: semester
     }
     let url = 'http://'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
     let options = {
