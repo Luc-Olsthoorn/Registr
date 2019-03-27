@@ -93,13 +93,7 @@ class App extends React.Component {
             
           </IconButton>):(null)}
           {this.props.success?(
-          <IconButton style={{backgroundColor:green}} aria-label="Success" onMouseEnter={()=>this.props.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:this.props.index, state:"deleteHover"}})}>
-            <DoneIcon />
-          </IconButton>):(null)}
-          {this.props.deleteHover?(
-          <IconButton aria-label="delete" 
-          onMouseLeave={()=>this.props.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:this.props.index, state:"success"}})}
-          onClick={()=>this.props.dispatch({type:"SEARCH_DELETE", data:{index:this.props.index, courseValue:this.props.courseValue}})}>
+          <IconButton style={{backgroundColor:green}} aria-label="Success" onClick={()=>this.props.dispatch({type:"SEARCH_DELETE", data:{index:this.props.index, courseValue:this.props.courseValue}})} >
             <ClearIcon />
           </IconButton>):(null)}
           {this.props.loading?(
