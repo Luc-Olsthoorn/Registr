@@ -24,7 +24,7 @@ const initState = {
   calendarDrawers:{},
   pinnedCalendars:{},
   bookMarkOnly:false,
-  numBookmarked:0
+  numBookmarked:0,
 }
 
 let mainReducer = (state = initState, action)=>{

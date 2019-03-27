@@ -29,10 +29,17 @@ const styles = theme => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
 
   },
   drawerPaper: {
     width: drawerWidth,
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      position:'relative'
+    }
     //background: "#1B1C1D"
   },
   toolbar: theme.mixins.toolbar,

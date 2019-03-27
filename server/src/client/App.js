@@ -10,7 +10,16 @@ import { Home } from './Home.js';
 const styles = theme => ({
   content: {
     flexGrow: 1,
+  },
+  mainView: {
+    overflow:'hidden',
+    display: 'flex',
+    [theme.breakpoints.down('xs')]: {
+      display: 'inherit'
+    }
   }
+  
+
 });
 class Main extends React.Component {
   constructor(props) {
@@ -18,8 +27,9 @@ class Main extends React.Component {
   }
 
   render(){
+
     return (
-      <div style={{display: 'flex', overflow:'hidden'}}>
+      <div className={this.props.classes.mainView}>
         <SideMenu/>
         <main className={this.props.classes.content}>
           <Home/>
