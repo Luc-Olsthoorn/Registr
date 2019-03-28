@@ -97,7 +97,7 @@ class App extends React.Component {
   render(){
     return (
       <div style={{userSelect:"none", padding:5}}>
-      <Typography  variant="caption">Filter out times you are not available</Typography>
+      <Typography  variant="caption">Filter out times you wish to not have class</Typography>
       <Table 
       style={{cursor: "cell"}}
       onMouseDown={()=>this.props.dispatch({type:"TOGGLE_FILTERED_PUSHED_DOWN", data:true})}
