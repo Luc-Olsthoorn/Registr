@@ -17,7 +17,7 @@ import Fab from '@material-ui/core/Fab';
 import TurnedIn from '@material-ui/icons/TurnedIn';
 import TurnedInNot from '@material-ui/icons/TurnedInNot';
 
-import {periods, days} from './services/UF.js';
+import {periods, days, periodTimesNormal, periodTimesSummer} from './services/UF.js';
 import { InformationDrawer } from './InformationDrawer.js'; 
 
 const styles = theme => ({
@@ -68,24 +68,40 @@ class App extends React.Component {
     //Generate everything
     let calendarData = this.props.calendar;//needs to be changed
     const rows = periods.map((period, periodKey) =>
-       <TableRow key = {periodKey} style={{height:"35px"}}>
-        <TableCell align="center"  padding="none">
-          {period}
-        </TableCell>
-         {days.map((day, dayKey) =>{
-            if(calendarData.meetTimes[period] && calendarData.meetTimes[period][day]){
-                if(calendarData.meetTimes[period][day].periodLength != 0){
-                  return (<this.generateTableCell  key={dayKey} cell={calendarData.meetTimes[period][day]} colSpan={1} number={calendarData.number}/>);
-              }else{
-                return(null);
-              }
-            }else{
-              return (
-                <TableCell padding="none" key={dayKey} />
-              )
-            }      
-          })}
-       </TableRow>
+      {
+      if(periodTimesSummer["semesters"].includes(this.props.semesterVal)&&periodTimesSummer[period] || periodTimesNormal["semesters"].includes(this.props.semesterVal)&&periodTimesNormal[period]){
+        return(
+          <TableRow key = {periodKey} style={{height:"35px"}}>
+           <TableCell align="center"  padding="none">
+             {period}
+             {'  '}
+             <span style={{color: "rgba(0, 0, 0, 0.54)"}}>
+             {periodTimesNormal["semesters"].includes(this.props.semesterVal)?(periodTimesNormal[period]):(null)}
+             {periodTimesSummer["semesters"].includes(this.props.semesterVal)?(periodTimesSummer[period]):(null)}
+             </span>
+           </TableCell>
+            {days.map((day, dayKey) =>{
+               if(calendarData.meetTimes[period] && calendarData.meetTimes[period][day]){
+                   if(calendarData.meetTimes[period][day].periodLength != 0){
+                     return (<this.generateTableCell  key={dayKey} cell={calendarData.meetTimes[period][day]} colSpan={1} number={calendarData.number}/>);
+                 }else{
+                   return(null);
+                 }
+               }else{
+                 return (
+                   <TableCell padding="none" key={dayKey} />
+                 )
+               }      
+             })}
+          </TableRow>
+          )
+      }else
+      {
+        return (null);
+      }
+
+       
+     }
     );
     //console.log(calendarData.meetTimes);
     if(calendarData.meetTimes["web"]){
@@ -195,6 +211,7 @@ const mapStateToProps = (state, ownProps) => {
     drawerOpen: state.calendarDrawers[ownProps.calendar.number],
     pinnedCalendar: state.pinnedCalendars[ownProps.calendar.number],
     bookMarkOnly: state.bookMarkOnly,
+    semesterVal: state.semesterVal
   }
 }
 const AppWithStyles = withStyles(styles)(App);
