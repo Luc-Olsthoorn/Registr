@@ -57,7 +57,7 @@ class App extends React.Component {
           </IconButton>
           
           <Input 
-          placeholder="Search by Course Name" 
+          placeholder="Search by Course Code" 
           autoFocus={true}
           required={true}
           disableUnderline={!this.props.error}

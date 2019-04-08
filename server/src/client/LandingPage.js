@@ -45,6 +45,7 @@ class App extends React.Component {
          <Grid item xs={4}>
             <div style={{paddingBottom:"40%"}}>
             <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.9 Simple UX fixes</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.8 Times now available, and are properly reflected for summer</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.7 Select for semester</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.6 Update UX for search</Typography> 

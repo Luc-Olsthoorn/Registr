@@ -57,7 +57,7 @@ class App extends React.Component {
               information: cell
             }
           })}
-          style={{backgroundColor:cell.color }}>
+          style={{backgroundColor:cell.color, cursor: "pointer"}}>
           <Typography variant="h7" style={{color:"white"}}>
             {cell.name}
           </Typography>
@@ -141,22 +141,10 @@ class App extends React.Component {
                   }
               })}}}
             >
-               <Grid
-                container
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-                spacing={8}
-                className={this.props.classes.root}
-              >
-                <Grid item xs={8}>
-                  <Typography variant="h6" style={{paddingLeft:20}}>
-                    Calender Number: {this.props.calendar.number}
-                  </Typography>
-                </Grid>
-                <Grid item xs={1}>
 
+                <div style={{paddingLeft:20, paddingRight:20, top:5, position:"relative", display:"inline"}}>
                   {this.props.pinnedCalendar?(<TurnedIn 
+                  style={{cursor:"pointer"}}
                   onClick={()=>this.props.dispatch({
                     type:"TOGGLE_PIN_CALENDAR", 
                     data:{
@@ -164,6 +152,7 @@ class App extends React.Component {
                       information: false
                     } 
                   })}/>):(<TurnedInNot 
+                  style={{cursor:"pointer"}}
                   onClick={()=>this.props.dispatch({
                     type:"TOGGLE_PIN_CALENDAR", 
                     data:{
@@ -171,9 +160,11 @@ class App extends React.Component {
                       information: true
                     } 
                   })}/>)}
+                </div>
+                  <Typography variant="h6" style={{display:"inline"}}>
+                    Calender Number: {this.props.calendar.number}
+                  </Typography>
 
-                </Grid>
-              </Grid>
               <Table>
                 <colgroup>
                   <col width="10%" />
