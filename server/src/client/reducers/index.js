@@ -2,8 +2,6 @@ import {menu} from '../services/UF.js';
 import {colorArray} from '../services/UF.js';
 const initState = {
   options:{
-    semester: menu.semester.defaultVal,
-    categories: menu.categories.defaultVal,
     courseInput:[
     {name:"",color:colorArray[0],state:"search"},
     {name:"",color:colorArray[1],state:"search"},
