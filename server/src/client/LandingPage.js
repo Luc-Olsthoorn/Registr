@@ -13,6 +13,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {exampleData} from './services/UF.js'
 import {Calendar} from './Calendar.js';
 import {CalendarFilter} from './CalendarFilter.js';
+
+import SelectCourse from './assets/SelectCourse.png';
+import SelectSemester from './assets/SelectSemester.png';
 const styles = theme => ({
    root: {
     paddingLeft: theme.spacing.unit * 4,
@@ -35,16 +38,60 @@ class App extends React.Component {
         className={this.props.classes.root}
       >
          <Grid item xs={12}>
-            <Typography variant="h2" color="textSecondary" gutterBottom style={{textAlign:"center", paddingTop:"10%", paddingBottom:"40%"}}>
+            <Typography variant="h2" color="textSecondary" gutterBottom style={{textAlign:"center", paddingTop:"10%"}}>
                <i>Find your perfect schedule on Registr.</i>
+
+            </Typography>
+            <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center", paddingBottom:"20%"}}>
+                Version 2.0.12
             </Typography>
          </Grid>
-         <Grid item xs={8} style={{paddingBottom:"40%"}}>
+         <Grid item xs={12}>
+            <Typography variant="h3" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               <i>Step 1: Select your semester</i>
+            </Typography>
+            <div style={{textAlign:"center", width:"100%" ,paddingBottom:"10%"}}>
+              <img  src={SelectSemester} style={{width:300}} />
+            </div>
+         </Grid>
+         <Grid item xs={12}>
+            <Typography variant="h3" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               <i>Step 2: Select your courses</i>
+
+            </Typography>
+            <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               Select by either <b>course code</b> (ex. mac2311), or by <b>course number</b> (ex. 11091)
+            </Typography>
+            <div style={{textAlign:"center" ,width:"100%", paddingBottom:"10%"}}>
+              <img  src={SelectCourse} style={{width:300}} />
+            </div>
+         </Grid>
+         <Grid item xs={12}>
+            <Typography variant="h3" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               <i>Step 3: Filter</i>
+            </Typography>
+            <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               You can filter by any time on any day
+            </Typography>
+         </Grid>
+         <Grid item xs={6} style={{paddingBottom:"10%"}}>
+            <CalendarFilter />
+         </Grid>
+         <Grid item xs={12}>
+            <Typography variant="h3" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               <i>Step 4: View the options</i>
+            </Typography>
+             <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
+               You can click on the colored class for more information, and bookmark it for later viewing
+            </Typography>
+         </Grid>
+         <Grid item xs={8} style={{paddingBottom:"10%"}}>
             <Calendar calendar = {exampleData} />
          </Grid>
-         <Grid item xs={4}>
+         <Grid item xs={6}>
             <div style={{paddingBottom:"40%"}}>
-            <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
+                <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.12 New landing page and tutorial</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.11 Bug fix of deleting inproper section</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.10 Error reporting is better now</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.9 Simple UX fixes</Typography> 
@@ -58,21 +105,10 @@ class App extends React.Component {
                 <Typography variant="body1" color="textSecondary" >2.0.1 Web class support</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.0 Completley rewritten for better performance, and less bugs</Typography> 
 
-            </div>
-            <Typography variant="h4" color="textSecondary" gutterBottom>Generate possible schedules</Typography> 
-            <Typography variant="body1" color="textSecondary" >
-               Given as many classes as you want, we will find all the different possible schedule combinations for you
-            </Typography> 
-        
+            </div>        
          </Grid>
-         <Grid item xs={6} style={{paddingBottom:"40%"}}>   
-            <Typography variant="h4" color="textSecondary" gutterBottom>Hate morning classes?</Typography> 
-            <Typography variant="body1" color="textSecondary" >Filters allow you to select what times you want your courses</Typography>
-         </Grid>
-         <Grid item xs={6}>
-            <CalendarFilter/>
-         </Grid>
-         <Grid item xs={12} style={{paddingBottom:50}}>
+         
+         <Grid item xs={6} >
             <Typography variant="h4" color="textSecondary" gutterBottom>Like to code?</Typography>
             <Typography variant="body1" color="textSecondary" >Great! This project is <a  href ="https://github.com/Luc-Olsthoorn/Registr/">open sourced</a> and we are always looking for more help! </Typography>
             <Typography variant="body1" color="textSecondary" >You can also submit bugs <a  href="https://github.com/Luc-Olsthoorn/Registr/issues">here</a></Typography>
