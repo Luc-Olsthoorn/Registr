@@ -86,7 +86,7 @@ class App extends React.Component {
             <Tooltip
                 
                 open={this.props.error}
-                title="error"
+                title={this.props.errorText}
               >
               <SearchIcon />
             </Tooltip>
@@ -120,7 +120,8 @@ const mapStateToProps = (state, ownProps) => {
     loading: state.options.courseInput[ownProps.index].state == "loading",
     error: state.options.courseInput[ownProps.index].state == "error",
     deleteHover: state.options.courseInput[ownProps.index].state == "deleteHover",
-    courseValue: state.options.courseInput[ownProps.index].courseValue
+    courseValue: state.options.courseInput[ownProps.index].courseValue,
+    errorText: state.options.courseInput[ownProps.index].error,
   }
 }
 const AppWithStyles = withStyles(styles)(App);

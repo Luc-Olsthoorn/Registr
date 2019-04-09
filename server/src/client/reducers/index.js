@@ -3,9 +3,9 @@ import {colorArray} from '../services/UF.js';
 const initState = {
   options:{
     courseInput:[
-    {name:"",color:colorArray[0],state:"search"},
-    {name:"",color:colorArray[1],state:"search"},
-    {name:"",color:colorArray[2],state:"search"}
+    {name:"",color:colorArray[0],state:"search",error:null},
+    {name:"",color:colorArray[1],state:"search",error:null},
+    {name:"",color:colorArray[2],state:"search",error:null}
     ]
   },
   courses:[],
@@ -191,7 +191,8 @@ let mainReducer = (state = initState, action)=>{
             ...state.options.courseInput.slice(0, action.data.index),
             {
              ...state.options.courseInput[action.data.index],
-             state:action.data.state
+             state:action.data.state,
+             error: action.data.error
             },
             ...state.options.courseInput.slice(action.data.index+1),
           ]
