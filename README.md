@@ -1,3 +1,3 @@
-# Registr-UF version 2.0.11
+# Registr-UF version 2.0.12
 
 Documentation coming soon
