@@ -81,12 +81,6 @@ class UF {
     }*/
     if(!isNaN(req.body.course) && req.body.course.length == 5){
       //Searching by class number
-      /*
-      if(req.body.semester != "2188"){
-        res.send(JSON.stringify({"error": "noSemesterSupport"}));
-        return;
-      }
-      */
       classNum= req.body.course;
     }else if(req.body.course.length > 6 && req.body.course.length < 10){
       //Searching by course code

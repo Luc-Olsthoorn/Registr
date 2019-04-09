@@ -4,9 +4,9 @@ import {convertCourses} from './UF.js';
 var query = {};
 query.searchCourses = (courseIndex)=>{
   store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"loading"}});
-  let courseInfo = store.getState().options.courseInput[courseIndex];
+  let courseInfo = store.getState().courseInput[courseIndex];
   let otherNames=[];
-  store.getState().options.courseInput.forEach((element)=>{if(element.state=="success"){otherNames.push(element.name)}});
+  store.getState().courseInput.forEach((element)=>{if(element.state=="success"){otherNames.push(element.name)}});
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
   let semester = store.getState().semesterVal;
@@ -44,10 +44,16 @@ const makeRequest = (options, courseIndex, color) =>{
   request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
-        store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
+        store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Connection Error"}});
         throw err
       }else if(res.body.error){
-        store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
+        if(res.body.error=="length"){
+          store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Invalid length"}});
+        }
+        if(res.body.error=="notFound"){
+          store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Course not found"}});
+        }
+        
       }else{
         let course = convertCourses({data:body,color:color});
         console.log('body: ', body);
@@ -60,13 +66,13 @@ const makeRequest = (options, courseIndex, color) =>{
 const verifyInput = (name, otherNames, courseIndex) => {
   let preparedName = prepareInput(name);
   if(preparedName.length == 0){
-    store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
+    
     preparedName = false;
   }  
   //Make sure it isnt searched 
   otherNames.forEach((element)=>{
     if(preparedName == prepareInput(element)){
-      store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error"}});
+      store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Already searched"}});
       preparedName = false;
     } 
   });

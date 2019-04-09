@@ -160,7 +160,7 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     loading: state.loading,
-    courseInput: state.options.courseInput,
+    courseInput: state.courseInput,
     numFiltered: state.numFiltered,
     totalCalendars: state.calendars.length,
     numBookmarked: state.numBookmarked,
