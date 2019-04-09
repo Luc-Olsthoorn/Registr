@@ -4,9 +4,9 @@ import {convertCourses} from './UF.js';
 var query = {};
 query.searchCourses = (courseIndex)=>{
   store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"loading"}});
-  let courseInfo = store.getState().options.courseInput[courseIndex];
+  let courseInfo = store.getState().courseInput[courseIndex];
   let otherNames=[];
-  store.getState().options.courseInput.forEach((element)=>{if(element.state=="success"){otherNames.push(element.name)}});
+  store.getState().courseInput.forEach((element)=>{if(element.state=="success"){otherNames.push(element.name)}});
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
   let semester = store.getState().semesterVal;

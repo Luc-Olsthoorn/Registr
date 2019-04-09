@@ -113,15 +113,15 @@ App.propTypes = {
 };
 const mapStateToProps = (state, ownProps) => {
   return {
-    text: state.options.courseInput[ownProps.index].name,
-    color: state.options.courseInput[ownProps.index].color,
-    search: state.options.courseInput[ownProps.index].state == "search",
-    success: state.options.courseInput[ownProps.index].state == "success",
-    loading: state.options.courseInput[ownProps.index].state == "loading",
-    error: state.options.courseInput[ownProps.index].state == "error",
-    deleteHover: state.options.courseInput[ownProps.index].state == "deleteHover",
-    courseValue: state.options.courseInput[ownProps.index].courseValue,
-    errorText: state.options.courseInput[ownProps.index].error,
+    text: state.courseInput[ownProps.index].name,
+    color: state.courseInput[ownProps.index].color,
+    search: state.courseInput[ownProps.index].state == "search",
+    success: state.courseInput[ownProps.index].state == "success",
+    loading: state.courseInput[ownProps.index].state == "loading",
+    error: state.courseInput[ownProps.index].state == "error",
+    deleteHover: state.courseInput[ownProps.index].state == "deleteHover",
+    courseValue: state.courseInput[ownProps.index].courseValue,
+    errorText: state.courseInput[ownProps.index].error,
   }
 }
 const AppWithStyles = withStyles(styles)(App);

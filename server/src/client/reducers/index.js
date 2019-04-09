@@ -1,13 +1,11 @@
 import {menu} from '../services/UF.js';
 import {colorArray} from '../services/UF.js';
 const initState = {
-  options:{
     courseInput:[
     {name:"",color:colorArray[0],state:"search",error:null},
     {name:"",color:colorArray[1],state:"search",error:null},
     {name:"",color:colorArray[2],state:"search",error:null}
-    ]
-  },
+    ],
   courses:[],
   calendars:[],
   updateCalendar:false,
@@ -41,17 +39,16 @@ let mainReducer = (state = initState, action)=>{
       calendarDrawers:{},
       pinnedCalendars:{},
       numCalendarsToDisplay:10,
-      options:{
-          ...state.options,
-          courseInput:[
-            ...state.options.courseInput.slice(0, action.data.index),
-            {
-             ...state.options.courseInput[action.data.index],
-             courseValue:state.courses.length
-            },
-            ...state.options.courseInput.slice(action.data.index+1),
-          ]
-        }
+
+      courseInput:[
+        ...state.courseInput.slice(0, action.data.index),
+        {
+         ...state.courseInput[action.data.index],
+         courseValue:action.data.course
+        },
+        ...state.courseInput.slice(action.data.index+1),
+      ]
+        
       }
     break;
     case "TOGGLE_INFORMATION_DRAWER":
@@ -88,17 +85,14 @@ let mainReducer = (state = initState, action)=>{
     case "NEW_INPUT_VALUE":
       return {
         ...state,
-        options:{
-          ...state.options,
           courseInput:[
-            ...state.options.courseInput.slice(0, action.data.index),
+            ...state.courseInput.slice(0, action.data.index),
             {
-             ...state.options.courseInput[action.data.index],
+             ...state.courseInput[action.data.index],
              name:action.data.value
             },
-            ...state.options.courseInput.slice(action.data.index+1),
+            ...state.courseInput.slice(action.data.index+1),
           ]
-        }
       }
       
     break;
@@ -166,17 +160,15 @@ let mainReducer = (state = initState, action)=>{
       }
       return {
         ...state,
-        options:{
-          ...state.options,
+
           courseInput:[
-            ...state.options.courseInput,
+            ...state.courseInput,
             {
               name:"",
               color: colorArray[state.currColor],
               state:"search"
             }
-          ]
-        },
+          ],
         currColor: currColor
       }
     break;
@@ -185,34 +177,30 @@ let mainReducer = (state = initState, action)=>{
       let loading = (action.data.state=="loading");
       return {
         ...state,
-        options:{
-          ...state.options,
           courseInput:[
-            ...state.options.courseInput.slice(0, action.data.index),
+            ...state.courseInput.slice(0, action.data.index),
             {
-             ...state.options.courseInput[action.data.index],
+             ...state.courseInput[action.data.index],
              state:action.data.state,
              error: action.data.error
             },
-            ...state.options.courseInput.slice(action.data.index+1),
-          ]
-        },
+            ...state.courseInput.slice(action.data.index+1),
+          ],
+        
         loading:loading
       }
     break;
     case "SEARCH_DELETE":
+      let courseIndex = state.courses.indexOf(action.data.courseValue);
       return {
         ...state,
-        options:{
-          ...state.options,
-          courseInput:[
-            ...state.options.courseInput.slice(0, action.data.index),
-            ...state.options.courseInput.slice(action.data.index+1),
-          ]
-        },
+        courseInput:[
+          ...state.courseInput.slice(0, action.data.index),
+          ...state.courseInput.slice(action.data.index+1),
+        ],
         courses:[
-          ...state.courses.slice(0, action.data.courseValue),
-          ...state.courses.slice(action.data.courseValue+1),
+          ...state.courses.slice(0, courseIndex),
+          ...state.courses.slice(courseIndex+1),
         ],
         updateCalendar:true,
         calendarDrawers:{},
