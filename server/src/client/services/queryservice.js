@@ -16,7 +16,7 @@ query.searchCourses = (courseIndex)=>{
   }
 }
 query.searchAllCourses = ()=>{
-  store.getState().options.courseInput.forEach((element, index)=>{
+  store.getState().courseInput.forEach((element, index)=>{
     console.log(element);
     if(element.state!="success"){
       query.searchCourses(index);
