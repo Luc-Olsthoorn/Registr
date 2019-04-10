@@ -83,5 +83,6 @@ const prepareInput = (name) =>{
   let upperCaseName = noSpaceName.toUpperCase();
   return upperCaseName; 
 }
+export {prepareInput};
 export {query};
 

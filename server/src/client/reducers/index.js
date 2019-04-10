@@ -1,5 +1,6 @@
 import {menu} from '../services/UF.js';
 import {colorArray} from '../services/UF.js';
+import {prepareInput} from '../services/queryservice.js';
 const initState = {
     courseInput:[
     {name:"",color:colorArray[0],state:"search",error:null},
@@ -208,10 +209,15 @@ let mainReducer = (state = initState, action)=>{
           ...state.courseInput.slice(0, action.data.index),
           ...state.courseInput.slice(action.data.index+1),
         ],
+
         courses:[
           ...state.courses.slice(0, courseIndex),
           ...state.courses.slice(courseIndex+1),
         ],
+        pinnedSections:{
+          ...state.pinnedSections,
+          [prepareInput(state.courseInput[action.data.index].name)]:null     
+        },
         updateCalendar:true,
         calendarDrawers:{},
         pinnedCalendars:{}
