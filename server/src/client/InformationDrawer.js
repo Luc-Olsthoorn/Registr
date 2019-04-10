@@ -7,6 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 
+import pinOn from './assets/pinOn.svg';
+import pinOff from './assets/pinOff.svg';
 
 
 const styles = theme => ({
@@ -35,10 +37,21 @@ class App extends React.Component {
         {
           this.props.drawerOpen?(
             <div style={{padding:10}}>
-            <Typography variant="h6" style={{color:"white"}}>{this.props.information.classNumber}<span style={{color:"#bdbdbd"}}>
+      
+              {this.props.sectionPinned?(
+                <div style={{display:"inline"}} onClick={()=>this.props.dispatch({type:"TOGGLE_PIN_SECTION", data:{classNumber: null, courseName: this.props.information.name}})}>
+              <img  src={pinOn} style={{width:30, position: "relative", top: 7}} />
+
+              </div>
+                ):(
+                <div  style={{display:"inline"}} onClick={()=>this.props.dispatch({type:"TOGGLE_PIN_SECTION", data:{classNumber: this.props.information.classNumber, courseName: this.props.information.name}})}>
+              <img  src={pinOff} style={{width:30, position: "relative", top: 7}} />
+              </div>
+                )}
+              
+            <Typography variant="h6" style={{display:"inline",color:"white"}}>{this.props.information.classNumber}<span style={{color:"#bdbdbd"}}>
               {' '}{this.props.information.name}
             </span></Typography>
-            
             <Typography variant="caption" style={{color:"white" ,paddingBottom:20}}>{this.props.information.title}</Typography>
             <Typography variant="body2" style={{color:"white", maxHeight:200, overflowY:"auto", paddingBottom:20}}><i>{this.props.information.description}</i></Typography>
             
@@ -62,7 +75,10 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     drawerOpen: state.calendarDrawers[ownProps.number],
-    information: state.calendarDrawers[ownProps.number]
+    information: state.calendarDrawers[ownProps.number],
+    sectionPinned: state.calendarDrawers[ownProps.number]?(
+      state.pinnedSections[state.calendarDrawers[ownProps.number].name] == state.calendarDrawers[ownProps.number].classNumber
+      ):(false)
   }
 }
 const withStylesApp = withStyles(styles)(App);

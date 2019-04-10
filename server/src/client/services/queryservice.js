@@ -12,7 +12,7 @@ query.searchCourses = (courseIndex)=>{
   let semester = store.getState().semesterVal;
   if(name){
     let options = generateRequest(name, semester);
-    makeRequest(options, courseIndex, courseInfo.color);
+    makeRequest(options, courseIndex, courseInfo.color, name);
   }
 }
 query.searchAllCourses = ()=>{
@@ -40,7 +40,7 @@ const generateRequest = (name, semester)=>{
     }
   return options;
 }
-const makeRequest = (options, courseIndex, color) =>{
+const makeRequest = (options, courseIndex, color, name) =>{
   request(options, function (err, res, body) {
       if (err) {
         console.error('error posting json: ', err)
@@ -55,7 +55,7 @@ const makeRequest = (options, courseIndex, color) =>{
         }
         
       }else{
-        let course = convertCourses({data:body,color:color});
+        let course = convertCourses({data:body,color:color}, name);
         console.log('body: ', body);
 
         store.dispatch({type:"NEW_COURSE", data:{course:course, index:courseIndex}});
@@ -80,8 +80,9 @@ const verifyInput = (name, otherNames, courseIndex) => {
 } 
 const prepareInput = (name) =>{
   let noSpaceName = name.replace(/\s/g, '');
-  let lowerCaseName = noSpaceName.toLowerCase();
-  return lowerCaseName; 
+  let upperCaseName = noSpaceName.toUpperCase();
+  return upperCaseName; 
 }
+export {prepareInput};
 export {query};
 

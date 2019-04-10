@@ -1,6 +1,6 @@
 import request from 'request';
 import {store} from '../index.js';
-import {createCalendars, filterCalendar} from './UF.js';
+import {createCalendars, filterCalendarTime, filterCalendarPinnedSection} from './UF.js';
 
 const Run=()=>{
 	store.subscribe(()=>{
@@ -20,16 +20,22 @@ const Run=()=>{
 		}
 		if(store.getState().updateFilters){
 			let calendars = store.getState().calendars;
-			let filters = store.getState().filters;
+			let timeFilters = store.getState().filters;
+			let pinnedSectionFilters = store.getState().pinnedSections;
 			let counter = 0;
 			let filteredCalendar =[];
 			for(let i =0; i<calendars.length; i++){
-				if(filterCalendar(calendars[i], filters)){
-					filteredCalendar.push(calendars[i]);
+
+				if(filterCalendarPinnedSection(calendars[i], pinnedSectionFilters)){
+					//console.log("yeet");
+					if(filterCalendarTime(calendars[i], timeFilters)){
+						filteredCalendar.push(calendars[i]);
+					}else{
+						counter++;
+					}
 				}else{
-					counter++;
+					counter ++;
 				}
-				
 			}
 			console.log(filteredCalendar);
 			store.dispatch({type:"NEW_FILTERED_CALENDARS", data:{calendar:filteredCalendar, numFiltered:counter}});

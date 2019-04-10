@@ -43,7 +43,7 @@ class App extends React.Component {
 
             </Typography>
             <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center", paddingBottom:"20%"}}>
-                Version 2.0.12
+                Version 2.1.0
             </Typography>
          </Grid>
          <Grid item xs={12}>
@@ -82,7 +82,9 @@ class App extends React.Component {
                <i>Step 4: View the options</i>
             </Typography>
              <Typography variant="body1" color="textSecondary" gutterBottom style={{textAlign:"center"}}>
-               You can click on the colored class for more information, and bookmark it for later viewing
+               You can click on the colored class for more information. If you want just this <b>section</b>, you can <b>pin</b> it
+               <br/>
+               You can also bookmark schedules for later viewing
             </Typography>
          </Grid>
          <Grid item xs={8} style={{paddingBottom:"10%"}}>
@@ -91,6 +93,7 @@ class App extends React.Component {
          <Grid item xs={6}>
             <div style={{paddingBottom:"40%"}}>
                 <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
+                <Typography variant="body1" color="textSecondary" >2.1.0 Section pinning now available</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.12 New landing page and tutorial</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.11 Bug fix of deleting inproper section</Typography> 
                 <Typography variant="body1" color="textSecondary" >2.0.10 Error reporting is better now</Typography> 
