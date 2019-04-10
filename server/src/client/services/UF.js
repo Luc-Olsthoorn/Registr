@@ -143,16 +143,33 @@ class Indexer {
     return (this.arrayIndex == this.arrayOfLengths.length-1)
   }
 }
+const getSectionData = (section)=>{
+  let keys = Object.keys(section);
+
+  if(keys[0] == "web"){
+    //console.log(section[keys[0]]);
+    let data  = section[keys[0]];
+    return data;
+  }else{
+    let nestedKeys = Object.keys(section[keys[0]]);
+    let data = section[keys[0]][nestedKeys[0]]; 
+    return data;
+  }
+  
+  
+}
 //dif file
 const createCalendars=(courses)=>{
   let calendars=[];
   let indexer = new Indexer(courses);
   let tempCal = {};
   let counter = 1;
+  let tempSectionData =[]; 
   while(!indexer.isFinished()){
     if(tempCal){
-      let courseToAdd = courses[indexer.getArrayIndex()][indexer.getElementIndex()];
-      tempCal = mergeCalender(tempCal, courseToAdd);
+      let sectionToAdd = courses[indexer.getArrayIndex()][indexer.getElementIndex()];
+      tempCal = mergeCalender(tempCal, sectionToAdd);
+      tempSectionData.push(getSectionData(sectionToAdd));
     }
     if(indexer.isEndOfRow()){
       //console.log(tempCal);
@@ -160,11 +177,14 @@ const createCalendars=(courses)=>{
 
         calendars.push({
           meetTimes:tempCal,
-          number:counter
+          number:counter,
+          sectionsInfo:tempSectionData
         });
         counter++;
       }
       tempCal = {};
+      tempSectionData =[];
+
     }
     indexer.updateArrayIndexes();
   }
@@ -221,7 +241,7 @@ const mergeCalender=(calendar, newCourse)=>{
   //input is array of sections. 
 }
 //difff file
-const filterCalendar=(calendar, filter)=>{
+const filterCalendarTime=(calendar, filter)=>{
   let meetTimes = calendar.meetTimes;
   let keys = Object.keys(filter);
   for(let i=0; i<keys.length; i++){
@@ -243,71 +263,97 @@ const filterCalendar=(calendar, filter)=>{
   }
   return true;
 }
-export {filterCalendar};
-const convertCourses=(input)=>{
+export {filterCalendarTime};
+const filterCalendarPinnedSection=(calendar, filters)=>{
+  //console.log(filters);
+  let sectionsInfo = calendar.sectionsInfo;
+  let filterNames = Object.keys(filters);
+  if(filterNames.length==0){
+    return true;
+  }
+  for(let i=0; i<filterNames.length; i++){
+    if(filters[filterNames[i]]){
+      for(let j=0;j<sectionsInfo.length; j++){
+        let section = sectionsInfo[j];
+        if(section.name == filterNames[i]){
+          if(section.classNumber != filters[filterNames[i]]){
+            return false;
+          }
+        }
+      }
+    }
+    
+  }
+  return true;
+
+}
+export {filterCalendarPinnedSection};
+const convertCourses=(input, searchedName)=>{
   let newCourses = [];
   let courses = input.data[0].COURSES;
   let color = input.color;
   for(let a=0; a<courses.length; a++){
     let course = courses[a];
-    let sections = course["sections"];
-    for(let i=0; i< sections.length; i++){
-      let section = sections[i];
-      let newSection ={};
-      //Remove duplicate teachers
-      let tempMap = {};
-      let instructors = [];
-      for(let i=0;i<section.instructors.length; i++){
-        if(!tempMap[section.instructors[i].name]){
-          instructors.push(section.instructors[i]);
-          tempMap[section.instructors[i].name] = true;
-        }
-      }
-      //Web Course
-      if(section.sectWeb == "AD"){
-        let data ={
-            name:course.code,
-            classNumber:section.classNumber,
-            color:color,
-            periodLength:1,
-            description:course.description,
-            title: course.name,
-            instructors: instructors
+    if(course.code==searchedName || searchedName==course.sections[0].classNumber){
+      let sections = course["sections"];
+      for(let i=0; i< sections.length; i++){
+        let section = sections[i];
+        let newSection ={};
+        //Remove duplicate teachers
+        let tempMap = {};
+        let instructors = [];
+        for(let i=0;i<section.instructors.length; i++){
+          if(!tempMap[section.instructors[i].name]){
+            instructors.push(section.instructors[i]);
+            tempMap[section.instructors[i].name] = true;
           }
-        newCourses.push({web:data});
-      }else{
-      //In person course
-        let meetTimes = section["meetTimes"];
-        for(let j=0; j<meetTimes.length; j++){
-          let meeting = meetTimes[j];
-          let start = periods.indexOf(meeting["meetPeriodBegin"]);
-          let end = periods.indexOf(meeting["meetPeriodEnd"]);
-          for(let k = start; k<=end; k++){
-            let period = periods[k];
-            let periodLength = 0;
-            if(k==start){
-              periodLength = ((end-start)+1);
-            }
-            
-            let data ={
+        }
+        //Web Course
+        if(section.sectWeb == "AD"){
+          let data ={
               name:course.code,
               classNumber:section.classNumber,
               color:color,
-              periodLength:periodLength,
+              periodLength:1,
               description:course.description,
               title: course.name,
               instructors: instructors
             }
-            newSection[period] = newSection[period] || {};
-            for(let m=0; m< meeting.meetDays.length; m++){
-               newSection[period][meeting.meetDays[m]] = data;
+          newCourses.push({web:data});
+        }else{
+        //In person course
+          let meetTimes = section["meetTimes"];
+          for(let j=0; j<meetTimes.length; j++){
+            let meeting = meetTimes[j];
+            let start = periods.indexOf(meeting["meetPeriodBegin"]);
+            let end = periods.indexOf(meeting["meetPeriodEnd"]);
+            for(let k = start; k<=end; k++){
+              let period = periods[k];
+              let periodLength = 0;
+              if(k==start){
+                periodLength = ((end-start)+1);
+              }
+              
+              let data ={
+                name:course.code,
+                classNumber:section.classNumber,
+                color:color,
+                periodLength:periodLength,
+                description:course.description,
+                title: course.name,
+                instructors: instructors
+              }
+              newSection[period] = newSection[period] || {};
+              for(let m=0; m< meeting.meetDays.length; m++){
+                 newSection[period][meeting.meetDays[m]] = data;
+              }
+             
             }
-           
           }
+          newCourses.push(newSection);
         }
-        newCourses.push(newSection);
+        
       }
-      
     }
   }
   console.log(newCourses);

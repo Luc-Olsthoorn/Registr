@@ -22,7 +22,8 @@ const initState = {
   bookMarkOnly:false,
   numBookmarked:0,
   choices:menu.semester.options,
-  semesterVal:menu.semester.defaultVal
+  semesterVal:menu.semester.defaultVal,
+  pinnedSections:{} 
 }
 
 let mainReducer = (state = initState, action)=>{
@@ -37,7 +38,6 @@ let mainReducer = (state = initState, action)=>{
       updateCalendar:true,
       loading:false,
       calendarDrawers:{},
-      pinnedCalendars:{},
       numCalendarsToDisplay:10,
 
       courseInput:[
@@ -58,6 +58,16 @@ let mainReducer = (state = initState, action)=>{
             ...state.calendarDrawers,
             [action.data.number]:action.data.information
           }
+        }
+    break;
+    case "TOGGLE_PIN_SECTION":
+      return {
+          ...state,
+          pinnedSections:{
+            ...state.pinnedSections,
+            [action.data.courseName]:action.data.classNumber
+          },
+          updateFilters:true,
         }
     break;
     case "CHANGE_SEMESTER":
