@@ -34,21 +34,23 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update readme/issues as appropriate.
 
 ## Roadmap
+   
+  - [ ] Create informational GIFS of steps on landing page 
   
-  [] Update filtering to be more intuitive 
+  - [ ] Update filtering to be more intuitive 
   
-  [] Implement courses per major
+  - [ ] Implement courses per major
       https://ufl.betterschedules.info/ is a great example of what needs to be done, but in a clean manner
   
-  [] Be able to search and filter by instructor
+  - [ ] Be able to search and filter by instructor
   
-  [] Auto complete - generateJSON function in server, has to be run an implemented
+  - [ ] Auto complete - generateJSON function in server, has to be run an implemented
   
-  [] Write some sort of test methods
+  - [ ] Write some sort of test methods
   
-  [] Change deployment so we can get https - heroku doesnt allow this on free tier 
+  - [ ] Change deployment so we can get https - heroku doesnt allow this on free tier 
   
-  [] Create GIFS of steps on landing page 
+ 
 
 
 ## License
