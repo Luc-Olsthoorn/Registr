@@ -3,9 +3,9 @@ import {colorArray} from '../services/UF.js';
 import {prepareInput} from '../services/queryservice.js';
 const initState = {
     courseInput:[
-    {name:"",color:colorArray[0],state:"search",error:null},
-    {name:"",color:colorArray[1],state:"search",error:null},
-    {name:"",color:colorArray[2],state:"search",error:null}
+    {name:"",color:colorArray[0],state:"search",error:null,online:"true",hybird:"true",traditional:"true"},
+    {name:"",color:colorArray[1],state:"search",error:null,online:"true",hybird:"true",traditional:"true"},
+    {name:"",color:colorArray[2],state:"search",error:null,online:"true",hybird:"true",traditional:"true"}
     ],
   courses:[],
   calendars:[],
@@ -24,7 +24,7 @@ const initState = {
   numBookmarked:0,
   choices:menu.semester.options,
   semesterVal:menu.semester.defaultVal,
-  pinnedSections:{} 
+  pinnedSections:{}
 }
 
 let mainReducer = (state = initState, action)=>{
@@ -49,7 +49,7 @@ let mainReducer = (state = initState, action)=>{
         },
         ...state.courseInput.slice(action.data.index+1),
       ]
-        
+
       }
     break;
     case "TOGGLE_INFORMATION_DRAWER":
@@ -77,7 +77,7 @@ let mainReducer = (state = initState, action)=>{
         ...state,
         semesterVal: action.data
       }
-    break; 
+    break;
     case "TOGGLE_FILTERED_PUSHED_DOWN":
     return {
         ...state,
@@ -90,7 +90,7 @@ let mainReducer = (state = initState, action)=>{
         ...state,
       bookMarkOnly:action.data,
       numCalendarsToDisplay:10,
-      
+
       }
     break;
     case "NEW_INPUT_VALUE":
@@ -105,14 +105,14 @@ let mainReducer = (state = initState, action)=>{
             ...state.courseInput.slice(action.data.index+1),
           ]
       }
-      
+
     break;
 
     case "INCREASE_NUM_CALENDARS":
       return {
         ...state,
         numCalendarsToDisplay: state.numCalendarsToDisplay+10,
-        
+
       }
     break;
     case "FILTER_TOGGLE":
@@ -124,13 +124,13 @@ let mainReducer = (state = initState, action)=>{
           [action.data.period]:{
             ...state.filters[action.data.period],
             [action.data.day]:action.data.value
-          } 
+          }
         },
         updateFilters:true,
-        loading:true    
+        loading:true
       }
     break;
-    
+
     case "NEW_FILTERED_CALENDARS":
       return {
         ...state,
@@ -147,8 +147,8 @@ let mainReducer = (state = initState, action)=>{
         filteredCalendars: action.data,
         updateCalendar:false,
         updateFilters:true,
-        loading:false      
-        
+        loading:false
+
       }
     break;
     case "TOGGLE_PIN_CALENDAR":
@@ -158,7 +158,7 @@ let mainReducer = (state = initState, action)=>{
         ...state,
         pinnedCalendars:{
         ...state.pinnedCalendars,
-        [action.data.number]:action.data.information     
+        [action.data.number]:action.data.information
         },
         numBookmarked: state.numBookmarked + toAdd
       }
@@ -197,7 +197,7 @@ let mainReducer = (state = initState, action)=>{
             },
             ...state.courseInput.slice(action.data.index+1),
           ],
-        
+
         loading:loading
       }
     break;
@@ -216,7 +216,7 @@ let mainReducer = (state = initState, action)=>{
         ],
         pinnedSections:{
           ...state.pinnedSections,
-          [prepareInput(state.courseInput[action.data.index].name)]:null     
+          [prepareInput(state.courseInput[action.data.index].name)]:null
         },
         updateCalendar:true,
         calendarDrawers:{},

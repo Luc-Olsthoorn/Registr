@@ -10,8 +10,14 @@ query.searchCourses = (courseIndex)=>{
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
   let semester = store.getState().semesterVal;
+  let online = courseInfo.online;
+  let traditional = courseInfo.traditional;
+  let hybrid = courseInfo.hybrid;
+  // let online = "false";
+  // let traditional = "true";
+  // let hybrid = "false";
   if(name){
-    let options = generateRequest(name, semester);
+    let options = generateRequest(name, semester, online, hybrid, traditional);
     makeRequest(options, courseIndex, courseInfo.color, name);
   }
 }
@@ -24,11 +30,14 @@ query.searchAllCourses = ()=>{
   });
 }
 
-const generateRequest = (name, semester)=>{
+const generateRequest = (name, semester, online, hybrid, traditional)=>{
   let data ={
       course: name,
       category: "RES",
-      semester: semester
+      semester: semester,
+      online: online,
+      hybrid: hybrid,
+      traditional: traditional
     }
     let url = 'http://'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
     let options = {
@@ -53,7 +62,7 @@ const makeRequest = (options, courseIndex, color, name) =>{
         if(res.body.error=="notFound"){
           store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Course not found"}});
         }
-        
+
       }else{
         let course = convertCourses({data:body,color:color}, name);
         console.log('body: ', body);
@@ -66,23 +75,22 @@ const makeRequest = (options, courseIndex, color, name) =>{
 const verifyInput = (name, otherNames, courseIndex) => {
   let preparedName = prepareInput(name);
   if(preparedName.length == 0){
-    
+
     preparedName = false;
-  }  
-  //Make sure it isnt searched 
+  }
+  //Make sure it isnt searched
   otherNames.forEach((element)=>{
     if(preparedName == prepareInput(element)){
       store.dispatch({type:"SEARCH_UPDATE_STATE", data:{index:courseIndex, state:"error", error:"Already searched"}});
       preparedName = false;
-    } 
+    }
   });
   return preparedName;
-} 
+}
 const prepareInput = (name) =>{
   let noSpaceName = name.replace(/\s/g, '');
   let upperCaseName = noSpaceName.toUpperCase();
-  return upperCaseName; 
+  return upperCaseName;
 }
 export {prepareInput};
 export {query};
-
