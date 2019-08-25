@@ -61,7 +61,7 @@ class App extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        
+
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -69,16 +69,16 @@ class App extends React.Component {
             paper: classes.drawerPaper,
           }}
           anchor="left"
-        > 
+        >
 
-        
+
         <Grid
         className={this.props.classes.root}
         container
         direction="row"
         justify="center"
         alignItems="flex-start"
-        spacing={8}
+        spacing={1}
         style={{paddingLeft:20, paddingRight:20}}
       >
         <Grid item xs={12}>
@@ -88,7 +88,7 @@ class App extends React.Component {
           <img  src={logo} style={{width:drawerWidth-40}} />
         </Grid>
         <Grid item xs={12}>
-        <Typography  variant="caption"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered</Typography>
+        <Typography  variant="caption"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered </Typography>
         <Typography  variant="caption"><b>{this.props.numBookmarked} </b>Bookmarked</Typography>
         </Grid>
         <Grid item xs={12}>
@@ -107,7 +107,7 @@ class App extends React.Component {
             )}
           </Select>
         </FormControl>
-         
+
 
         </Grid>
         {this.props.courseInput.map((data, key)=>{
@@ -117,38 +117,38 @@ class App extends React.Component {
           </Grid>
           )
          })}
-        
+
         <Grid item xs={6}>
-          <Fab 
-          color="secondary" 
-          size="small" 
-          aria-label="Add" 
+          <Fab
+          color="secondary"
+          size="small"
+          aria-label="Add"
           variant="extended"
           onClick={()=>this.props.dispatch({type:"ADD_COURSE_INPUT"})}>
-            
+
             Add More
             <AddIcon  />
           </Fab>
         </Grid>
         <Grid item xs={6}>
-          <Fab 
-          color="primary" 
-          size="small" 
-          aria-label="Add" 
+          <Fab
+          color="primary"
+          size="small"
+          aria-label="Add"
           variant="extended"
           onClick={()=>query.searchAllCourses()}>
-            
-            
-            Search All 
+
+
+            Search All
             <SearchIcon  />
           </Fab>
         </Grid>
         <Grid item xs={12}>
-         
+
         <CalendarFilter/>
         </Grid>
         </Grid>
-        
+
         </Drawer>
       </div>
     );
