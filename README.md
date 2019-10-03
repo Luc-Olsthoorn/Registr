@@ -1,4 +1,4 @@
-# Registr-UF version 2.1.1
+# Registr-UF version 2.1.2
 
 Registr is a website that allows for students to find there perfect schedule. Visit it at www.registr-uf.com
 
