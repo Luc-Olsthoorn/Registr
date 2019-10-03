@@ -1,7 +1,7 @@
 const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
 export{ periods };
 const periodTimesNormal = {
-  semesters: ["2198"],
+  semesters: ["2198", "2201"],
   "1":"7:25 - 8:15",
   "2":"8:30  - 9:20 ",
   "3":"9:35  - 10:25 ",
@@ -37,7 +37,7 @@ const days = [
       "W",
       "R",
       "F"
-    ]; 
+    ];
 export {days};
 const colorArray = [
       "#e91e63",
@@ -49,13 +49,10 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2198",
+        defaultVal: "2201",
         options : [
+          {"val":"2201","name": "Spring 2020"},
           {"val":"2198","name": "Fall 2019"},
-          {"val":"21956W1","name":"Summer A 2019"},
-          {"val":"21956W2", "name":"Summer B 2019"},
-          {"val":"21951", "name":"Summer C 2019"},
-          {"val":"2195", "name":"Summer 2019"}
         ]
       },
       categories:{
@@ -91,7 +88,7 @@ export {colorArray};
                 color: "#e91e63"
               }
             }
-          }    
+          }
 */
 //Needs to be put in different file
 class Indexer {
@@ -119,15 +116,15 @@ class Indexer {
       this.arrayIndex++;
     }else{
       this.arrayIndex=0;
-      //increment element index. if element index is longer then arrayoflengths, incremnet next, 
+      //increment element index. if element index is longer then arrayoflengths, incremnet next,
       //if it goes to the top, it is finished.
       for(let i = this.indexes.length-1; i>=0; i--){
-        //-1 for checking for addition ability 
+        //-1 for checking for addition ability
         if(this.indexes[i] < this.arrayOfLengths[i] - 1){
           this.indexes[i]=this.indexes[i]+ 1;
           break;
         }else{
-          this.indexes[i] = 0; 
+          this.indexes[i] = 0;
           if(i==0){
             this.finished = true;
             break;
@@ -152,11 +149,11 @@ const getSectionData = (section)=>{
     return data;
   }else{
     let nestedKeys = Object.keys(section[keys[0]]);
-    let data = section[keys[0]][nestedKeys[0]]; 
+    let data = section[keys[0]][nestedKeys[0]];
     return data;
   }
-  
-  
+
+
 }
 //dif file
 const createCalendars=(courses)=>{
@@ -164,7 +161,7 @@ const createCalendars=(courses)=>{
   let indexer = new Indexer(courses);
   let tempCal = {};
   let counter = 1;
-  let tempSectionData =[]; 
+  let tempSectionData =[];
   while(!indexer.isFinished()){
     if(tempCal){
       let sectionToAdd = courses[indexer.getArrayIndex()][indexer.getElementIndex()];
@@ -211,7 +208,7 @@ const mergeCalender=(calendar, newCourse)=>{
         }
       }
     }
-  
+
   //Checks overlap
   if(newCourse["web"]){
     newCal["web"]=newCal["web"]||[];
@@ -236,9 +233,9 @@ const mergeCalender=(calendar, newCourse)=>{
       }
     }
   }
-  
+
   return newCal;
-  //input is array of sections. 
+  //input is array of sections.
 }
 //difff file
 const filterCalendarTime=(calendar, filter)=>{
@@ -282,7 +279,7 @@ const filterCalendarPinnedSection=(calendar, filters)=>{
         }
       }
     }
-    
+
   }
   return true;
 
@@ -333,7 +330,7 @@ const convertCourses=(input, searchedName)=>{
               if(k==start){
                 periodLength = ((end-start)+1);
               }
-              
+
               let data ={
                 name:course.code,
                 classNumber:section.classNumber,
@@ -347,12 +344,12 @@ const convertCourses=(input, searchedName)=>{
               for(let m=0; m< meeting.meetDays.length; m++){
                  newSection[period][meeting.meetDays[m]] = data;
               }
-             
+
             }
           }
           newCourses.push(newSection);
         }
-        
+
       }
     }
   }
