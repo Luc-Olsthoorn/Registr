@@ -1,7 +1,7 @@
 const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
 export{ periods };
 const periodTimesNormal = {
-  semesters: ["2198", "2201"],
+  semesters: ["2208"],
   "1":"7:25 - 8:15",
   "2":"8:30  - 9:20 ",
   "3":"9:35  - 10:25 ",
@@ -19,7 +19,7 @@ const periodTimesNormal = {
 };
 export{ periodTimesNormal };
 const periodTimesSummer = {
-semesters: ["21956W1", "21956W1", "21956W2", "21951", "2195"],
+semesters: ["2205", "22056W1", "22056W2", "22051"],
 "1": "8:00  - 9:15 ",
 "2" :"9:30  - 10:45 ",
 "3": "11:00  - 12:15 ",
@@ -49,10 +49,15 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2201",
+        defaultVal: "2208",
         options : [
-          {"val":"2201","name": "Spring 2020"},
-          {"val":"2198","name": "Fall 2019"},
+
+          {"val":"2208","name": "Fall 2020"},
+          {"val":"2205","name": "Summer 2020"},
+          {"val":"22056W1","name": "Summer-A 2020"},
+          {"val":"22056W2","name": "Summer-B 2020"},
+          {"val":"22051","name": "Summer-C 2020"},
+
         ]
       },
       categories:{
@@ -165,8 +170,10 @@ const createCalendars=(courses)=>{
   while(!indexer.isFinished()){
     if(tempCal){
       let sectionToAdd = courses[indexer.getArrayIndex()][indexer.getElementIndex()];
-      tempCal = mergeCalender(tempCal, sectionToAdd);
-      tempSectionData.push(getSectionData(sectionToAdd));
+      if(Object.keys(sectionToAdd).length!==0){
+        tempCal = mergeCalender(tempCal, sectionToAdd);
+        tempSectionData.push(getSectionData(sectionToAdd));
+      }
     }
     if(indexer.isEndOfRow()){
       //console.log(tempCal);
