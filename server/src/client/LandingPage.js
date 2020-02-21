@@ -93,7 +93,8 @@ class App extends React.Component {
          <Grid item xs={6}>
             <div style={{paddingBottom:"40%"}}>
                 <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
-                <Typography variant="body1" color="textSecondary" >2.1.2 Spring 2020 baby</Typography> 
+                <Typography variant="body1" color="textSecondary" >2.1.3 Fall/Summer 2020 baby (share this page to see daddy)</Typography> 
+                <Typography variant="body1" color="textSecondary" >2.1.2 Spring 2020 baby</Typography>
                 <Typography variant="body1" color="textSecondary" >2.1.1 Minor bug fixes, https implemented</Typography>
                 <Typography variant="body1" color="textSecondary" >2.1.0 Section pinning now available</Typography>
                 <Typography variant="body1" color="textSecondary" >2.0.12 New landing page and tutorial</Typography>
