@@ -1,7 +1,7 @@
 const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
 export{ periods };
 const periodTimesNormal = {
-  semesters: ["2208"],
+  semesters: ['2211',"2208"],
   "1":"7:25 - 8:15",
   "2":"8:30  - 9:20 ",
   "3":"9:35  - 10:25 ",
@@ -49,9 +49,9 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2208",
+        defaultVal: "2211",
         options : [
-
+          {"val":"2211","name": "Spring 2021"},
           {"val":"2208","name": "Fall 2020"},
           {"val":"2205","name": "Summer 2020"},
           {"val":"22056W1","name": "Summer-A 2020"},
