@@ -5,7 +5,7 @@ COPY server/package.json ./
 
 RUN npm install
  
-Add server/ ./
+COPY server/ ./
 
 EXPOSE 8080
 CMD [ "npm", "start" ]
