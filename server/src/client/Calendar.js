@@ -73,7 +73,7 @@ class App extends React.Component {
           <TableRow key={periodKey} style={{ height: "35px" }}>
             <TableCell align="center" padding="none">
               <span>
-                <b display='inline' style={{float:'left'}}>{period}</b>
+                <b display='inline'>  {period}</b>
                 {' '}
                 {periodTimesNormal["semesters"].includes(this.props.semesterVal) ? <i color="secondary">{(periodTimesNormal[period])}</i> : (null)}
                 {periodTimesSummer["semesters"].includes(this.props.semesterVal) ? <i color="secondary">{(periodTimesSummer[period])}</i> : (null)}
