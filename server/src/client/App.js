@@ -26,18 +26,26 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * Dark theme. Customize theming options for dark mode here.
+ */
 const darkTheme = createTheme({
   palette: { type: 'dark' },
+  // TODO state for which logo image to pick.
+  // Currently unused. May need to move to redux.
   logo: logo_light
 });
 
+/**
+ * Light theme. Customize theming options for light mode here.
+ */
 const lightTheme = createTheme({
   palette: { type: 'light' },
-  logo: logo_dark
+  logo: logo_dark // See TODO in light theme
 });
 
 
-function main() {
+function app() {
   // App-wide dark mode toggle
   const [darkMode, setDarkMode] = useState(false);
 
@@ -45,27 +53,26 @@ function main() {
   const classes = useStyles();
 
   return (
-    
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <CssBaseline/>
-        <div className={classes.mainView}>
-          <SideMenu />
-          <main className={classes.content}>
-            <div style={{ paddingLeft: '16px' }}>
-              {/* <span> */}
-                <Brightness5Icon style={{verticalAlign: 'middle'}}/>
-                <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-                <Brightness2Icon style={{verticalAlign: 'middle'}}/>
-              {/* </span> */}
-            </div>
-              <Home/>
-          </main>
-        </div>
-      </ThemeProvider>
+    // Theme provider for dark/light mode. Propagates to children.
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
+      <div className={classes.mainView}>
+        <SideMenu />
+        <main className={classes.content}>
+          <div style={{ paddingLeft: '16px' }}>
+            {/* Dark mode switch. Two icons and a MUI switch. */}
+            <Brightness5Icon style={{ verticalAlign: 'middle' }} />
+            <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+            <Brightness2Icon style={{ verticalAlign: 'middle' }} />
+          </div>
+          <Home />
+        </main>
+      </div>
+    </ThemeProvider>
 
   )
 }
 
-const App = connect()(main);
+const App = connect()(app);
 
 export { App };
