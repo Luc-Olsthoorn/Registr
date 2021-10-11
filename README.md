@@ -4,21 +4,6 @@ Registr is a website that allows for students to find there perfect schedule. Vi
 
 ## Installation
 
-Use [docker](https://docs.docker.com/install/) to run registr.
-
-```
-git clone https://github.com/Luc-Olsthoorn/Registr.git
-```
-```
-docker-compose build
-```
-```
-docker-compose up
-```
-Go to localhost 8080
-
-You could also use npm. Run
-
 ```
 npm install
 ```
@@ -26,7 +11,7 @@ npm install
 ```
 npm start
 ```
-
+Go to localhost:8080
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
