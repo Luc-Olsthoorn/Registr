@@ -39,7 +39,7 @@ const generateRequest = (name, semester, online, hybrid, traditional)=>{
       hybrid: hybrid,
       traditional: traditional
     }
-    let url = 'http://'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
+    let url = window.location.protocol+ '//'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
     let options = {
       method: 'post',
       body: data,

@@ -9,6 +9,7 @@ process.on("uncaughtException", function(err) {
 });
 
 ("use strict");
+const sslRedirect = require('heroku-ssl-redirect');
 const http = require("http");
 const express = require("express"); //routing
 const app = express();
@@ -20,6 +21,7 @@ const PORT = 8080;
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.text()); // to support JSON-encoded bodies
+app.use(sslRedirect());//Heroku nonsense 
 
 const interfacer = require("./oneUFInterfacer");
 

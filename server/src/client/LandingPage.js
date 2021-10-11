@@ -93,24 +93,28 @@ class App extends React.Component {
          <Grid item xs={6}>
             <div style={{paddingBottom:"40%"}}>
                 <Typography variant="h4" gutterBottom color="textSecondary">Whats new?</Typography>
-                <Typography variant="body1" color="textSecondary" >2.1.0 Section pinning now available</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.12 New landing page and tutorial</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.11 Bug fix of deleting inproper section</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.10 Error reporting is better now</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.9 Simple UX fixes</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.8 Times now available, and are properly reflected for summer</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.7 Select for semester</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.6 Update UX for search</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.5 Mobile support</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.4 Added bookmarking</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.3 Can't have duplicate days</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.2 Filter out web classes</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.1 Web class support</Typography> 
-                <Typography variant="body1" color="textSecondary" >2.0.0 Completley rewritten for better performance, and less bugs</Typography> 
+                <Typography variant="body1" color="textSecondary" >2.1.4 Fall/Summer 2021 😩</Typography>
+                <Typography variant="body1" color="textSecondary" >2.1.3 Fall/Summer 2020 baby (share this page to see daddy)</Typography>
+                <Typography variant="body1" color="textSecondary" >2.1.2 Spring 2020 baby</Typography>
+                <Typography variant="body1" color="textSecondary" >2.1.1 Minor bug fixes, https implemented</Typography>
+                <Typography variant="body1" color="textSecondary" >2.1.0 Section pinning now available</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.12 New landing page and tutorial</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.11 Bug fix of deleting inproper section</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.10 Error reporting is better now</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.9 Simple UX fixes</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.8 Times now available, and are properly reflected for summer</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.7 Select for semester</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.6 Update UX for search</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.5 Mobile support</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.4 Added bookmarking</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.3 Can't have duplicate days</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.2 Filter out web classes</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.1 Web class support</Typography>
+                <Typography variant="body1" color="textSecondary" >2.0.0 Completley rewritten for better performance, and less bugs</Typography>
 
-            </div>        
+            </div>
          </Grid>
-         
+
          <Grid item xs={6} >
             <Typography variant="h4" color="textSecondary" gutterBottom>Like to code?</Typography>
             <Typography variant="body1" color="textSecondary" >Great! This project is <a  href ="https://github.com/Luc-Olsthoorn/Registr/">open sourced</a> and we are always looking for more help! </Typography>
