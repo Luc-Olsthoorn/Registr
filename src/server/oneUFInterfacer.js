@@ -72,6 +72,13 @@ class UF {
     let cat = "";
     let classNum = "";
     let courseCode= "";
+    let online= "";
+    online= req.body.online;
+    let traditional= "";
+    traditional= req.body.traditional;
+    let hybrid= "";
+    hybrid= req.body.hybrid;
+
     /*if(req.body.semester == "2188"){*/
       cat = fallMap[req.body.category]
       prefix = "soc";
@@ -93,13 +100,50 @@ class UF {
       return;
     }
     let url =
-      "https://one.uf.edu/apix/"+
-      prefix+
+      "https://one.uf.edu/apix/" +
+      prefix +
       "/schedule/?category="+
       cat +
       "&class-num="+ classNum +
-      "&course-code=" + courseCode+
-      "&course-title=&cred-srch=&credits=&day-f=&day-m=&day-r=&day-s=&day-t=&day-w=&days=false&dept=+&eep=&fitsSchedule=false&ge=&ge-b=&ge-c=&ge-d=&ge-h=&ge-m=&ge-n=&ge-p=&ge-s=&instructor=&last-control-number=0&level-max=--&level-min=--&no-open-seats=false&online-a=&online-c=&online-h=&online-p=&period-b=&period-e=&prog-level=+&term="+
+      "&course-code=" + courseCode +
+      // "&course-title=" +
+      // "&cred-srch=" +
+      // "&credits=" +
+      // "&day-f=" +
+      // "&day-m=" +
+      // "&day-r=" +
+      // "&day-s=" +
+      // "&day-t=" +
+      // "&day-w=" +
+      // "&days=false" +
+      // "&dept=+" +
+      // "&eep=" +
+      // "&fitsSchedule=false" +
+      // "&ge=" +
+      // "&ge-b=" +
+      // "&ge-c=" +
+      // "&ge-d=" +
+      // "&ge-h=" +
+      // "&ge-m=" +
+      // "&ge-n=" +
+      // "&ge-p=" +
+      // "&ge-s=" +
+      // "&instructor=" +
+      // "&last-control-number=0" +
+      // "&level-max=--" +
+      // "&level-min=--" +
+      "&no-open-seats=false" +
+      "&online-a=" +
+      online +
+      "&online-c=" +
+      traditional +
+      "&online-h=" +
+      hybrid +
+      "&online-p=true" +
+      // "&period-b=" +
+      // "&period-e=" +
+      // "&prog-level=+" +
+      "&term=" +
       req.body.semester+
       "&wr-2000=&wr-4000=&wr-6000=&writing=";
     console.log(url);

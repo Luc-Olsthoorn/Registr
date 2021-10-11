@@ -10,8 +10,14 @@ query.searchCourses = (courseIndex)=>{
   console.log(courseInfo);
   let name = verifyInput(courseInfo.name, otherNames, courseIndex);
   let semester = store.getState().semesterVal;
+  let online = courseInfo.online;
+  let traditional = courseInfo.traditional;
+  let hybrid = courseInfo.hybrid;
+  // let online = "false";
+  // let traditional = "true";
+  // let hybrid = "false";
   if(name){
-    let options = generateRequest(name, semester);
+    let options = generateRequest(name, semester, online, hybrid, traditional);
     makeRequest(options, courseIndex, courseInfo.color, name);
   }
 }
@@ -24,11 +30,14 @@ query.searchAllCourses = ()=>{
   });
 }
 
-const generateRequest = (name, semester)=>{
+const generateRequest = (name, semester, online, hybrid, traditional)=>{
   let data ={
       course: name,
       category: "RES",
-      semester: semester
+      semester: semester,
+      online: online,
+      hybrid: hybrid,
+      traditional: traditional
     }
     let url = window.location.protocol+ '//'+window.location.hostname + ":" + window.location.port +'/getCourseInfo';
     let options = {
