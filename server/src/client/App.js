@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles, ThemeProvider, createTheme } from '@material-ui/core/styles';
 import { Switch, CssBaseline } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 
 import { SideMenu } from './SideMenu.js';
 import { Home } from './Home.js';
 
-import logo_light from './assets/logo.png';
-import logo_dark from './assets/logo_dark.png';
-
-import Brightness5Icon from '@material-ui/icons/Brightness5';
 import Brightness2Icon from '@material-ui/icons/Brightness2';
+import WbSunny from '@material-ui/icons/WbSunny';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -31,9 +27,6 @@ const useStyles = makeStyles(theme => ({
  */
 const darkTheme = createTheme({
   palette: { type: 'dark' },
-  // TODO state for which logo image to pick.
-  // Currently unused. May need to move to redux.
-  logo: logo_light
 });
 
 /**
@@ -41,13 +34,12 @@ const darkTheme = createTheme({
  */
 const lightTheme = createTheme({
   palette: { type: 'light' },
-  logo: logo_dark // See TODO in light theme
 });
 
 
 function app() {
   // App-wide dark mode toggle
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   // Styling hook
   const classes = useStyles();
@@ -61,7 +53,7 @@ function app() {
         <main className={classes.content}>
           <div style={{ paddingLeft: '16px' }}>
             {/* Dark mode switch. Two icons and a MUI switch. */}
-            <Brightness5Icon style={{ verticalAlign: 'middle' }} />
+            <WbSunny style={{ verticalAlign: 'middle' }} />
             <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
             <Brightness2Icon style={{ verticalAlign: 'middle' }} />
           </div>

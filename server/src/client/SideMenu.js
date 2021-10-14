@@ -22,7 +22,6 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import Icon from '@material-ui/core/Icon';
 import TextField from "@material-ui/core/TextField";
-import logo from './assets/logo.png';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import {Search} from'./Search.js';
@@ -54,11 +53,17 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
   },
+  registr: {
+    fontSize:'80px',
+    fontStyle:'italic',
+    fontWeight: '100'
+  }
 });
 
 class App extends React.Component {
   render() {
     const { classes } = this.props;
+    console.log(this.props)
     return (
       <div>
 
@@ -85,7 +90,7 @@ class App extends React.Component {
         {this.props.loading?(<LinearProgress style={{width:"300px"}} color="secondary" variant="query" />):(<div style={{height:"5px"}}/>)}
         </Grid>
         <Grid item xs={12}>
-          <img  src={logo} style={{width:drawerWidth-40}} />
+          <div className={classes.registr}>Registr</div>
         </Grid>
         <Grid item xs={12}>
         <Typography  variant="caption"><b>{this.props.totalCalendars} </b>Options generated <b>{this.props.numFiltered}</b> Filtered </Typography>

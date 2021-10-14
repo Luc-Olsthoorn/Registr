@@ -45,7 +45,7 @@ class App extends React.Component {
 
             </Typography>
             <Typography variant="body1" color="textSecondary" gutterBottom style={{ textAlign: "center", paddingBottom: "20%" }}>
-              Version 2.1.0
+              Version 2.1.5
             </Typography>
           </Grid>
           <Grid item xs={12}>
