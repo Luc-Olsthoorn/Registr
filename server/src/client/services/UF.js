@@ -49,7 +49,7 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2218",
+        defaultVal: "2221",
         options : [
           {"val":"2215","name": "Summer 2021"},
           {"val":"22156W1","name": "Summer-A 2021"},
