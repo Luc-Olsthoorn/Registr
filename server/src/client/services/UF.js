@@ -1,7 +1,7 @@
 const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
 export{ periods };
 const periodTimesNormal = {
-  semesters: ['2211',"2218"],
+  semesters: ['2211',"2218","2221"],
   "1":"7:25 - 8:15",
   "2":"8:30  - 9:20 ",
   "3":"9:35  - 10:25 ",
@@ -56,6 +56,7 @@ const menu = {
           {"val":"22156W2","name": "Summer-B 2021"},
           {"val":"22151","name": "Summer-C 2021"},
           {"val":"2218","name": "Fall 2021"},
+          {"val":"2221","name": "Spring 2022"},
         ]
       },
       categories:{
