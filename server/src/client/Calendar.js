@@ -162,7 +162,7 @@ class App extends React.Component {
                     })} />)}
               </div>
               <Typography variant="h6" style={{ display: "inline" }}>
-                Calender Number: {this.props.calendar.number}
+                Calendar Number: {this.props.calendar.number}
               </Typography>
 
               <Table>
