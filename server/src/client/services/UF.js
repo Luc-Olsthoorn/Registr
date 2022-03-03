@@ -1,7 +1,7 @@
 const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
 export{ periods };
 const periodTimesNormal = {
-  semesters: ['2211',"2218","2221"],
+  semesters: ['2221',"2228","2221"],
   "1":"7:25 - 8:15",
   "2":"8:30  - 9:20 ",
   "3":"9:35  - 10:25 ",
@@ -19,7 +19,7 @@ const periodTimesNormal = {
 };
 export{ periodTimesNormal };
 const periodTimesSummer = {
-semesters: ["2215", "22156W1", "22156W2", "22151"],
+semesters: ["2225", "22256W2", "22256W2", "22251"],
 "1": "8:00  - 9:15 ",
 "2" :"9:30  - 10:45 ",
 "3": "11:00  - 12:15 ",
@@ -49,13 +49,13 @@ const colorArray = [
     ];
 const menu = {
       semester: {
-        defaultVal: "2221",
+        defaultVal: "2228",
         options : [
-          {"val":"2215","name": "Summer 2021"},
-          {"val":"22156W1","name": "Summer-A 2021"},
-          {"val":"22156W2","name": "Summer-B 2021"},
-          {"val":"22151","name": "Summer-C 2021"},
-          {"val":"2218","name": "Fall 2021"},
+          {"val":"2225","name": "Summer 2022"},
+          {"val":"22256W1","name": "Summer-A 2022"},
+          {"val":"22256W2","name": "Summer-B 2022"},
+          {"val":"22251","name": "Summer-C 2022"},
+          {"val":"2228","name": "Fall 2022"},
           {"val":"2221","name": "Spring 2022"},
         ]
       },
