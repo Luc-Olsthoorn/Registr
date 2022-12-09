@@ -18,7 +18,7 @@
     "apollo-client": "latest",
     "apollo-link-http": "latest",
     "body-parser": "^1.18.3",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "graphql": "latest",
     "graphiql": "latest",
