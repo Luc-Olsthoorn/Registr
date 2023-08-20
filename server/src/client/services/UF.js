@@ -64,8 +64,8 @@ const colorArray = [
 const currentYearPrefix = moment().year() % 100;
 const currentMonthNum = moment().month() + 1;
 const prevYearPrefix = currentYearPrefix - 1;
-const springTermYear = (currentMonthNum > 10) ? currentYearPrefix + 1 : currentYearPrefix;
-const summerFallTermYear = (currentMonthNum > 3) ? currentYearPrefix : prevYearPrefix;
+const springTermYear = (currentMonthNum >= 10) ? currentYearPrefix + 1 : currentYearPrefix;
+const summerFallTermYear = (currentMonthNum >= 3) ? currentYearPrefix : prevYearPrefix;
 const menu = {
   semester: {
     defaultVal: summerFallTermYear >= springTermYear ? `2${summerFallTermYear}8` : `2${springTermYear}1`,  
