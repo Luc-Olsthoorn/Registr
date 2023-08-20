@@ -74,24 +74,19 @@ class App extends React.Component {
   generatePeriods(props) {
     //Generate everything
     let calendarData = this.props.calendar; //needs to be changed
+    const semesterTerm = this.props.semesterVal;
     const rows = periods.map((period, periodKey) => {
       if (
-        periodTimesSummer["semesters"].includes(this.props.semesterVal) &&
-          periodTimesSummer[period] ||
-        periodTimesNormal["semesters"].includes(this.props.semesterVal) &&
-          periodTimesNormal[period]
+        (semesterTerm.charAt(3) === "5" && periodTimesSummer[period]) ||
+        (semesterTerm.charAt(3) !== "5" && periodTimesNormal[period])
       ) {
         return (
           <TableRow key={periodKey} style={{ height: "35px" }}>
             <TableCell align="center" padding="none">
               <span>
-                <b display="inline">{period}</b>{" "}
-                {periodTimesNormal["semesters"].includes(this.props.semesterVal)
-                  ? <i color="secondary">{periodTimesNormal[period]}</i>
-                  : (null)}
-                {periodTimesSummer["semesters"].includes(this.props.semesterVal)
+                <b display="inline">{period}</b> {semesterTerm.charAt(3) === "5"
                   ? <i color="secondary">{periodTimesSummer[period]}</i>
-                  : (null)}
+                  : <i color="secondary">{periodTimesNormal[period]}</i>}
               </span>
             </TableCell>
             {days.map((day, dayKey) => {

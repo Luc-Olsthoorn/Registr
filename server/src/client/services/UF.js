@@ -16,7 +16,6 @@ const periods = [
 ];
 export { periods };
 const periodTimesNormal = {
-  semesters: ["2231", "2238"],
   "1": "7:25 - 8:15",
   "2": "8:30  - 9:20 ",
   "3": "9:35  - 10:25 ",
@@ -34,7 +33,6 @@ const periodTimesNormal = {
 };
 export { periodTimesNormal };
 const periodTimesSummer = {
-  semesters: ["2235", "22356W1", "22356W2", "22351"],
   "1": "8:00  - 9:15 ",
   "2": "9:30  - 10:45 ",
   "3": "11:00  - 12:15 ",
