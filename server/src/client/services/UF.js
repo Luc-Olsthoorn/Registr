@@ -1,3 +1,4 @@
+const moment = require("moment");
 const periods = [
   "1",
   "2",
@@ -60,16 +61,21 @@ const colorArray = [
   "#4caf50",
   "#ff9800",
 ];
+const year = moment().year() % 100;
+const month = moment().month() + 1;
+const prevYear = year - 1;
+const springYear = (month > 10) ? year + 1 : year;
+const summerFallYear = (month > 3) ? year : prevYear;
 const menu = {
   semester: {
-    defaultVal: "2238",
+    defaultVal: summerFallYear >= springYear ? `2${summerFallYear}8` : `2${springYear}1`,  
     options: [
-      { "val": "2231", "name": "Spring 2023" },
-      { "val": "2235", "name": "Summer 2023" },
-      { "val": "22356W1", "name": "Summer-A 2023" },
-      { "val": "22356W2", "name": "Summer-B 2023" },
-      { "val": "22351", "name": "Summer-C 2023" },
-      { "val": "2238", "name": "Fall 2023" },
+      { "val": `2${springYear}1`, "name": `Spring 20${springYear}` },
+      { "val": `2${summerFallYear}5`, "name": `Summer 20${summerFallYear}` },
+      { "val": `2${summerFallYear}56W1`, "name": `Summer-A 20${summerFallYear}` },
+      { "val": `2${summerFallYear}56W2`, "name": `Summer-B 20${summerFallYear}` },
+      { "val": `2${summerFallYear}51`, "name": `Summer-C 20${summerFallYear}` },
+      { "val": `2${summerFallYear}8`, "name": `Fall 20${summerFallYear}` },
     ],
   },
   categories: {
@@ -82,6 +88,7 @@ const menu = {
     ],
   },
 };
+console.log(menu);
 export { menu };
 export { colorArray };
 //Converts courses:
