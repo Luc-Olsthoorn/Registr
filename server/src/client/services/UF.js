@@ -1,4 +1,15 @@
 const moment = require("moment");
+
+const currentYearPrefix = moment().year() % 100;
+const currentMonthNum = moment().month() + 1;
+const prevYearPrefix = currentYearPrefix - 1;
+const springTermYear = (currentMonthNum >= 10)
+  ? currentYearPrefix + 1
+  : currentYearPrefix;
+const summerFallTermYear = (currentMonthNum >= 3)
+  ? currentYearPrefix
+  : prevYearPrefix;
+
 const periods = [
   "1",
   "2",
@@ -16,7 +27,9 @@ const periods = [
   "E3",
 ];
 export { periods };
+
 const periodTimesNormal = {
+  semesters: [`2${springTermYear}1`, `2${summerFallTermYear}8`],
   "1": "7:25 - 8:15",
   "2": "8:30  - 9:20 ",
   "3": "9:35  - 10:25 ",
@@ -33,7 +46,9 @@ const periodTimesNormal = {
   "E3": "9:20  - 10:10 ",
 };
 export { periodTimesNormal };
+
 const periodTimesSummer = {
+  semesters: [`2${summerFallTermYear}51`, `2${summerFallTermYear}56W1`, `2${summerFallTermYear}56W2`],
   "1": "8:00  - 9:15 ",
   "2": "9:30  - 10:45 ",
   "3": "11:00  - 12:15 ",
@@ -45,6 +60,7 @@ const periodTimesSummer = {
   "E2": "8:30  - 9:45 ",
 };
 export { periodTimesSummer };
+
 const days = [
   "M",
   "T",
@@ -53,6 +69,7 @@ const days = [
   "F",
 ];
 export { days };
+
 const colorArray = [
   "#e91e63",
   "#9c27b0",
@@ -61,21 +78,35 @@ const colorArray = [
   "#4caf50",
   "#ff9800",
 ];
-const currentYearPrefix = moment().year() % 100;
-const currentMonthNum = moment().month() + 1;
-const prevYearPrefix = currentYearPrefix - 1;
-const springTermYear = (currentMonthNum >= 10) ? currentYearPrefix + 1 : currentYearPrefix;
-const summerFallTermYear = (currentMonthNum >= 3) ? currentYearPrefix : prevYearPrefix;
+export { colorArray };
+
 const menu = {
   semester: {
-    defaultVal: summerFallTermYear >= springTermYear ? `2${summerFallTermYear}8` : `2${springTermYear}1`,  
+    defaultVal: summerFallTermYear >= springTermYear
+      ? `2${summerFallTermYear}8`
+      : `2${springTermYear}1`,
     options: [
       { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
-      { "val": `2${summerFallTermYear}5`, "name": `Summer 20${summerFallTermYear}` },
-      { "val": `2${summerFallTermYear}56W1`, "name": `Summer-A 20${summerFallTermYear}` },
-      { "val": `2${summerFallTermYear}56W2`, "name": `Summer-B 20${summerFallTermYear}` },
-      { "val": `2${summerFallTermYear}51`, "name": `Summer-C 20${summerFallTermYear}` },
-      { "val": `2${summerFallTermYear}8`, "name": `Fall 20${summerFallTermYear}` },
+      {
+        "val": `2${summerFallTermYear}5`,
+        "name": `Summer 20${summerFallTermYear}`,
+      },
+      {
+        "val": `2${summerFallTermYear}56W1`,
+        "name": `Summer-A 20${summerFallTermYear}`,
+      },
+      {
+        "val": `2${summerFallTermYear}56W2`,
+        "name": `Summer-B 20${summerFallTermYear}`,
+      },
+      {
+        "val": `2${summerFallTermYear}51`,
+        "name": `Summer-C 20${summerFallTermYear}`,
+      },
+      {
+        "val": `2${summerFallTermYear}8`,
+        "name": `Fall 20${summerFallTermYear}`,
+      },
     ],
   },
   categories: {
@@ -89,7 +120,6 @@ const menu = {
   },
 };
 export { menu };
-export { colorArray };
 //Converts courses:
 //To
 /*
