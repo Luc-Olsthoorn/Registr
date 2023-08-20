@@ -48,7 +48,11 @@ const periodTimesNormal = {
 export { periodTimesNormal };
 
 const periodTimesSummer = {
-  semesters: [`2${summerFallTermYear}51`, `2${summerFallTermYear}56W1`, `2${summerFallTermYear}56W2`],
+  semesters: [
+    `2${summerFallTermYear}51`,
+    `2${summerFallTermYear}56W1`,
+    `2${summerFallTermYear}56W2`,
+  ],
   "1": "8:00  - 9:15 ",
   "2": "9:30  - 10:45 ",
   "3": "11:00  - 12:15 ",
@@ -85,29 +89,53 @@ const menu = {
     defaultVal: summerFallTermYear >= springTermYear
       ? `2${summerFallTermYear}8`
       : `2${springTermYear}1`,
-    options: [
-      { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
-      {
-        "val": `2${summerFallTermYear}5`,
-        "name": `Summer 20${summerFallTermYear}`,
-      },
-      {
-        "val": `2${summerFallTermYear}56W1`,
-        "name": `Summer-A 20${summerFallTermYear}`,
-      },
-      {
-        "val": `2${summerFallTermYear}56W2`,
-        "name": `Summer-B 20${summerFallTermYear}`,
-      },
-      {
-        "val": `2${summerFallTermYear}51`,
-        "name": `Summer-C 20${summerFallTermYear}`,
-      },
-      {
-        "val": `2${summerFallTermYear}8`,
-        "name": `Fall 20${summerFallTermYear}`,
-      },
-    ],
+    options: summerFallTermYear >= springTermYear
+      ? [
+        { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
+        {
+          "val": `2${summerFallTermYear}5`,
+          "name": `Summer 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W1`,
+          "name": `Summer-A 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W2`,
+          "name": `Summer-B 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}51`,
+          "name": `Summer-C 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}8`,
+          "name": `Fall 20${summerFallTermYear}`,
+        },
+      ]
+      : [
+        {
+          "val": `2${summerFallTermYear}5`,
+          "name": `Summer 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W1`,
+          "name": `Summer-A 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W2`,
+          "name": `Summer-B 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}51`,
+          "name": `Summer-C 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}8`,
+          "name": `Fall 20${summerFallTermYear}`,
+        },
+        { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
+      ],
   },
   categories: {
     defaultVal: "RES",
