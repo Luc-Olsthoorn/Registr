@@ -61,21 +61,21 @@ const colorArray = [
   "#4caf50",
   "#ff9800",
 ];
-const year = moment().year() % 100;
-const month = moment().month() + 1;
-const prevYear = year - 1;
-const springYear = (month > 10) ? year + 1 : year;
-const summerFallYear = (month > 3) ? year : prevYear;
+const currentYearPrefix = moment().year() % 100;
+const currentMonthNum = moment().month() + 1;
+const prevYearPrefix = currentYearPrefix - 1;
+const springTermYear = (currentMonthNum > 10) ? currentYearPrefix + 1 : currentYearPrefix;
+const summerFallTermYear = (currentMonthNum > 3) ? currentYearPrefix : prevYearPrefix;
 const menu = {
   semester: {
-    defaultVal: summerFallYear >= springYear ? `2${summerFallYear}8` : `2${springYear}1`,  
+    defaultVal: summerFallTermYear >= springTermYear ? `2${summerFallTermYear}8` : `2${springTermYear}1`,  
     options: [
-      { "val": `2${springYear}1`, "name": `Spring 20${springYear}` },
-      { "val": `2${summerFallYear}5`, "name": `Summer 20${summerFallYear}` },
-      { "val": `2${summerFallYear}56W1`, "name": `Summer-A 20${summerFallYear}` },
-      { "val": `2${summerFallYear}56W2`, "name": `Summer-B 20${summerFallYear}` },
-      { "val": `2${summerFallYear}51`, "name": `Summer-C 20${summerFallYear}` },
-      { "val": `2${summerFallYear}8`, "name": `Fall 20${summerFallYear}` },
+      { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
+      { "val": `2${summerFallTermYear}5`, "name": `Summer 20${summerFallTermYear}` },
+      { "val": `2${summerFallTermYear}56W1`, "name": `Summer-A 20${summerFallTermYear}` },
+      { "val": `2${summerFallTermYear}56W2`, "name": `Summer-B 20${summerFallTermYear}` },
+      { "val": `2${summerFallTermYear}51`, "name": `Summer-C 20${summerFallTermYear}` },
+      { "val": `2${summerFallTermYear}8`, "name": `Fall 20${summerFallTermYear}` },
     ],
   },
   categories: {
@@ -88,7 +88,6 @@ const menu = {
     ],
   },
 };
-console.log(menu);
 export { menu };
 export { colorArray };
 //Converts courses:
