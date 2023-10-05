@@ -1,76 +1,154 @@
-const periods = ["1","2","3","4","5","6","7","8","9","10","11","E1","E2","E3"];
-export{ periods };
+const moment = require("moment");
+
+const currentYearPrefix = moment().year() % 100;
+const currentMonthNum = moment().month() + 1;
+const prevYearPrefix = currentYearPrefix - 1;
+const springTermYear = (currentMonthNum >= 10)
+  ? currentYearPrefix + 1
+  : currentYearPrefix;
+const summerFallTermYear = (currentMonthNum >= 3)
+  ? currentYearPrefix
+  : prevYearPrefix;
+
+const periods = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "E1",
+  "E2",
+  "E3",
+];
+export { periods };
+
 const periodTimesNormal = {
-  semesters: ['2231', "2238","2231"],
-  "1":"7:25 - 8:15",
-  "2":"8:30  - 9:20 ",
-  "3":"9:35  - 10:25 ",
-  "4":"10:40  - 11:30 ",
-  "5":"11:45  - 12:35 ",
-  "6":"12:50  - 1:40 ",
-  "7":"1:55  - 2:45 ",
-  "8":"3:00  - 3:50 ",
-  "9":"4:05  - 4:55 ",
-  "10":"5:10  - 6:00 ",
-  "11":"6:15  - 7:05 ",
-  "E1":"7:20  - 8:10 ",
-  "E2":"8:20  - 9:10 ",
-  "E3":"9:20  - 10:10 "
+  semesters: [`2${springTermYear}1`, `2${summerFallTermYear}8`],
+  "1": "7:25 - 8:15",
+  "2": "8:30  - 9:20 ",
+  "3": "9:35  - 10:25 ",
+  "4": "10:40  - 11:30 ",
+  "5": "11:45  - 12:35 ",
+  "6": "12:50  - 1:40 ",
+  "7": "1:55  - 2:45 ",
+  "8": "3:00  - 3:50 ",
+  "9": "4:05  - 4:55 ",
+  "10": "5:10  - 6:00 ",
+  "11": "6:15  - 7:05 ",
+  "E1": "7:20  - 8:10 ",
+  "E2": "8:20  - 9:10 ",
+  "E3": "9:20  - 10:10 ",
 };
-export{ periodTimesNormal };
+export { periodTimesNormal };
+
 const periodTimesSummer = {
-semesters: ["2235", "22356W1", "22356W2", "22351"],
-"1": "8:00  - 9:15 ",
-"2" :"9:30  - 10:45 ",
-"3": "11:00  - 12:15 ",
-"4": "12:30  - 1:45 ",
-"5": "2:00  - 3:15 ",
-"6": "3:30  - 4:45 ",
-"7": "5:00  - 6:15 ",
-"E1": "7:00  - 8:15 ",
-"E2": "8:30  - 9:45 "
+  semesters: [
+    `2${summerFallTermYear}51`,
+    `2${summerFallTermYear}56W1`,
+    `2${summerFallTermYear}56W2`,
+  ],
+  "1": "8:00  - 9:15 ",
+  "2": "9:30  - 10:45 ",
+  "3": "11:00  - 12:15 ",
+  "4": "12:30  - 1:45 ",
+  "5": "2:00  - 3:15 ",
+  "6": "3:30  - 4:45 ",
+  "7": "5:00  - 6:15 ",
+  "E1": "7:00  - 8:15 ",
+  "E2": "8:30  - 9:45 ",
 };
-export{ periodTimesSummer };
+export { periodTimesSummer };
+
 const days = [
-      "M",
-      "T",
-      "W",
-      "R",
-      "F"
-    ];
-export {days};
+  "M",
+  "T",
+  "W",
+  "R",
+  "F",
+];
+export { days };
+
 const colorArray = [
-      "#e91e63",
-      "#9c27b0",
-      "#3f51b5",
-      "#00bcd4",
-      "#4caf50",
-      "#ff9800"
-    ];
+  "#e91e63",
+  "#9c27b0",
+  "#3f51b5",
+  "#00bcd4",
+  "#4caf50",
+  "#ff9800",
+];
+export { colorArray };
+
 const menu = {
-      semester: {
-        defaultVal: "2238",
-        options : [
-		  {"val":"2231","name": "Spring 2023"},
-          {"val":"2235","name": "Summer 2023"},
-          {"val":"22356W1","name": "Summer-A 2023"},
-          {"val":"22356W2","name": "Summer-B 2023"},
-          {"val":"22351","name": "Summer-C 2023"},
-          {"val":"2238","name": "Fall 2023"}
-        ]
-      },
-      categories:{
-        defaultVal: "RES",
-        options : [
-          {"val":"RES","name":"Campus / Web / Special Program"},
-          {"val":"UFO","name":"UF Online Program"},
-          {"val":"IA","name":"Innovation Academy"},
-          {"val":"HUR","name":"Puerto Rico/U.S. Virgin Islands"}
-        ]
-      }
-    };
-export {menu}
-export {colorArray};
+  semester: {
+    defaultVal: summerFallTermYear >= springTermYear
+      ? `2${summerFallTermYear}8`
+      : `2${springTermYear}1`,
+    options: summerFallTermYear >= springTermYear
+      ? [
+        { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
+        {
+          "val": `2${summerFallTermYear}5`,
+          "name": `Summer 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W1`,
+          "name": `Summer-A 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W2`,
+          "name": `Summer-B 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}51`,
+          "name": `Summer-C 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}8`,
+          "name": `Fall 20${summerFallTermYear}`,
+        },
+      ]
+      : [
+        {
+          "val": `2${summerFallTermYear}5`,
+          "name": `Summer 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W1`,
+          "name": `Summer-A 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}56W2`,
+          "name": `Summer-B 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}51`,
+          "name": `Summer-C 20${summerFallTermYear}`,
+        },
+        {
+          "val": `2${summerFallTermYear}8`,
+          "name": `Fall 20${summerFallTermYear}`,
+        },
+        { "val": `2${springTermYear}1`, "name": `Spring 20${springTermYear}` },
+      ],
+  },
+  categories: {
+    defaultVal: "RES",
+    options: [
+      { "val": "RES", "name": "Campus / Web / Special Program" },
+      { "val": "UFO", "name": "UF Online Program" },
+      { "val": "IA", "name": "Innovation Academy" },
+      { "val": "HUR", "name": "Puerto Rico/U.S. Virgin Islands" },
+    ],
+  },
+};
+export { menu };
+
 //Converts courses:
 //To
 /*

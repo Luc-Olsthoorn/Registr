@@ -41,7 +41,8 @@
     "react-syntax-highlighter": "latest",
     "react-infinite-scroller": "1.2.4",
     "react-gtm-module": "latest",
-    "react-ds": "latest"
+    "react-ds": "latest",
+    "moment": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
